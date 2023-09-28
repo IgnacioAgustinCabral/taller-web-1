@@ -645,6 +645,12 @@ ul.pagination .active a {
   background: #5672f9;
 }
 
+.bg-5 {
+  background: url(../images/home/bg-5.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .navigation {
   padding: 20px 0;
 }
