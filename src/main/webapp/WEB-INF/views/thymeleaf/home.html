@@ -13,9 +13,10 @@
     <meta name="theme-name" content="classimax"/>
 
     <!-- Use Thymeleaf expressions for CSS URLs -->
+    <link th:href="@{/plugins/nerd-fonts/css/nerd-fonts.css}" rel="stylesheet">
     <link th:href="@{/plugins/bootstrap/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/plugins/bootstrap/bootstrap-slider.css}" rel="stylesheet">
-    <link th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+<!--    <link th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet">-->
     <link th:href="@{/plugins/slick/slick.css}" rel="stylesheet">
     <link th:href="@{/plugins/slick/slick-theme.css}" rel="stylesheet">
     <link th:href="@{/plugins/jquery-nice-select/css/nice-select.css}" rel="stylesheet">
@@ -30,6 +31,7 @@
     <script th:src="@{/plugins/slick/slick.min.js}"></script>
     <script th:src="@{/plugins/jquery-nice-select/js/jquery.nice-select.min.js}"></script>
     <script th:src="@{/plugins/google-map/map.js}" defer></script>
+    <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
 
     <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
@@ -41,33 +43,34 @@
 
 
 <header>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <nav class="navbar navbar-expand-lg navbar-light navigation">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto main-nav ">
-              <li class="nav-item active">
-                <a class="nav-link" href="home">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="nuevo-usuario">Perfil</a>
-              </li>
-            </ul>
-            <ul class="navbar-nav ml-auto mt-10">
-              <li class="nav-item">
-                <a class="nav-link login-button" href="login.html">Login</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light navigation">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto main-nav ">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="nuevo-usuario">Perfil</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto mt-10">
+                            <li class="nav-item">
+                                <a class="nav-link login-button" href="login.html">Login</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
     </div>
-  </div>
 </header>
 
 <section class="hero-area bg-1 text-center overly">
@@ -206,9 +209,36 @@
 
                         <div class="col-sm-12 col-lg-4">
                             <div class="card" style="width: 18rem;">
-                                <div style="background-image: url('images/products/salta.jpg'); height: 200px;"></div>
+                                <div style="background-image: url('images/products/jujuy_web.jpg'); height: 200px;"></div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title 01</h5>
+                                    <div class="header-card">
+                                        <img src="images/team/team1.jpg" alt="avatar"
+                                             width="55x" height="55px" class="rounded-circle">
+                                    </div>
+                                    <div><h5 class="card-title">Mariano Ochoa</h5></div>
+                                    <div><p class="card-text">Fecha de Salida: 25/02/2024</p></div>
+
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fa-solid fa-signs-post"></i> Origen: San Justo, Buenos Aires</li>
+                                    <li class="list-group-item"><i class="fa-solid fa-flag-checkered"></i> Destino: Pumamarca Jujuy</li>
+                                    <li class="list-group-item">**ICONOS**</li>
+                                </ul>
+                                <div class="card-body">
+                                    <a href="#" class="card-link">Mas Info</a>
+                                    <a href="#" class="card-link">Ver Perfil</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="card" style="width: 18rem;">
+                                <div style="background-image: url('images/products/marDelPlata_web.jpg'); height: 200px;"></div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Rocio Lagos</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up
                                         the bulk of the card's content.</p>
                                 </div>
@@ -229,32 +259,9 @@
 
                         <div class="col-sm-12 col-lg-4">
                             <div class="card" style="width: 18rem;">
-                                <div style="background-image: url('images/products/salta.jpg'); height: 200px;"></div>
+                                <div style="background-image: url('images/products/misiones_web.jpg'); height: 200px;"></div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title 02</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                </ul>
-                                <div class="card-body">
-                                    <a href="#" class="card-link">Card link</a>
-                                    <a href="#" class="card-link">Another link</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-sm-12 col-lg-4">
-
-                        <div class="col-sm-12 col-lg-4">
-                            <div class="card" style="width: 18rem;">
-                                <div style="background-image: url('images/products/salta.jpg'); height: 200px;"></div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title 03</h5>
+                                    <h5 class="card-title">Matias Chamorro</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up
                                         the bulk of the card's content.</p>
                                 </div>
@@ -276,9 +283,9 @@
 
                         <div class="col-sm-12 col-lg-4">
                             <div class="card" style="width: 18rem;">
-                                <div style="background-image: url('images/products/salta.jpg'); height: 200px;"></div>
+                                <div style="background-image: url('images/products/rioNegro_web.jpg'); height: 200px;"></div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title 04</h5>
+                                    <h5 class="card-title">Martin Zambucetti</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up
                                         the bulk of the card's content.</p>
                                 </div>
@@ -299,9 +306,9 @@
 
                         <div class="col-sm-12 col-lg-4">
                             <div class="card" style="width: 18rem;">
-                                <div style="background-image: url('images/products/salta.jpg'); height: 200px;"></div>
+                                <div style="background-image: url('images/products/santacruz_web.jpg'); height: 200px;"></div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title 05</h5>
+                                    <h5 class="card-title">Olivia Gonzales</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up
                                         the bulk of the card's content.</p>
                                 </div>
