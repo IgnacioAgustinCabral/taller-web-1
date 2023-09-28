@@ -2,6 +2,7 @@ package com.tallerwebi.integracion;
 
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
+import com.tallerwebi.presentacion.ViajeDisplay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,10 +15,13 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -50,4 +54,35 @@ public class ControladorHomeTest {
 
         assertThat(mvcResult.getModelAndView().getViewName(), is("home"));
     }
+
+    @Test
+    public void elControllerDebePasarCincoCardsALaView() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get("/home"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("home"))
+                .andReturn();
+
+        List<ViajeDisplay> ultimosViajes = (List<ViajeDisplay>) mvcResult.getModelAndView().getModel().get("ultimosViajes");
+        assertThat(ultimosViajes, hasSize(5));
+
+
+    }
+
+    @Test
+    public void debeVerificarElPrimerNombreDeLaListaDeDatosSeaElCorrecto() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get("/home"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("home"))
+                .andReturn();
+
+
+        List<ViajeDisplay> ultimosViajes = (List<ViajeDisplay>) mvcResult.getModelAndView().getModelMap().getAttribute("ultimosViajes");
+
+        assertThat(ultimosViajes.size(), greaterThan(0));
+
+        assertThat(ultimosViajes.get(0).getNombre(), is("Carolina Rojas"));
+    }
+
+
+
 }

@@ -210,7 +210,7 @@
 
                     <div class="col-sm-12 col-lg-4" th:each="viaje : ${ultimosViajes}">
                         <div class="col-sm-12 col-lg-4">
-                            <div class="card" style="width: 18rem;">
+                            <div class="card" style="width: 20rem;">
                                 <div th:style="'background-image: url(' + ${viaje.background} + '); height: 200px;'"></div>
                                 <div class="card-body">
                                     <div class="header-card">
@@ -223,11 +223,16 @@
 
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><i class="fa-solid fa-signs-post"></i> Origen: <span
+                                    <li class="list-group-item"><i class="fa-solid fa-signs-post fa-xl"></i> Origen: <span
                                             th:text="${viaje.origen}"></span></li>
-                                    <li class="list-group-item"><i class="fa-solid fa-flag-checkered"></i> Destino:
+                                    <li class="list-group-item"><i class="fa-solid fa-flag-checkered fa-xl"></i> Destino:
                                         <span th:text="${viaje.destino}"></span></li>
-                                    <li class="list-group-item">**ICONOS**</li>
+                                    <li class="list-group-item">
+                                        <i class="fa-solid fa-paw fa-lg"></i>
+                                        <i class="fa-solid fa-ban-smoking fa-lg"></i>
+                                        <i class="fa-solid fa-guitar fa-lg"></i>
+                                        <i class="fa-solid fa-baby-carriage fa-lg"></i>
+                                    </li>
                                 </ul>
                                 <div class="card-body">
                                     <a href="#" class="card-link">Mas Info</a>
