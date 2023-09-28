@@ -1,35 +1,310 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Taller Web I</title>
+    <meta charset="utf-8">
+    <title>TravelAndo</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Agency HTML Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="author" content="Themefisher">
+    <meta name="generator" content="Themefisher Classified Marketplace Template v1.0">
 
-  <!-- Boostrap core css -->
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+    <meta name="theme-name" content="classimax"/>
 
-  <!-- custom style -->
-  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <!-- Use Thymeleaf expressions for CSS URLs -->
+    <link th:href="@{/plugins/nerd-fonts/css/nerd-fonts.css}" rel="stylesheet">
+    <link th:href="@{/plugins/bootstrap/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/plugins/bootstrap/bootstrap-slider.css}" rel="stylesheet">
+    <!--    <link th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet">-->
+    <link th:href="@{/plugins/slick/slick.css}" rel="stylesheet">
+    <link th:href="@{/plugins/slick/slick-theme.css}" rel="stylesheet">
+    <link th:href="@{/plugins/jquery-nice-select/css/nice-select.css}" rel="stylesheet">
+
+    <!-- Use Thymeleaf expressions for JavaScript URLs -->
+    <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap/popper.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap/bootstrap.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap/bootstrap-slider.js}"></script>
+    <script th:src="@{/plugins/tether/js/tether.min.js}"></script>
+    <script th:src="@{/plugins/raty/jquery.raty-fa.js}"></script>
+    <script th:src="@{/plugins/slick/slick.min.js}"></script>
+    <script th:src="@{/plugins/jquery-nice-select/js/jquery.nice-select.min.js}"></script>
+    <script th:src="@{/plugins/google-map/map.js}" defer></script>
+    <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
+
+    <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <script th:src="@{/js/script.js}"></script>
 
 </head>
 
-<body>
+<body class="body-wrapper">
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="#">UNLAM</a>
-</nav>
 
-<main role="main" class="container">
-  <div class = "container">
-    <h1>Bienvenidos a Taller Web 1</h1>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light navigation">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto main-nav ">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="nuevo-usuario">Perfil</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto mt-10">
+                            <li class="nav-item">
+                                <a class="nav-link login-button" href="login.html">Login</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
 
-    <a href="login.html" class="btn btn-lg btn-primary btn-block">Volver</a>
-  </div>
-</main>
-<!-- /.container -->
+<section class="hero-area bg-5 text-center overly">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content-block">
+                    <h1>Encontrá tu próximo compañero de viaje</h1>
+                </div>
+                <div class="advance-search">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12 col-md-12 align-content-center">
+                                <form>
+                                    <div class="form-row">
+                                        <div class="form-group col-xl-4 col-lg-3 col-md-6">
+                                            <input type="text" class="form-control my-2 my-lg-1" id="inputtext4"
+                                                   placeholder="Origen">
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-6">
+                                            <input type="text" class="form-control my-2 my-lg-1" id="inputtext5"
+                                                   placeholder="Destino">
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-6">
+                                            <input type="date" class="form-control my-2 my-lg-1" id="inputLocation4">
+                                        </div>
+                                        <div class="form-group col-xl-2 col-lg-3 col-md-6 align-self-center">
+                                            <button type="submit" class="btn btn-primary active w-100">Buscar Viaje
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<!-- Boostrap core js -->
-<script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+<section class="popular-deals section bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2>Provincias populares</h2>
+                    <p>Les destacamos las provincias mas visitadas por nuestros usuarios</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="trending-ads-slide">
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="product-item bg-light">
+                            <div class="card">
+                                <div class="thumb-content">
+                                    <a href="#">
+                                        <img class="card-img-top img-fluid" src="images/products/san-rafael.jpg"
+                                             alt="Card image cap">
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title"><a href="#">Mendoza</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="product-item bg-light">
+                            <div class="card">
+                                <div class="thumb-content">
+                                    <a href="#">
+                                        <img class="card-img-top img-fluid" src="images/products/cordoba.jpg"
+                                             alt="Card image cap">
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title"><a href="#">Córdoba</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="product-item bg-light">
+                            <div class="card">
+                                <div class="thumb-content">
+                                    <a href="#">
+                                        <img class="card-img-top img-fluid" src="images/products/neuquen.jpg"
+                                             alt="Card image cap">
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title"><a href="#">Neuquén</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="product-item bg-light">
+                            <div class="card">
+                                <div class="thumb-content">
+                                    <a href="#">
+                                        <img class="card-img-top img-fluid" src="images/products/salta.jpg"
+                                             alt="Card image cap">
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title"><a href="#">Salta</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="popular-deals section bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2>Ultimos Destinos</h2>
+                    <p>Estos Usuarios están buscando el compañero ideal que les cebe unos mates</p>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="trending-ads-slide">
+
+                    <div class="col-sm-12 col-lg-4" th:each="viaje : ${ultimosViajes}">
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="card" style="width: 20rem;">
+                                <div th:style="'background-image: url(' + ${viaje.background} + '); height: 200px;'"></div>
+                                <div class="card-body">
+                                    <div class="header-card">
+                                        <img th:src="${viaje.avatar}" alt="avatar" width="55px" height="55px"
+                                             class="rounded-circle">
+                                    </div>
+                                    <div><h5 class="card-title" th:text="${viaje.nombre}"></h5></div>
+                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fechaViaje}"></p>
+                                    </div>
+
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fa-solid fa-signs-post fa-xl"></i> Origen: <span
+                                            th:text="${viaje.origen}"></span></li>
+                                    <li class="list-group-item"><i class="fa-solid fa-flag-checkered fa-xl"></i> Destino:
+                                        <span th:text="${viaje.destino}"></span></li>
+                                    <li class="list-group-item">
+                                        <i class="fa-solid fa-paw fa-lg"></i>
+                                        <i class="fa-solid fa-ban-smoking fa-lg"></i>
+                                        <i class="fa-solid fa-guitar fa-lg"></i>
+                                        <i class="fa-solid fa-baby-carriage fa-lg"></i>
+                                    </li>
+                                </ul>
+                                <div class="card-body">
+                                    <a href="#" class="card-link">Mas Info</a>
+                                    <a href="#" class="card-link">Ver Perfil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class=" section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h2>Viajes Cerca Tuyo</h2>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="call-to-action overly bg-3 section-sm">
+    <div class="container">
+        <div class="row justify-content-md-center text-center">
+            <div class="col-md-8">
+
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 text-center text-lg-left mb-3 mb-lg-0">
+            </div>
+            <div class="col-lg-6">
+                <ul class="social-media-icons text-center text-lg-right">
+                    <li><a class="fa fa-facebook" href="https://www.facebook.com/themefisher"></a></li>
+                    <li><a class="fa fa-twitter" href="https://www.twitter.com/themefisher"></a></li>
+                    <li><a class="fa fa-github-alt" href="https://www.github.com/themefisher"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-top-to">
+        <i class="fa fa-angle-up"></i>
+    </div>
+</footer>
+
+<script src="plugins/jquery/jquery.min.js"></script>
+<script src="plugins/bootstrap/popper.min.js"></script>
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+<script src="plugins/bootstrap/bootstrap-slider.js"></script>
+<script src="plugins/tether/js/tether.min.js"></script>
+<script src="plugins/raty/jquery.raty-fa.js"></script>
+<script src="plugins/slick/slick.min.js"></script>
+<script src="plugins/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
+<script src="plugins/google-map/map.js" defer></script>
+
+<script th:src="@{js/script.js}"></script>
+
 </body>
+
 </html>
