@@ -40,6 +40,8 @@ public class ControladorHome {
     }
 
 
+
+
     // Constructor para crear algunos viajes ficticios
     public ControladorHome() {
 
