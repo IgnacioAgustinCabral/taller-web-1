@@ -28,7 +28,7 @@ public class ControladorLogin {
 
         ModelMap modelo = new ModelMap();
         modelo.put("datosLogin", new DatosLogin());
-        return new ModelAndView("login", modelo);
+        return new ModelAndView("login2", modelo);
     }
 
     @RequestMapping(path = "/validar-login", method = RequestMethod.POST)
