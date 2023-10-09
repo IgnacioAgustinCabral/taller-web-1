@@ -652,9 +652,9 @@ ul.pagination .active a {
 }
 
 .bg-login{
-  background: url(../images/fondo-login.png);
-  background-repeat: no-repeat;
+  background: url("../images/fondo-login.png");
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .navigation {
