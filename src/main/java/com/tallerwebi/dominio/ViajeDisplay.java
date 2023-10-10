@@ -1,8 +1,16 @@
-package com.tallerwebi.presentacion;
+package com.tallerwebi.dominio;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class ViajeDisplay {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nombre;
     private String avatar;
     private String fechaViaje; //cambiar a DATE
@@ -17,6 +25,18 @@ public class ViajeDisplay {
         this.background = background;
         this.origen = origen;
         this.destino = destino;
+    }
+
+    public ViajeDisplay() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {
