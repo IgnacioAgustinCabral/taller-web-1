@@ -63,7 +63,7 @@
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
                             <li class="nav-item">
-                                <a class="nav-link login-button" href="login.html">Login</a>
+                                <a class="nav-link login-button" th:href="@{/login}">Login</a>
                             </li>
                         </ul>
                     </div>
@@ -218,7 +218,7 @@
                                              class="rounded-circle">
                                     </div>
                                     <div><h5 class="card-title" th:text="${viaje.nombre}"></h5></div>
-                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fechaViaje}"></p>
+                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${#dates.format(viaje.fechaViaje, 'dd/MM/yyyy')}"></p>
                                     </div>
 
                                 </div>
