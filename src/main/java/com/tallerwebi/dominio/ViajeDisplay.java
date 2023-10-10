@@ -1,9 +1,9 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -13,12 +13,14 @@ public class ViajeDisplay {
     private Long id;
     private String nombre;
     private String avatar;
-    private String fechaViaje; //cambiar a DATE
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date fechaViaje;
     private String background;
     private String origen;
     private String destino;
 
-    public ViajeDisplay(String nombre, String avatar, String fechaViaje, String background, String origen, String destino) {
+    public ViajeDisplay(String nombre, String avatar, Date fechaViaje, String background, String origen, String destino) {
         this.nombre = nombre;
         this.avatar = avatar;
         this.fechaViaje = fechaViaje;
@@ -55,11 +57,11 @@ public class ViajeDisplay {
         this.avatar = avatar;
     }
 
-    public String getFechaViaje() {
+    public Date getFechaViaje() {
         return fechaViaje;
     }
 
-    public void setFechaViaje(String fechaViaje) {
+    public void setFechaViaje(Date fechaViaje) {
         this.fechaViaje = fechaViaje;
     }
 
