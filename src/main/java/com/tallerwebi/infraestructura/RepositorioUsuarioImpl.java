@@ -2,11 +2,14 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.Viaje;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository("repositorioUsuario")
 public class RepositorioUsuarioImpl implements RepositorioUsuario {
@@ -29,6 +32,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
+    public Usuario buscarUsuario(String email) {
+
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Usuario V WHERE V.email = :email", Usuario.class).setParameter("email",email).uniqueResult();
+    }
+
+    @Override
     public void guardar(Usuario usuario) {
         sessionFactory.getCurrentSession().save(usuario);
     }
@@ -43,6 +53,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public void modificar(Usuario usuario) {
         sessionFactory.getCurrentSession().update(usuario);
+    }
+
+    @Override
+    public List<Usuario> listarUsuarios() {
+        return sessionFactory.getCurrentSession().createQuery("FROM Usuario", Usuario.class).list();
     }
 
 }
