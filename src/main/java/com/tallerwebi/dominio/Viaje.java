@@ -1,9 +1,5 @@
 package com.tallerwebi.dominio;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Viaje {
@@ -17,23 +13,30 @@ public class Viaje {
     private  String fecha_hora;
     private  String destino;
     //TO DO: Que el atributo id_usuario sea unique .
-    private  Long id_usuario;
+    @ManyToOne
+    private Usuario usuario;
+
 
     private String origen;
 
-    public Viaje(Long id, String origen, String destino, String fecha_hora, Integer cantidad, String descripcion, Long creador) {
+    public Viaje() {
+
+    }
+    public Viaje(String origen, String destino, String fecha_hora, Integer cantidad, String descripcion, Usuario creador) {
         this.id = id;
         this.origen = origen;
         this.destino = destino;
         this.fecha_hora = fecha_hora;
         this.cantidad = cantidad;
         this.descripcion = descripcion;
-        this.id_usuario =  creador;
+        this.usuario =  creador;
     }
 
     public Viaje(Long id) {
         this.id = id;
     }
+
+
 
     public String getDescripcion() {
         return this.descripcion;
@@ -79,7 +82,7 @@ public class Viaje {
         this.origen = origen;
     }
 
-    public Long getIdUsuario() {
-        return this.id_usuario;
+    public Long getUsuario() {
+        return this.usuario.getId();
     }
 }
