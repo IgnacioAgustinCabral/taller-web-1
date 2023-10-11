@@ -11,9 +11,10 @@ import java.util.List;
 @Service
 public class ServicioViajeImpl implements ServicioViaje {
 
-    @Autowired
+
     private RepositorioViaje repositorioViaje;
 
+    @Autowired
     public ServicioViajeImpl(RepositorioViaje repositorioViaje) {
         this.repositorioViaje = repositorioViaje;
     }

@@ -13,6 +13,7 @@ public class Usuario {
     private Long id;
     private String email;
     private String password;
+    private String avatar;
     private String rol;
     private Boolean activo = false;
     private String nombre;
@@ -40,8 +41,20 @@ public class Usuario {
         this.email = email;
         this.password= password;
         this.activo = activo;
+    }
 
-
+    public Usuario(String nombre, String apellido, Long dni, String fecha_nac, Integer cod_area, Long telefono, String email, String password,String avatar, String rol, Boolean activo){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.fecha_nac = fecha_nac;
+        this.cod_area = cod_area;
+        this.telefono = telefono;
+        this.email = email;
+        this.rol = rol;
+        this.password= password;
+        this.avatar = avatar;
+        this.activo = activo;
     }
 
     public Long getId() {
@@ -65,6 +78,15 @@ public class Usuario {
     public String getRol() {
         return rol;
     }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public void setRol(String rol) {
         this.rol = rol;
     }
@@ -73,6 +95,19 @@ public class Usuario {
     }
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    public String getApellido() {
+        return apellido;
+    }
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public boolean activo() {

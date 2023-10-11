@@ -34,6 +34,7 @@ public class RepositorioViajeTest {
     public void queSePuedaCrearUnViajeYseGuarde(){
         //preparacion
         Usuario creador = new Usuario(5L);
+        //TODO: sacar el id de los tests, lo maneja hibernate
         Viaje viaje = new Viaje(1L,"Buenos Aires", "Tucuman", LocalDateTime.now().toString(), 2, "probando", creador.getId());
         //ejecucion
         repositorio.guardar(viaje);
@@ -46,8 +47,11 @@ public class RepositorioViajeTest {
     @Transactional
     @Rollback
     @Test
+    //nuevo nombre: queAlPasarDestinoTucumanRetorneDosViajesConEseDestino
     public void queSePuedaBuscarViajesPorDestino(){
         //preparacion
+
+        //dadoQUETENGO3viajesguardados
         Usuario creador = new Usuario(5L);
         Viaje viaje = new Viaje(1L,"Buenos Aires", "Tucuman", LocalDateTime.now().toString(), 2, "probando", creador.getId());
         Viaje viaje2 = new Viaje(1L,"Buenos Aires", "Bariloche", LocalDateTime.now().toString(), 3, "probando", creador.getId());
@@ -58,9 +62,12 @@ public class RepositorioViajeTest {
         repositorio.guardar(viaje2);
         repositorio.guardar(viaje3);
 
+        //cuandoBuscoEldestino
         List<Viaje> viajesBuscados = repositorio.buscarPorDestino(viaje.getDestino());
 
+        //entoncesExistenSolamenteDosViajesConElDestino
         //validacion
+        //cant de destinos que pertenecen a tucuman ->2
         assertThat(viajesBuscados , is(notNullValue()));
         for(Viaje viajeListado : viajesBuscados){
             assertThat(viajeListado.getDestino(), equalTo(viaje.getDestino()));
@@ -96,6 +103,7 @@ public class RepositorioViajeTest {
     @Test
     public void queSePuedanListarLosViajes(){
         Usuario creador = new Usuario(5L);
+
 
         Viaje viaje1 = new Viaje(1L,"Buenos Aires", "Tucuman", LocalDateTime.now().toString(), 2, "probando1", creador.getId());
         Viaje viaje2 = new Viaje(2L,"Buenos Aires", "Tucuman", LocalDateTime.now().toString(), 2, "probando2", creador.getId());
