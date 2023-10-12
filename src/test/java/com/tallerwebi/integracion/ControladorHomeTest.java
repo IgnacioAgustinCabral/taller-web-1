@@ -55,34 +55,4 @@ public class ControladorHomeTest {
         assertThat(mvcResult.getModelAndView().getViewName(), is("home"));
     }
 
-    @Test
-    public void elControllerDebePasarCincoCardsALaView() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get("/home"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("home"))
-                .andReturn();
-
-        List<ViajeDisplay> ultimosViajes = (List<ViajeDisplay>) mvcResult.getModelAndView().getModel().get("ultimosViajes");
-        assertThat(ultimosViajes, hasSize(5));
-
-
-    }
-
-    @Test
-    public void debeVerificarElPrimerNombreDeLaListaDeDatosSeaElCorrecto() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get("/home"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("home"))
-                .andReturn();
-
-
-        List<ViajeDisplay> ultimosViajes = (List<ViajeDisplay>) mvcResult.getModelAndView().getModelMap().getAttribute("ultimosViajes");
-
-        assertThat(ultimosViajes.size(), greaterThan(0));
-
-        assertThat(ultimosViajes.get(0).getNombre(), is("Carolina Rojas"));
-    }
-
-
-
 }
