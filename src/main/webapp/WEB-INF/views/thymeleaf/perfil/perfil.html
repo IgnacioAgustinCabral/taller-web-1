@@ -2,10 +2,11 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Recibir parametros del request HTTP get</title>
+    <title th:text="${'Perfil: ' + usuario.nombre + ' ' + usuario.apellido}"></title>
 </head>
 <body>
-<h1>Recibir parametros del request HTTP get</h1>
-<div th:text="${usuario.nombre}"></div>
+<h1>Info de Perfil</h1>
+<div th:text="${usuario.nombre + ' ' + usuario.apellido}"></div>
+<img th:src="${'../' + usuario.avatar}" alt="avatar" width="55px" height="55px">
 </body>
 </html>
