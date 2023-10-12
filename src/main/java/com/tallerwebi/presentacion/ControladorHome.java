@@ -34,27 +34,18 @@ public class ControladorHome {
 
     @Transactional
     @RequestMapping(path = "/home")
-    public ModelAndView irAHome(){
-
+    public ModelAndView irAHome() {
 
 
         List<ViajeDisplay> datos = repositorioViajeDisplay.listarViajeDisplay();
+        List<Provincia> provincia = servicioProvincia.obtenerProvinciasConImagenes();
 
         ModelMap model = new ModelMap();
+
         model.put("ultimosViajes", datos);
-
-
+        model.put("provincias", provincia);
 
         return new ModelAndView("home", model);
     }
 
-    @RequestMapping(path = "/home")
-    public ModelAndView mostrarProvincias(){
-        ModelMap model = new ModelMap();
-
-        List < Provincia> provincia = servicioProvincia.obtenerProvinciasConImagenes();
-        model.put("provincias",provincia);
-
-        return new ModelAndView("home",model);
-    }
 }

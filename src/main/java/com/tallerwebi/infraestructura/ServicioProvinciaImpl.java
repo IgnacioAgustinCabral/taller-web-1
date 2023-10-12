@@ -5,9 +5,11 @@ import com.tallerwebi.dominio.RepositorioProvincia;
 import com.tallerwebi.dominio.ServicioProvincia;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ServicioProvinciaImpl implements ServicioProvincia {
     private final RepositorioProvincia repositorioProvincia;
 
@@ -16,7 +18,8 @@ public class ServicioProvinciaImpl implements ServicioProvincia {
     }
 
     @Override
-    public List<Provincia> obtenerProvincias() {return repositorioProvincia.obtenerTodasLasProvincias();
+    public List<Provincia> obtenerProvincias() {
+        return repositorioProvincia.obtenerTodasLasProvincias();
     }
 
     @Override
