@@ -25,9 +25,6 @@ public class Usuario {
 
 
     //TODO: constructor de pruebas.
-    public Usuario(Long id){
-        this.id = id;
-    }
     public Usuario(){};
 
     public Usuario(Long id, String nombre, String apellido, Long dni, String fecha_nac, Integer cod_area, Long telefono, String email, String password, Integer calificacion, Boolean activo) {

@@ -1,6 +1,7 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.RepositorioViaje;
+import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Viaje;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -56,7 +57,9 @@ public class RepositorioViajeImpl implements RepositorioViaje {
 
     @Override
     public List<Viaje> buscarPorOrigen(String origen) {
-        return sessionFactory.getCurrentSession().createQuery("FROM Viaje V WHERE V.origen = :origen_viaje", Viaje.class).setParameter("origen_viaje",origen).list();
+        return sessionFactory.getCurrentSession().createQuery("FROM Viaje V WHERE V.origen = :origen_viaje", Viaje.class)
+                .setParameter("origen_viaje",origen)
+                .list();
     }
 
     @Override
@@ -70,9 +73,9 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     public void eliminar(Viaje viaje) {sessionFactory.getCurrentSession().delete(viaje);}
 
     @Override
-    public List<Viaje> buscarPorUsuario(Long idUsuario) {
-        return sessionFactory.getCurrentSession().createCriteria(Viaje.class)
-                .add(Restrictions.eq("id_usuario",idUsuario))
+    public List<Viaje> buscarPorUsuario(Usuario usuario) {
+        return sessionFactory.getCurrentSession().createQuery("FROM Viaje V WHERE V.usuario = :id_usuario", Viaje.class)
+                .setParameter("id_usuario",usuario)
                 .list();
 
     }

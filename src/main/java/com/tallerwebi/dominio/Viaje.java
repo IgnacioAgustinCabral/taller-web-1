@@ -12,16 +12,13 @@ public class Viaje {
     private  Integer cantidad;
     private  String fecha_hora;
     private  String destino;
-    //TO DO: Que el atributo id_usuario sea unique .
+    private String origen;
     @ManyToOne
     private Usuario usuario;
 
 
-    private String origen;
 
-    public Viaje() {
-
-    }
+    public Viaje() {}
     public Viaje(String origen, String destino, String fecha_hora, Integer cantidad, String descripcion, Usuario creador) {
         this.id = id;
         this.origen = origen;
@@ -82,7 +79,11 @@ public class Viaje {
         this.origen = origen;
     }
 
-    public Long getUsuario() {
-        return this.usuario.getId();
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

@@ -12,4 +12,6 @@ public interface ServicioViaje {
     List<Viaje> obtenerViajesPorFecha(String fecha);
 
     List<Viaje> obtenerViajesPorFiltroMultiple(String origen, String destino, String fecha_hora);
+
+    void crearViaje(Viaje viaje);
 }

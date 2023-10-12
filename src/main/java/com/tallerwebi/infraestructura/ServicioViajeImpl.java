@@ -43,4 +43,10 @@ public class ServicioViajeImpl implements ServicioViaje {
     public List<Viaje> obtenerViajesPorFiltroMultiple(String origen, String destino, String fecha) {
         return repositorioViaje.buscarPorOrigenDestinoYfecha(origen,destino,fecha);
     }
+
+    @Override
+    public void crearViaje(Viaje viaje) {
+        this.repositorioViaje.guardar(viaje);
+    }
+
 }

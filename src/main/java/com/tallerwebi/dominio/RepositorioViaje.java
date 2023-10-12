@@ -19,7 +19,7 @@ public interface RepositorioViaje {
 
     void eliminar(Viaje viaje);
 
-    List<Viaje> buscarPorUsuario(Long idUsuario);
+    List<Viaje> buscarPorUsuario(Usuario usuario);
 
     List<Viaje> buscarPorOrigenDestinoYfecha(String origen, String destino, String fechaHora);
 }

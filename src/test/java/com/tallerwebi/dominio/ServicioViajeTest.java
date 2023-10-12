@@ -13,9 +13,8 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.*;
 
 public class ServicioViajeTest {
 
@@ -56,6 +55,8 @@ public class ServicioViajeTest {
 
     }
 
+
+
     @Test
     public void queSePuedanBuscarViajesPorOrigen(){
         List <Viaje> viajesEsperados = generarViajes(CANTIDAD_VIAJES);
@@ -70,6 +71,12 @@ public class ServicioViajeTest {
             assertThat(viaje.getOrigen(),equalTo("Buenos Aires"));
         }
 
+    }
+    @Test
+    public void queSePuedaCrearUnViaje(){
+        Viaje viajeEsperado = crearViaje();
+        this.repositorioViaje.guardar(viajeEsperado);
+        verify(repositorioViaje, times(1)).guardar(eq(viajeEsperado));
     }
 
     @Test
