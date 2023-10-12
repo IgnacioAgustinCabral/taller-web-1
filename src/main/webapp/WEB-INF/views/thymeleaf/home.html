@@ -132,7 +132,24 @@
                 <div class="trending-ads-slide">
                     <div class="col-sm-12 col-lg-4">
                         <div class="product-item bg-light">
+                            <div class="card" th:each="item : ${provincias}">
+                                <div class="thumb-content">
+                                    <a href="#">
+                                        <img class="card-img-top img-fluid" th:src="${item.imagen}"
+                                             alt="Imagen provincia">
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title"><a href="#" th:text="${item.nombre}"></a></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-sm-12 col-lg-4">
+                        <div class="product-item bg-light">
                             <div class="card">
+
+
                                 <div class="thumb-content">
                                     <a href="#">
                                         <img class="card-img-top img-fluid" src="images/products/san-rafael.jpg"
@@ -189,7 +206,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>

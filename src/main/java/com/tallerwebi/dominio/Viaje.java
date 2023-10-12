@@ -20,7 +20,7 @@ public class Viaje {
 
     public Viaje() {}
     public Viaje(String origen, String destino, String fecha_hora, Integer cantidad, String descripcion, Usuario creador) {
-        this.id = id;
+
         this.origen = origen;
         this.destino = destino;
         this.fecha_hora = fecha_hora;

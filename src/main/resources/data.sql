@@ -29,4 +29,30 @@ VALUES
     ('melinarodriguez@unlam.edu.ar', 'contraseña17',null, 'admin', true, 'Melina', 'Rodriguez', 89012367, '2000/05/17', 011, 89012367),
     ('nicolasbenitez@unlam.edu.ar', 'contraseña18',null, 'default', true, 'Nicolas', 'Benitez', 90123478, '2000/06/18', 011, 90123478),
     ('orianasalvatierra@unlam.edu.ar', 'contraseña19',null, 'admin', true, 'Oriana', 'Salvatierra', 12345689, '2000/07/19', 011, 12345689),
-    ('pedroromero@unlam.edu.ar', 'contraseña20',null, 'default', true, 'Pedro', 'Romero', 23456790, '2000/08/20', 011, 23456790);;
+    ('pedroromero@unlam.edu.ar', 'contraseña20',null, 'default', true, 'Pedro', 'Romero', 23456790, '2000/08/20', 011, 23456790);
+
+INSERT INTO Provincia (nombre, imagen)
+VALUES
+    ('Buenos Aires', "images/products/marDelPlata.jpg"),
+    ('Catamarca', NULL),
+    ('Chaco', NULL),
+    ('Chubut', NULL),
+    ('Córdoba', "images/products/cordoba.jpg"),
+    ('Corrientes', NULL),
+    ('Entre Ríos', NULL),
+    ('Formosa', NULL),
+    ('Jujuy', "images/products/jujuy.jpg"),
+    ('La Pampa', NULL),
+    ('La Rioja', NULL),
+    ('Mendoza', "images/products/san-rafael.jpg"),
+    ('Misiones', "images/products/misiones.jpg"),
+    ('Neuquén', "images/products/neuquen.jpg"),
+    ('Río Negro', "images/products/rioNegro.jpg"),
+    ('Salta', "images/products/salta.jpg"),
+    ('San Juan', NULL),
+    ('San Luis', NULL),
+    ('Santa Cruz', "images/products/santacruz.jpg"),
+    ('Santa Fe', NULL),
+    ('Santiago del Estero', NULL),
+    ('Tierra del Fuego', NULL),
+    ('Tucumán', NULL);;

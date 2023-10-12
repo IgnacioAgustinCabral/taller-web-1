@@ -1,6 +1,8 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.Provincia;
 import com.tallerwebi.dominio.RepositorioViajeDisplay;
+import com.tallerwebi.dominio.ServicioProvincia;
 import com.tallerwebi.dominio.ViajeDisplay;
 import com.tallerwebi.infraestructura.RepositorioViajeImpl;
 import com.tallerwebi.infraestructura.ViajeDisplayImpl;
@@ -21,10 +23,12 @@ import java.util.List;
 public class ControladorHome {
 
     private final RepositorioViajeDisplay repositorioViajeDisplay;
+    private ServicioProvincia servicioProvincia;
 
     @Autowired
-    public ControladorHome(RepositorioViajeDisplay repositorioViajeDisplay) {
+    public ControladorHome(RepositorioViajeDisplay repositorioViajeDisplay, ServicioProvincia servicioProvincia) {
         this.repositorioViajeDisplay = repositorioViajeDisplay;
+        this.servicioProvincia = servicioProvincia;
     }
 
 
@@ -42,5 +46,15 @@ public class ControladorHome {
 
 
         return new ModelAndView("home", model);
+    }
+
+    @RequestMapping(path = "/home")
+    public ModelAndView mostrarProvincias(){
+        ModelMap model = new ModelMap();
+
+        List < Provincia> provincia = servicioProvincia.obtenerProvinciasConImagenes();
+        model.put("provincias",provincia);
+
+        return new ModelAndView("home",model);
     }
 }
