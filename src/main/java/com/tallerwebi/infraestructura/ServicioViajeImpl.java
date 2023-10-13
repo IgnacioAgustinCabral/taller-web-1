@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.Ciudad;
 import com.tallerwebi.dominio.RepositorioViaje;
 import com.tallerwebi.dominio.ServicioViaje;
 import com.tallerwebi.dominio.Viaje;
@@ -27,12 +28,12 @@ public class ServicioViajeImpl implements ServicioViaje {
     }
 
     @Override
-    public List<Viaje> obtenerViajesPorDestino(String destino) {
+    public List<Viaje> obtenerViajesPorDestino(Ciudad destino) {
         return repositorioViaje.buscarPorDestino(destino);
     }
 
     @Override
-    public List<Viaje> obtenerViajesPorOrigen(String origen) {
+    public List<Viaje> obtenerViajesPorOrigen(Ciudad origen) {
         return repositorioViaje.buscarPorOrigen(origen);
     }
 
@@ -42,7 +43,7 @@ public class ServicioViajeImpl implements ServicioViaje {
     }
 
     @Override
-    public List<Viaje> obtenerViajesPorFiltroMultiple(String origen, String destino, String fecha) {
+    public List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha) {
         return repositorioViaje.buscarPorOrigenDestinoYfecha(origen,destino,fecha);
     }
 

@@ -5,13 +5,13 @@ import java.util.List;
 public interface ServicioViaje {
     List<Viaje> obtenerViajes();
 
-    List<Viaje> obtenerViajesPorDestino(String destino);
+    List<Viaje> obtenerViajesPorDestino(Ciudad destino);
 
-    List<Viaje> obtenerViajesPorOrigen(String origen);
+    List<Viaje> obtenerViajesPorOrigen(Ciudad origen);
 
     List<Viaje> obtenerViajesPorFecha(String fecha);
 
-    List<Viaje> obtenerViajesPorFiltroMultiple(String origen, String destino, String fecha_hora);
+    List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha_hora);
 
     void crearViaje(Viaje viaje);
 

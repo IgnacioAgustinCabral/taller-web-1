@@ -3,7 +3,7 @@ package com.tallerwebi.dominio;
 import java.util.List;
 
 public interface RepositorioProvincia {
-    void guardar(Provincia cordoba);
+    void guardar(Provincia provincia);
 
     List<Provincia> obtenerTodasLasProvincias();
 
