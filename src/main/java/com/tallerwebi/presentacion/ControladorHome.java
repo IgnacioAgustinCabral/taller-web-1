@@ -21,13 +21,13 @@ import java.util.List;
 @Controller
 public class ControladorHome {
 
-    private final RepositorioViajeDisplay repositorioViajeDisplay;
     private ServicioProvincia servicioProvincia;
+    private ServicioViaje servicioViaje;
     private ServicioUsuario servicioUsuario;
 
     @Autowired
-    public ControladorHome(RepositorioViajeDisplay repositorioViajeDisplay, ServicioProvincia servicioProvincia, ServicioUsuario servicioUsuario) {
-        this.repositorioViajeDisplay = repositorioViajeDisplay;
+    public ControladorHome(ServicioViaje servicioViaje , ServicioProvincia servicioProvincia, ServicioUsuario servicioUsuario) {
+        this.servicioViaje = servicioViaje;
         this.servicioProvincia = servicioProvincia;
         this.servicioUsuario = servicioUsuario;
     }
@@ -37,8 +37,8 @@ public class ControladorHome {
     @RequestMapping(path = "/home")
     public ModelAndView irAHome() {
 
-        //TODO como traer un ID desde esta instancia?
-        List<ViajeDisplay> datos = repositorioViajeDisplay.listarViajeDisplay();
+
+        List<Viaje> datos = servicioViaje.obtenerViajes();
         List<Provincia> provincia = servicioProvincia.obtenerProvinciasConImagenes();
 
         ModelMap model = new ModelMap();
@@ -48,7 +48,5 @@ public class ControladorHome {
 
         return new ModelAndView("home", model);
     }
-
-
 
 }

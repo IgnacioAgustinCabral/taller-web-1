@@ -169,17 +169,17 @@
             <div class="col-lg-12">
                 <div class="trending-ads-slide">
 
-                    <div class="col-sm-12 col-lg-4" th:each="viaje : ${ultimosViajes}">
-                        <div class="col-sm-12 col-lg-4">
+                    <div class="col-sm-12 col-lg-4" th:each=" viaje : ${ultimosViajes}" >
+                        <div class="col-sm-12 col-lg-4" >
                             <div class="card" style="width: 20rem;">
-                                <div th:style="'background-image: url(' + ${viaje.background} + '); height: 200px;'"></div>
+                                <!--<div th:style="'background-image: url(' '); height: 200px;'"></div>-->
                                 <div class="card-body">
                                     <div class="header-card">
-                                        <img th:src="${viaje.avatar}" alt="avatar" width="55px" height="55px"
+                                        <img th:src="${viaje.usuario.avatar}" alt="avatar" width="55px" height="55px"
                                              class="rounded-circle">
                                     </div>
-                                    <div><h5 class="card-title" th:text="${viaje.nombre}"></h5></div>
-                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${#dates.format(viaje.fechaViaje, 'dd/MM/yyyy')}"></p>
+                                    <div><h5 class="card-title" th:text="${viaje.usuario.nombre}"></h5></div>
+                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${#dates.format( viaje.fecha_hora, 'dd/MM/yyyy')}"></p>
                                     </div>
 
                                 </div>
@@ -197,7 +197,7 @@
                                 </ul>
                                 <div class="card-body">
                                     <a th:href="@{/ver-viaje(id=${viaje.id})}" class="card-link">Mas Info</a>
-                                    <a th:href="@{/perfil/usuario(email='marianoochoa@unlam.edu.ar')}" class="card-link">Ver Perfil</a>
+                                    <a th:href="@{/perfil/usuario(email= ${viaje.usuario.email})}" class="card-link">Ver Perfil</a>
                                 </div>
                             </div>
                         </div>
