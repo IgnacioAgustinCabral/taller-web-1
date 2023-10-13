@@ -24,9 +24,11 @@ public class ControladorPerfil {
     @RequestMapping(value="/usuario", method = RequestMethod.GET )
     public ModelAndView irAPerfil(@RequestParam(required = false) String email, ModelAndView mv){
 
+        //TODO: completar con try catch - manejar excepciones - revisar porque trae un mv
         Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorEmail(email);
         mv.addObject("usuario",usuarioBuscado);
         mv.setViewName("perfil/perfil");
         return mv;
+
     }
 }

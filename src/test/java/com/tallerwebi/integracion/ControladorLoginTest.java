@@ -62,6 +62,7 @@ public class ControladorLoginTest {
 	@Test
 	public void debeRetornarLaPaginaLoginCuandoSeNavegaALLogin() throws Exception {
 
+		//TODO mockea una "redirect"
 		MvcResult result = this.mockMvc.perform(get("/login"))
 				.andExpect(status().isOk())
 				.andReturn();
