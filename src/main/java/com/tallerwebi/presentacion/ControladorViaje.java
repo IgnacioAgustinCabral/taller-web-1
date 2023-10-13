@@ -33,8 +33,8 @@ public class ControladorViaje {
     public ModelAndView crearViaje(@ModelAttribute("viaje") Viaje viaje, HttpSession session) {
         ModelMap model = new ModelMap();
        try {
-            //Usuario usuario = (Usuario) session.getAttribute("usuario");
-            //viaje.setUsuario(usuario);
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            viaje.setUsuario(usuario);
 
             this.servicioViaje.crearViaje(viaje);
        }
