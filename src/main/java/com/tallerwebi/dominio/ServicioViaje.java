@@ -14,4 +14,6 @@ public interface ServicioViaje {
     List<Viaje> obtenerViajesPorFiltroMultiple(String origen, String destino, String fecha_hora);
 
     void crearViaje(Viaje viaje);
+
+    Viaje obtenerViajePorId(Long id);
 }

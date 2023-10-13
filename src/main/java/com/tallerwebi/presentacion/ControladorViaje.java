@@ -1,15 +1,13 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioUsuario;
 import com.tallerwebi.dominio.ServicioViaje;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -45,5 +43,14 @@ public class ControladorViaje {
            return new ModelAndView("crear-viaje", model);
        }
         return new ModelAndView("redirect:/home");
+    }
+
+    @RequestMapping(path = "/ver-viaje", method = RequestMethod.GET )
+    public ModelAndView masInfo(@RequestParam(required = false) String id, ModelAndView mv) {
+
+        Viaje viajeBuscado = servicioViaje.obtenerViajePorId(Long.valueOf(id));
+        mv.addObject("viaje", viajeBuscado);
+        mv.setViewName("viaje/viaje");
+        return mv;
     }
 }

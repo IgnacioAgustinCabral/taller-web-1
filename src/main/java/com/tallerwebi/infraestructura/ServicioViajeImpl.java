@@ -6,9 +6,11 @@ import com.tallerwebi.dominio.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ServicioViajeImpl implements ServicioViaje {
 
 
@@ -47,6 +49,11 @@ public class ServicioViajeImpl implements ServicioViaje {
     @Override
     public void crearViaje(Viaje viaje) {
         this.repositorioViaje.guardar(viaje);
+    }
+
+    @Override
+    public Viaje obtenerViajePorId(Long id) {
+        return repositorioViaje.buscarPorId(id);
     }
 
 }

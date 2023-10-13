@@ -55,4 +55,10 @@ VALUES
     ('Santa Fe', NULL),
     ('Santiago del Estero', NULL),
     ('Tierra del Fuego', NULL),
-    ('Tucumán', NULL);;
+    ('Tucumán', NULL);
+
+INSERT INTO Viaje(cantidad,descripcion,destino,fecha_hora,origen) VALUES(2, 'contraseña1', 'purmamarca', '15/03/2024', 'casa'),
+                                                                                   (4, 'contraseña2', 'la rioja','15/03/2024','casa'),
+                                                                                   (3, 'contraseña3', 'arbol solo','15/03/2024', 'casa'),
+                                                                                   (2, 'contraseña4', 'trenque lauquen','15/03/2024', 'casa'),
+                                                                                   (4, 'contraseña5', 'la matanza','15/03/2024', 'casa');
