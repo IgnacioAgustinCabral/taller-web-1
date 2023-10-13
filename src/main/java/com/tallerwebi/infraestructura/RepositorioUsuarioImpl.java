@@ -60,4 +60,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
         return sessionFactory.getCurrentSession().createQuery("FROM Usuario", Usuario.class).list();
     }
 
+    @Override
+    public Usuario buscarUsuarioPorId(Long id) {
+        return (Usuario) sessionFactory.getCurrentSession().createQuery("FROM Usuario WHERE id = :id")
+                .setParameter("id", id)
+                .uniqueResult();
+    }
+
 }

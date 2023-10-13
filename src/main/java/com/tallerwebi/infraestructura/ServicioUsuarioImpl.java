@@ -28,4 +28,9 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
     public Usuario obtenerUsuarioPorEmail(String email) {
         return repositorioUsuario.buscarUsuario(email);
     }
+
+    @Override
+    public Usuario obtenerUsuarioPorId(Long id) {
+        return repositorioUsuario.buscarUsuarioPorId(id);
+    }
 }

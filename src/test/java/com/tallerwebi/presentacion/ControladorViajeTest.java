@@ -66,7 +66,7 @@ public class ControladorViajeTest {
         // Preparación
 
         // Ejecución
-        ModelAndView modelAndView = controladorViaje.crearViaje(null, sessionMock);
+        ModelAndView modelAndView = controladorViaje.crearViaje(viajeMock, null);
 
         // Validación
         assertThat(modelAndView, notNullValue());

@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Provincia;
-import com.tallerwebi.dominio.RepositorioViajeDisplay;
-import com.tallerwebi.dominio.ServicioProvincia;
-import com.tallerwebi.dominio.ViajeDisplay;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.infraestructura.RepositorioViajeImpl;
 import com.tallerwebi.infraestructura.ViajeDisplayImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
@@ -24,11 +23,13 @@ public class ControladorHome {
 
     private final RepositorioViajeDisplay repositorioViajeDisplay;
     private ServicioProvincia servicioProvincia;
+    private ServicioUsuario servicioUsuario;
 
     @Autowired
-    public ControladorHome(RepositorioViajeDisplay repositorioViajeDisplay, ServicioProvincia servicioProvincia) {
+    public ControladorHome(RepositorioViajeDisplay repositorioViajeDisplay, ServicioProvincia servicioProvincia, ServicioUsuario servicioUsuario) {
         this.repositorioViajeDisplay = repositorioViajeDisplay;
         this.servicioProvincia = servicioProvincia;
+        this.servicioUsuario = servicioUsuario;
     }
 
 
@@ -36,7 +37,7 @@ public class ControladorHome {
     @RequestMapping(path = "/home")
     public ModelAndView irAHome() {
 
-
+        //TODO como traer un ID desde esta instancia?
         List<ViajeDisplay> datos = repositorioViajeDisplay.listarViajeDisplay();
         List<Provincia> provincia = servicioProvincia.obtenerProvinciasConImagenes();
 
@@ -47,5 +48,7 @@ public class ControladorHome {
 
         return new ModelAndView("home", model);
     }
+
+
 
 }
