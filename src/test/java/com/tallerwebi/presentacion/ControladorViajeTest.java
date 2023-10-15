@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.ServicioViaje;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Viaje;
@@ -74,5 +75,23 @@ public class ControladorViajeTest {
         assertThat(modelAndView.getModel().get("error"), equalTo("Error al registrar el viaje"));
     }
 
+    @Test
+    public void queCuandoVayaAMisViajesMeRedirijaYLosListe(){
+        // preparacion
+        Usuario usuarioEncontradoMock = mock(Usuario.class);
+        when(usuarioEncontradoMock.getRol()).thenReturn("ADMIN");
+
+        when(requestMock.getSession()).thenReturn(sessionMock);
+        when(servicioViajeMock.obtenerViajesCreadosPorUnUsuario(usuarioEncontradoMock));
+
+        // ejecucion
+        ModelAndView modelAndView = controladorViaje.verMisViajes(usuarioEncontradoMock);
+
+        // validacion
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("perfil/mis-viajes"));
+        //verify(sessionMock, times(1)).setAttribute("ROL", usuarioEncontradoMock.getRol());
+
+
+    }
 
 }

@@ -6,11 +6,14 @@ import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class ControladorViaje {
@@ -52,6 +55,14 @@ public class ControladorViaje {
         mv.addObject("viaje", viajeBuscado);
         mv.setViewName("viaje/viaje");
         return mv;
+    }
+
+    @RequestMapping(path = "/mis-viajes", method = RequestMethod.GET )
+    public ModelAndView verMisViajes(Usuario usuarioEncontradoMock) {
+        ModelMap model = new ModelMap();
+        List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuarioEncontradoMock);
+        model.put("viajesCreados", viajes);
+        return new ModelAndView("perfil/mis-viajes", model);
     }
 
 }

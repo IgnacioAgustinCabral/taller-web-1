@@ -2,6 +2,7 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.RepositorioViaje;
 import com.tallerwebi.dominio.ServicioViaje;
+import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,11 @@ public class ServicioViajeImpl implements ServicioViaje {
     @Override
     public Viaje obtenerViajePorId(Long id) {
         return repositorioViaje.buscarPorId(id);
+    }
+
+    @Override
+    public List<Viaje> obtenerViajesCreadosPorUnUsuario(Usuario usuario) {
+        return repositorioViaje.buscarPorUsuario(usuario);
     }
 
 }

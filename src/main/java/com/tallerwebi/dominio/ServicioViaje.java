@@ -16,4 +16,6 @@ public interface ServicioViaje {
     void crearViaje(Viaje viaje);
 
     Viaje obtenerViajePorId(Long id);
+
+    List<Viaje> obtenerViajesCreadosPorUnUsuario(Usuario usuario);
 }
