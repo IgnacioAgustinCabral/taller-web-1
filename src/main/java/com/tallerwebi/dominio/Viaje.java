@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Viaje {
@@ -10,7 +11,7 @@ public class Viaje {
     private  Long id;
     private String descripcion;
     private  Integer cantidad;
-    private  String fecha_hora;
+    private String fecha_hora;
 
     @ManyToOne
     private  Ciudad destino;

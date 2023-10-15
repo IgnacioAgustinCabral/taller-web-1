@@ -3,9 +3,11 @@ package com.tallerwebi.infraestructura;
 import com.tallerwebi.dominio.*;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ServicioCiudadImpl implements ServicioCiudad {
     private  RepositorioCiudad repositorioCiudad;
 
