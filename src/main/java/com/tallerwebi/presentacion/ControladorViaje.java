@@ -26,7 +26,7 @@ public class ControladorViaje {
         this.servicioCiudad = servicioCiudad;
     }
 
-    @RequestMapping(value = "/crear-viaje", method = GET)
+    @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
     public ModelAndView mostrarVistaCrearViaje() {
         List<Ciudad> ciudades = servicioCiudad.obtenerListaDeCiudades();
         ModelMap modelo = new ModelMap();
@@ -51,7 +51,7 @@ public class ControladorViaje {
         return new ModelAndView("redirect:/home");
     }
 
-    @RequestMapping(path = "/ver-viaje", method = GET )
+    @RequestMapping(path = "/ver-viaje", method = RequestMethod.GET )
     public ModelAndView masInfo(@RequestParam(required = false) String id, ModelAndView mv) {
 
         Viaje viajeBuscado = servicioViaje.obtenerViajePorId(Long.valueOf(id));
