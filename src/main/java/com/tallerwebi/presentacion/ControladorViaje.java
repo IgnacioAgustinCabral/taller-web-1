@@ -58,11 +58,16 @@ public class ControladorViaje {
     }
 
     @RequestMapping(path = "/mis-viajes", method = RequestMethod.GET )
-    public ModelAndView verMisViajes(Usuario usuarioEncontradoMock) {
-        ModelMap model = new ModelMap();
-        List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuarioEncontradoMock);
-        model.put("viajesCreados", viajes);
-        return new ModelAndView("perfil/mis-viajes", model);
+    public ModelAndView verMisViajes(HttpSession session) {
+        if(session.getAttribute("usuario") == null){
+            return new ModelAndView("redirect:/login");
+        }else{
+            ModelMap model = new ModelMap();
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
+            model.put("viajesCreados", viajes);
+            return new ModelAndView("perfil/mis-viajes", model);
+        }
     }
 
 }

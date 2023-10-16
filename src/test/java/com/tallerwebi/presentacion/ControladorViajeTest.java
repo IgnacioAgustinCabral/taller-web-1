@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -78,20 +80,32 @@ public class ControladorViajeTest {
     @Test
     public void queCuandoVayaAMisViajesMeRedirijaYLosListe(){
         // preparacion
-        Usuario usuarioEncontradoMock = mock(Usuario.class);
-        when(usuarioEncontradoMock.getRol()).thenReturn("ADMIN");
-
-        when(requestMock.getSession()).thenReturn(sessionMock);
-        when(servicioViajeMock.obtenerViajesCreadosPorUnUsuario(usuarioEncontradoMock));
+        //when(requestMock.getSession()).thenReturn(sessionMock);
+        //usuarioMock = (Usuario) sessionMock.getAttribute("usuario");
+        //when(servicioViajeMock.obtenerViajesCreadosPorUnUsuario(usuarioMock).thenReturn());
 
         // ejecucion
-        ModelAndView modelAndView = controladorViaje.verMisViajes(usuarioEncontradoMock);
+        ModelAndView modelAndView = controladorViaje.verMisViajes(sessionMock);
 
         // validacion
+        assertThat(modelAndView, notNullValue());
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("perfil/mis-viajes"));
-        //verify(sessionMock, times(1)).setAttribute("ROL", usuarioEncontradoMock.getRol());
-
-
     }
+    @Test
+    public void queCuandoVayaAMisViajesSinUnaSesionMeRedirijaAlLogin(){
+        // preparacion
+        //when(requestMock.getSession()).thenReturn(sessionMock);
+        //usuarioMock = (Usuario) sessionMock.getAttribute("usuario");
+        //when(servicioViajeMock.obtenerViajesCreadosPorUnUsuario(usuarioMock).thenReturn());
+
+        // ejecucion
+        ModelAndView modelAndView = controladorViaje.verMisViajes(null);
+
+        // validacion
+        assertThat(modelAndView, notNullValue());
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
+    }
+
+
 
 }
