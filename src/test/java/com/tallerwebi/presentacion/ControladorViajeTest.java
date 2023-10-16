@@ -10,6 +10,7 @@ import com.tallerwebi.integracion.config.SpringWebTestConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -54,7 +55,6 @@ public class ControladorViajeTest {
         servicioCiudadMock = mock(ServicioCiudad.class);
         controladorViaje = new ControladorViaje(servicioViajeMock,servicioCiudadMock);
         sessionMockUsuario = mock(HttpSession.class);
-        sessionMockUsuario.setAttribute("usuario", "john_doe");
     }
 
 
@@ -83,34 +83,33 @@ public class ControladorViajeTest {
         assertThat(modelAndView.getModel().get("error"), equalTo("Error al registrar el viaje"));
     }
 
-   /* @Test
-    public void queCuandoVayaAMisViajesMeRedirijaYLosListe(){
+    @Test
+    public void queCuandoVayaAMisViajesConUnaSesionIniciadaMeLleveAMisViajes(){
         // preparacion
-        //when(requestMock.getSession()).thenReturn(sessionMock);
-        //usuarioMock = (Usuario) sessionMock.getAttribute("usuario");
-        //when(servicioViajeMock.obtenerViajesCreadosPorUnUsuario(usuarioMock).thenReturn());
+        //TODO Accedi a la sesion mediante MockHttpSession
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("usuario", usuarioMock);
+
+        // ejecucion
+        ModelAndView modelAndView = controladorViaje.verMisViajes(session);
+
+        // validacion
+        assertThat(modelAndView, notNullValue());
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("perfil/mis-viajes"));
+    }
+
+    @Test
+    public void queCuandoVayaAMisViajesSinUnaSesionMeRedirijaAlLogin(){
+        // preparacion
+
 
         // ejecucion
         ModelAndView modelAndView = controladorViaje.verMisViajes(sessionMockUsuario);
 
         // validacion
         assertThat(modelAndView, notNullValue());
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("perfil/mis-viajes"));
-    }
-    @Test
-    public void queCuandoVayaAMisViajesSinUnaSesionMeRedirijaAlLogin(){
-        // preparacion
-        //when(requestMock.getSession()).thenReturn(sessionMock);
-        //usuarioMock = (Usuario) sessionMock.getAttribute("usuario");
-        //when(servicioViajeMock.obtenerViajesCreadosPorUnUsuario(usuarioMock).thenReturn());
-
-        // ejecucion
-        ModelAndView modelAndView = controladorViaje.verMisViajes(null);
-
-        // validacion
-        assertThat(modelAndView, notNullValue());
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
-    }*/
+    }
 
 
 
