@@ -6,8 +6,8 @@
 <body>
 <h1>Info Viajes</h1>
 <div th:each="viaje : ${viajesCreados}">
-    <div th:text="${viaje.origen}"></div>
-    <div th:text="${viaje.destino}"></div>
+    <div th:text="${viaje.origen.nombre + ',' + viaje.origen.provincia.nombre}"></div>
+    <div th:text="${viaje.destino.nombre + ',' + viaje.destino.provincia.nombre}"></div>
 
 
 </div>

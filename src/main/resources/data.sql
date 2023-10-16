@@ -90,4 +90,4 @@ VALUES (2,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 6, 2),
        (3,null,STR_TO_DATE('22/12/2023', '%d/%m/%Y'),15,8,5),
        (3,null,STR_TO_DATE('10/11/2023', '%d/%m/%Y'),1,7,6);
 
-INSERT INTO Viaje(cantidad,descripcion,destino,fecha_hora,origen, usuario_id) VALUES(2, 'contraseña1', 'purmamarca', '15/03/2024', 'casa', 1);
+/*INSERT INTO Viaje(cantidad,descripcion,destino,fecha_hora,origen, usuario_id) VALUES(2, 'contraseña1', 'purmamarca', '15/03/2024', 'casa', 1);*/
