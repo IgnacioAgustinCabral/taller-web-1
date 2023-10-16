@@ -58,4 +58,9 @@ public class ServicioViajeImpl implements ServicioViaje {
         return repositorioViaje.buscarPorId(id);
     }
 
+    @Override
+    public List<Viaje> obtenerViajesPorProvincia(String provincia) {
+        return repositorioViaje.listarPorProvincia(provincia);
+    }
+
 }

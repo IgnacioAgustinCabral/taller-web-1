@@ -88,4 +88,5 @@ VALUES (2,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 6, 2),
        (3,null,STR_TO_DATE('25/09/2024', '%d/%m/%Y'),9,12,3),
        (3,null,STR_TO_DATE('05/04/2024', '%d/%m/%Y'),22,10,4),
        (3,null,STR_TO_DATE('22/12/2023', '%d/%m/%Y'),15,8,5),
+       (3,null,STR_TO_DATE('22/12/2023', '%d/%m/%Y'),15,8,5),
        (3,null,STR_TO_DATE('10/11/2023', '%d/%m/%Y'),1,7,6);

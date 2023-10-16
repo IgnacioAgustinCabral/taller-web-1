@@ -3,12 +3,15 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 public class ControladorViaje {
@@ -23,7 +26,7 @@ public class ControladorViaje {
         this.servicioCiudad = servicioCiudad;
     }
 
-    @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
+    @RequestMapping(value = "/crear-viaje", method = GET)
     public ModelAndView mostrarVistaCrearViaje() {
         List<Ciudad> ciudades = servicioCiudad.obtenerListaDeCiudades();
         ModelMap modelo = new ModelMap();
@@ -48,12 +51,24 @@ public class ControladorViaje {
         return new ModelAndView("redirect:/home");
     }
 
-    @RequestMapping(path = "/ver-viaje", method = RequestMethod.GET )
+    @RequestMapping(path = "/ver-viaje", method = GET )
     public ModelAndView masInfo(@RequestParam(required = false) String id, ModelAndView mv) {
 
         Viaje viajeBuscado = servicioViaje.obtenerViajePorId(Long.valueOf(id));
         mv.addObject("viaje", viajeBuscado);
         mv.setViewName("viaje/viaje");
         return mv;
+    }
+
+    @RequestMapping(path = "/listar-provincia", method = GET)
+    public ModelAndView listarPorProvincia(@RequestParam String provincia) {
+        ModelMap modelo = new ModelMap();
+        List<Viaje> listadoDeViaje = servicioViaje.obtenerViajesPorProvincia(provincia);
+
+        if (listadoDeViaje != null) {
+            modelo.put("viajes", listadoDeViaje);
+        }
+
+        return new ModelAndView("provinciaDetalle", modelo);
     }
 }
