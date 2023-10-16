@@ -141,9 +141,8 @@
                         <div class="product-item bg-light">
                             <div class="card">
                                 <div class="thumb-content">
-                                    <a href="#">
-                                        <img class="card-img-top img-fluid" style="min-width: 100%" th:src="${item.imagen}"
-                                             alt="Imagen provincia">
+                                    <a th:href="@{/listar-provincia(provincia = ${item.nombre})}" th:value="${item.nombre.toString()}">
+                                        <img class="card-img-top img-fluid" style="min-width: 100%" th:src="${item.imagen}" alt="Imagen provincia">
                                     </a>
                                 </div>
                                 <div class="card-body">
