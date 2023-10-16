@@ -1,32 +1,43 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.RepositorioViajeDisplay;
 import com.tallerwebi.dominio.ServicioUsuario;
 import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.ViajeDisplay;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
+@Transactional
 @RequestMapping("/perfil")
 public class ControladorPerfil {
 
     private ServicioUsuario servicioUsuario;
+    private final RepositorioViajeDisplay repositorioViajeDisplay;
 
     @Autowired
-    public ControladorPerfil(ServicioUsuario servicioUsuario){ this.servicioUsuario = servicioUsuario;}
+    public ControladorPerfil(RepositorioViajeDisplay repositorioViajeDisplay,ServicioUsuario servicioUsuario){
+        this.repositorioViajeDisplay = repositorioViajeDisplay;
+        this.servicioUsuario = servicioUsuario;}
     @RequestMapping(value="/usuario", method = RequestMethod.GET )
-    public ModelAndView irAPerfil(@RequestParam(required = false) String email, ModelAndView mv){
-
+    public ModelAndView irAPerfil(@RequestParam(required = false) String email){
+        ModelMap modelo = new ModelMap();
         //TODO: completar con try catch - manejar excepciones - revisar porque trae un mv
         Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorEmail(email);
-        mv.addObject("usuario",usuarioBuscado);
-        mv.setViewName("perfil/perfil");
-        return mv;
+        List<ViajeDisplay> viajes = repositorioViajeDisplay.listarViajeDisplay();
+        modelo.put("usuario",usuarioBuscado);
+        modelo.put("viajes",viajes);
+        return new ModelAndView("perfil/perfil",modelo);
     }
 
 /*    @RequestMapping(value="/usuario", method = RequestMethod.GET )
