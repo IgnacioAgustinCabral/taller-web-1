@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioCiudad;
 import com.tallerwebi.dominio.ServicioViaje;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Viaje;
@@ -35,17 +36,19 @@ public class ControladorViajeTest {
     private HttpSession sessionMock;
     private ServicioViaje servicioViajeMock;
     private Viaje viajeMock;
+    private ServicioCiudad servicioCiudadMock;
 
 
     @BeforeEach
     public void init(){
         viajeMock = mock(Viaje.class);
         usuarioMock = mock(Usuario.class);
-        when(usuarioMock.getEmail()).thenReturn("dami@unlam.com");
+        when(usuarioMock.getEmail()).thenReturn("test@unlam.com");
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
         servicioViajeMock = mock(ServicioViaje.class);
-        controladorViaje = new ControladorViaje(servicioViajeMock);
+        servicioCiudadMock = mock(ServicioCiudad.class);
+        controladorViaje = new ControladorViaje(servicioViajeMock,servicioCiudadMock);
     }
 
 

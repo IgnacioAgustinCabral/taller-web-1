@@ -7,13 +7,13 @@ public interface RepositorioViaje {
 
     Viaje buscarPorId(Long id);
 
-    List<Viaje> buscarPorDestino(String destino);
+    List<Viaje> buscarPorDestino(Ciudad destino);
 
     void actualizar(Viaje viaje);
 
     List<Viaje> listarViajes();
 
-    List<Viaje> buscarPorOrigen(String origen);
+    List<Viaje> buscarPorOrigen(Ciudad origen);
 
     List<Viaje> buscarPorFecha(String fechaHora);
 
@@ -21,5 +21,5 @@ public interface RepositorioViaje {
 
     List<Viaje> buscarPorUsuario(Usuario usuario);
 
-    List<Viaje> buscarPorOrigenDestinoYfecha(String origen, String destino, String fechaHora);
+    List<Viaje> buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fechaHora);
 }

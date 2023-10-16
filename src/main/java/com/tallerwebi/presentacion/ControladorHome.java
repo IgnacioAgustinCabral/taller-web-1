@@ -37,7 +37,6 @@ public class ControladorHome {
     @RequestMapping(path = "/home")
     public ModelAndView irAHome() {
 
-
         List<Viaje> datos = servicioViaje.obtenerViajes();
         List<Provincia> provincia = servicioProvincia.obtenerProvinciasConImagenes();
 
