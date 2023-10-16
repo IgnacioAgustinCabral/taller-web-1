@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioUsuario;
-import com.tallerwebi.dominio.ServicioViaje;
-import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.dominio.Viaje;
+import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +16,21 @@ import java.util.List;
 public class ControladorViaje {
 
     private  ServicioViaje servicioViaje;
+    private ServicioCiudad servicioCiudad;
 
     @Autowired
-    public ControladorViaje(ServicioViaje servicioViaje){
+    public ControladorViaje(ServicioViaje servicioViaje, ServicioCiudad servicioCiudad){
+
         this.servicioViaje = servicioViaje;
+        this.servicioCiudad = servicioCiudad;
     }
 
     @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
     public ModelAndView mostrarVistaCrearViaje() {
+        List<Ciudad> ciudades = servicioCiudad.obtenerListaDeCiudades();
         ModelMap modelo = new ModelMap();
         modelo.put("viaje", new Viaje());
+        modelo.put("ciudades", ciudades);
         return new ModelAndView("crear-viaje",modelo);
     }
 

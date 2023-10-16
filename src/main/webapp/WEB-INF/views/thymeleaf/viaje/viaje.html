@@ -3,8 +3,138 @@
 <head>
   <meta charset="utf-8">
   <title>viaje seleccionado</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/viaje.css}">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <script th:src="@{/js/script.js}"></script>
 </head>
 <body>
-  <span th:text="${'Viaje: ' + viaje.destino + ' ' + viaje.origen}"></span>
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <nav class="navbar navbar-expand-lg navbar-light navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse"
+                  data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto main-nav ">
+              <li class="nav-item active">
+                <a class="nav-link" href="home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="nuevo-usuario">Perfil</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto mt-10">
+              <li class="nav-item">
+                <a class="nav-link login-button" th:href="@{/login}">Login</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto mt-10">
+              <li>
+                <a class="nav-link bg-danger p-3" th:href="@{/crear-viaje}">Crear Viaje</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<span th:text="${'Viaje: ' + viaje.destino.nombre+', '+viaje.destino.provincia.nombre + ' - '
+                              + viaje.origen.nombre + ', '+viaje.origen.provincia.nombre}"></span>
+<div class="container">
+  <div class="row text-center">
+    <div class="col-lg-10 mx-auto">
+      <div class="card card-margin flex-row">
+        <div class="col-lg-3 userInfo">
+          <div>
+            <img th:src="${'../../../../resources/core/images/avatars/av-3.jpg'}" alt="avatar" width="5px" height="5px" class="rounded-circle">
+            <h5 th:text="${viaje.destino}" class="card-title"></h5>
+          </div>
+          <div>
+            <a th:href="@{/perfil/usuario(email='marianoochoa@unlam.edu.ar')}" class="card-link">Ver Perfil</a>
+          </div>
+        </div>
+        <div class=" col-lg-9 d-block paddingNone">
+          <div class="card-header no-border">
+            <div class="col-lg-6 card-body">
+              <div class="widget-49">
+                <div class="widget-49-title-wrapper">
+                  <div class="widget-49-date-warning">
+                    <span class="widget-49-date-day">13</span>
+                    <span class="widget-49-date-month">abril</span>
+                  </div>
+                  <div class="widget-49-meeting-info">
+                    <span class="widget-49-pro-title">Rosario</span>
+                    <span class="widget-49-meeting-time">Santa Fe</span>
+                  </div>
+                </div>
+                <div class="widget-49-title-wrapper">
+                  <div class="widget-49-date-warning">
+                    <span class="widget-49-date-day">15</span>
+                    <span class="widget-49-date-month">mayo</span>
+                  </div>
+                  <div class="widget-49-meeting-info">
+                    <span class="widget-49-pro-title">Rosario</span>
+                    <span class="widget-49-meeting-time">Santa Fe</span>
+                  </div>
+                </div>
+                <div class="widget-49-title-wrapper">
+                  <div class="widget-49-date-warning">
+                    <span class="widget-49-date-day">2</span>
+                  </div>
+                  <div class="widget-49-meeting-info">
+                    <span class="widget-49-pro-title">Lugares disponibles</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 card-body">
+              <div class="widget-49">
+                <div class="widget-49-title-wrapper">
+                  <div class="widget-49-meeting-info ">
+                    <div class="flex-row">
+                      <span class="widget-49-meeting-time">Viaje Publico</span>
+                      <span class="widget-49-meeting-time">No Fumar</span>
+                    </div>
+                    <div class="flex-row">
+                      <span class="widget-49-meeting-time">No niños</span>
+                      <span class="widget-49-meeting-time">No Mascotas</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="widget-49-title-wrapper">
+                  <div class="widget-49-meeting-info flex-row">
+                    <span class="widget-49-pro-title">Distancia a recorrer</span>
+                    <span class="widget-49-meeting-time">291km</span>
+                  </div>
+                </div>
+                <div class="widget-49-title-wrapper">
+                  <div class="widget-49-meeting-info flex-row">
+                    <span class="widget-49-pro-title">Tiempo estimado de viaje</span>
+                    <span class="widget-49-meeting-time">30 minutos</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="widget-49-meeting-action d-flex" style="padding: 10px 10px;background-color: grey;">
+              <a href="#" style="padding: 5px;background-color: red;color:white;font-size: medium;border-radius:3px;">ENVIAR MENSAJE</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+</script>
 </body>
 </html>

@@ -57,8 +57,37 @@ VALUES
     ('Tierra del Fuego', NULL),
     ('Tucumán', NULL);
 
+INSERT INTO Ciudad (background, nombre, provincia_id)
+VALUES
+    ('images/ciudades/Bahía-Blanca.jpg', 'Bahía Blanca', 1),
+    ('images/ciudades/colon.jpg', 'Colón', 7),
+    ('images/ciudades/concordia.jpg', 'Concordia', 7),
+    ('images/ciudades/gualeguaychu.jpg', 'Gualeguaichu', 7),
+    ('images/ciudades/la-falda.jpg', 'La Falda', 5),
+    ('images/ciudades/mar-del-plata.jpg', 'Mar del Plata', 1),
+    ('images/ciudades/bariloche.jpg', 'San Carlos de Bariloche', 15),
+    ('images/ciudades/rio-gallegos.webp', 'Río Gallegos', 19),
+    ('images/ciudades/iruya.jpg', 'Iruya', 16),
+    ('images/ciudades/san-rafael.jpg', 'San Rafael', 12),
+    ('images/ciudades/partido-de-la-costa.jpg', 'Partido de La Costa', 1),
+    ('images/ciudades/rosario.webp', 'Rosario', 20),
+    ('images/ciudades/resistencia.jpg', 'Resistencia', 3),
+    ('images/ciudades/Posadas-Misiones.jpg', 'Posadas', 13),
+    ('images/ciudades/villa-langostura.jpg', 'Villa La Angostura', 14),
+    ('images/ciudades/villa-maria.jpg', 'Villa María', 5),
+    ('images/ciudades/villa-mercedes.JPG', 'Villa Mercedes', 18),
+    ('images/ciudades/puerto-madryn.jpg', 'Puerto Madryn', 4),
+    ('images/ciudades/Rawson.jpg', 'Rawson', 4),
+    ('images/ciudades/san-salvador.jpg', 'San Salvador de Jujuy', 9),
+    ('images/ciudades/tandil.webp', 'Tandil', 1),
+    ('images/ciudades/trelew-chubut.webp', 'Trelew', 4),
+    ('images/ciudades/usuahia.png', 'Ushuaia', 22);
+
+INSERT INTO Viaje ( cantidad, descripcion, fecha_hora, destino_id, origen_id, usuario_id)
+VALUES (2,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 6, 2),
+       (3,null,STR_TO_DATE('25/09/2024', '%d/%m/%Y'),9,12,3),
+       (3,null,STR_TO_DATE('05/04/2024', '%d/%m/%Y'),22,10,4),
+       (3,null,STR_TO_DATE('22/12/2023', '%d/%m/%Y'),15,8,5),
+       (3,null,STR_TO_DATE('10/11/2023', '%d/%m/%Y'),1,7,6);
+
 INSERT INTO Viaje(cantidad,descripcion,destino,fecha_hora,origen, usuario_id) VALUES(2, 'contraseña1', 'purmamarca', '15/03/2024', 'casa', 1);
-                                                                   /*                (4, null, 'contraseña2', 'la rioja','15/03/2024','casa', 1),
-                                                                                   (3, null, 'contraseña3', 'arbol solo','15/03/2024', 'casa', 1),
-                                                                                   (2, null, 'contraseña4', 'trenque lauquen','15/03/2024', 'casa', 1),
-                                                                                   (4, null, 'contraseña5', 'la matanza','15/03/2024', 'casa', 1);*/

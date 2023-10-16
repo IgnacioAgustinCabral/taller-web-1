@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.Ciudad;
 import com.tallerwebi.dominio.RepositorioViaje;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Viaje;
@@ -36,7 +37,7 @@ public class RepositorioViajeImpl implements RepositorioViaje {
 
 
     @Override
-    public List<Viaje> buscarPorDestino(String destino) {
+    public List<Viaje> buscarPorDestino(Ciudad destino) {
         CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
         CriteriaQuery<Viaje> criteria = builder.createQuery(Viaje.class);
         Root<Viaje> root = criteria.from(Viaje.class);
@@ -56,7 +57,7 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     }
 
     @Override
-    public List<Viaje> buscarPorOrigen(String origen) {
+    public List<Viaje> buscarPorOrigen(Ciudad origen) {
         return sessionFactory.getCurrentSession().createQuery("FROM Viaje V WHERE V.origen = :origen_viaje", Viaje.class)
                 .setParameter("origen_viaje",origen)
                 .list();
@@ -81,7 +82,7 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     }
 
     @Override
-    public List buscarPorOrigenDestinoYfecha(String origen, String destino, String fechaHora) {
+    public List buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fechaHora) {
         return sessionFactory.getCurrentSession().createCriteria(Viaje.class)
                 .add(Restrictions.eq("origen",origen))
                 .add(Restrictions.eq("destino", destino))
