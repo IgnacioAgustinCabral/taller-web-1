@@ -53,4 +53,5 @@ public class ControladorViaje {
         mv.setViewName("viaje/viaje");
         return mv;
     }
+
 }
