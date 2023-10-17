@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class ControladorViaje {
         mv.setViewName("viaje/viaje");
         return mv;
     }
+
 
     @RequestMapping(path = "/listar-provincia", method = GET)
     public ModelAndView listarPorProvincia(@RequestParam String provincia) {

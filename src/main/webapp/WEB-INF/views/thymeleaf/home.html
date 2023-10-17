@@ -58,7 +58,7 @@
                                 <a class="nav-link" href="home">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="nuevo-usuario">Perfil</a>
+                                <a class="nav-link card-link" th:href="@{/perfil/mi-perfil}">Mi Perfil</a>
                             </li>
                         </ul>
                         <ul class="navbar-nav ml-auto mt-10">
@@ -141,9 +141,8 @@
                         <div class="product-item bg-light">
                             <div class="card">
                                 <div class="thumb-content">
-                                    <a href="#">
-                                        <img class="card-img-top img-fluid" style="min-width: 100%" th:src="${item.imagen}"
-                                             alt="Imagen provincia">
+                                    <a th:href="@{/listar-provincia(provincia = ${item.nombre})}" th:value="${item.nombre.toString()}">
+                                        <img class="card-img-top img-fluid" style="min-width: 100%" th:src="${item.imagen}" alt="Imagen provincia">
                                     </a>
                                 </div>
                                 <div class="card-body">
@@ -208,7 +207,7 @@
                                 </ul>
                                 <div class="card-body">
                                     <a th:href="@{/ver-viaje(id=${viaje.id})}" class="card-link">Mas Info</a>
-                                    <a th:href="@{/perfil/usuario(email= ${viaje.usuario.email})}" class="card-link">Ver Perfil</a>
+                                    <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="card-link">Ver Perfil</a>
                                 </div>
                             </div>
                         </div>
