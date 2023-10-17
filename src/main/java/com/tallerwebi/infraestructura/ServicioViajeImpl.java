@@ -63,5 +63,4 @@ public class ServicioViajeImpl implements ServicioViaje {
     public List<Viaje> obtenerViajesCreadosPorUnUsuario(Usuario usuario) {
         return repositorioViaje.buscarPorUsuario(usuario);
     }
-
 }
