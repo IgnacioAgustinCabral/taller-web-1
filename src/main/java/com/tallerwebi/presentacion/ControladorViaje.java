@@ -61,6 +61,7 @@ public class ControladorViaje {
         return mv;
     }
 
+
     @RequestMapping(path = "/listar-provincia", method = GET)
     public ModelAndView listarPorProvincia(@RequestParam String provincia) {
         ModelMap modelo = new ModelMap();
