@@ -89,4 +89,14 @@ public class RepositorioViajeImpl implements RepositorioViaje {
                 .add(Restrictions.eq("fecha_hora",fechaHora))
                 .list();
                     }
+
+    @Override
+    public List <Viaje> listarPorProvincia(String provincia) {
+        return sessionFactory.getCurrentSession().createQuery(
+                "SELECT V FROM Viaje V INNER JOIN Ciudad C " +
+                        "ON V.destino.id = C.id INNER JOIN Provincia P ON " +
+                        "C.provincia.id = P.id WHERE P.nombre = :provincia", Viaje.class)
+                .setParameter("provincia", provincia)
+                .list();
+    }
 }

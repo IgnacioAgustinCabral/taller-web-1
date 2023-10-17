@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 @Controller
 public class ControladorViaje {
 
@@ -59,6 +61,14 @@ public class ControladorViaje {
         return mv;
     }
 
-
+    @RequestMapping(path = "/listar-provincia", method = GET)
+    public ModelAndView listarPorProvincia(@RequestParam String provincia) {
+        ModelMap modelo = new ModelMap();
+        List<Viaje> listadoDeViaje = servicioViaje.obtenerViajesPorProvincia(provincia);
+        if (listadoDeViaje != null) {
+            modelo.put("viajes", listadoDeViaje);
+        }
+        return new ModelAndView("provinciaDetalle", modelo);
+    }
 
 }

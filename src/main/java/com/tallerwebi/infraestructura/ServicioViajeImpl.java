@@ -62,6 +62,10 @@ public class ServicioViajeImpl implements ServicioViaje {
     @Override
     public List<Viaje> obtenerViajesCreadosPorUnUsuario(Usuario usuario) {
         return repositorioViaje.buscarPorUsuario(usuario);
+      
+    @Override
+    public List<Viaje> obtenerViajesPorProvincia(String provincia) {
+        return repositorioViaje.listarPorProvincia(provincia);
     }
 
 }
