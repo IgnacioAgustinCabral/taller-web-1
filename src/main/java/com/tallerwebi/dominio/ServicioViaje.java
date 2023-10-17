@@ -19,4 +19,7 @@ public interface ServicioViaje {
     Viaje obtenerViajePorId(Long id);
 
     List<Viaje> obtenerViajesPorProvincia(String provincia);
+
+    List<Viaje> obtenerViajesCreadosPorUnUsuario(Usuario usuario);
+
 }
