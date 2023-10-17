@@ -54,7 +54,7 @@
                         <img th:src="${'../' + usuario.avatar}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
                         <div class="w-100 ms-3">
                             <h4 th:text="${usuario.nombre + ' ' + usuario.apellido}" class="my-0"></h4>
-                            <p class="text-muted">@webdesigner</p>
+                            <p class="text-muted" th:text="${usuario.email}"></p>
                             <div class="profile-cover__action bg--img" data-overlay="0.3">
                                 <button class="btn btn-rounded btn-info">
                                     <i class="fa fa-plus"></i>
@@ -129,22 +129,26 @@
                                     <div class="col-sm-12 col-lg-4" th:each="viaje : ${viajes}">
                                         <div class="col-sm-12 col-lg-4">
                                             <div class="card" style="width: 20rem;">
-                                                <div th:style="'background-image: url(' + ${'../'+viaje.background} + '); height: 200px;'"></div>
+                                                <div class="container p-0" style="height: 200px;">
+                                                    <img th:src="${'../' + viaje.destino.background}" class=" m-0 p-0 w-100 h-100">
+                                                </div>
+                                                <!--<div th:style="'background-image: url(' + ${viaje.destino.background} + '); height: 200px;'"></div>-->
                                                 <div class="card-body">
                                                     <div class="header-card">
-                                                        <img th:src="${'../'+viaje.avatar}" alt="avatar" width="55px" height="55px"
+                                                        <img th:src="${'../' + viaje.usuario.avatar}" alt="avatar" width="55px" height="55px"
                                                              class="rounded-circle">
                                                     </div>
-                                                    <div><h5 class="card-title" th:text="${viaje.nombre}"></h5></div>
-                                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${#dates.format(viaje.fechaViaje, 'dd/MM/yyyy')}"></p>
+
+                                                    <div><h5 class="card-title" th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"></h5></div>
+                                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fecha_hora}"></p>
                                                     </div>
 
                                                 </div>
                                                 <ul class="list-group list-group-flush">
                                                     <li class="list-group-item"><i class="fa-solid fa-signs-post fa-xl"></i> Origen: <span
-                                                            th:text="${viaje.origen}"></span></li>
+                                                            th:text="${viaje.origen.nombre + ', ' + viaje.origen.provincia.nombre}"></span></li>
                                                     <li class="list-group-item"><i class="fa-solid fa-flag-checkered fa-xl"></i> Destino:
-                                                        <span th:text="${viaje.destino}"></span></li>
+                                                        <span th:text="${viaje.destino.nombre + ', ' + viaje.destino.provincia.nombre}"></span></li>
                                                     <li class="list-group-item">
                                                         <i class="fa-solid fa-paw fa-lg"></i>
                                                         <i class="fa-solid fa-ban-smoking fa-lg"></i>
@@ -154,7 +158,7 @@
                                                 </ul>
                                                 <div class="card-body">
                                                     <a th:href="@{/ver-viaje(id=${viaje.id})}" class="card-link">Mas Info</a>
-                                                    <a th:href="@{/perfil/usuario(email='marianoochoa@unlam.edu.ar')}" class="card-link">Ver Perfil</a>
+                                                    <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="card-link">Ver Perfil</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -168,7 +172,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+           <!-- <div class="card">
                 <div class="card-body">
                     <div class="border border-light p-2 mb-3">
                         <h4 class="header-title mb-3">Viajes realizados</h4>
@@ -216,7 +220,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="card">
                 <div class="card-body">
                     <div class="border border-light p-2 mb-3">
