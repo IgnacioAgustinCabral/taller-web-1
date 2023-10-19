@@ -117,6 +117,38 @@ public class Usuario {
         activo = true;
     }
 
+    public Integer getCod_area() {
+        return cod_area;
+    }
+
+    public Long getDni() {
+        return dni;
+    }
+
+    public Long getTelefono() {
+        return telefono;
+    }
+
+    public String getFecha_nac() {
+        return fecha_nac;
+    }
+
+    public void setCod_area(Integer cod_area) {
+        this.cod_area = cod_area;
+    }
+
+    public void setDni(Long dni) {
+        this.dni = dni;
+    }
+
+    public void setFecha_nac(String fecha_nac) {
+        this.fecha_nac = fecha_nac;
+    }
+
+    public void setTelefono(Long telefono) {
+        this.telefono = telefono;
+    }
+
     public List<Viaje> getViajes() {
         return viajes;
     }
