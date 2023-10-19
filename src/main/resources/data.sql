@@ -84,7 +84,9 @@ VALUES
     ('images/ciudades/usuahia.png', 'Ushuaia', 22);
 
 INSERT INTO Viaje ( cantidad, descripcion, fecha_hora, destino_id, origen_id, usuario_id)
-VALUES (2,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 6, 2),
+VALUES (2,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 5, 2),
+       (5,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate vehicula mauris, ac interdum nunc porttitor vel. In hac habitasse platea dictumst. Aliquam erat volutpat. Vestibulum ornare rutrum interdum. Sed faucibus orci ac rhoncus egestas' ,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),9 , 4, 2),
+       (4,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),22 , 6, 2),
        (3,null,STR_TO_DATE('25/09/2024', '%d/%m/%Y'),9,12,3),
        (3,null,STR_TO_DATE('05/04/2024', '%d/%m/%Y'),22,10,4),
        (3,null,STR_TO_DATE('22/12/2023', '%d/%m/%Y'),15,8,5),
