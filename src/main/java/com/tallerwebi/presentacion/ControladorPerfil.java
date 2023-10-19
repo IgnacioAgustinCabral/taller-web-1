@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -28,14 +29,17 @@ public class ControladorPerfil {
     public ControladorPerfil(ServicioViaje servicioViaje,ServicioUsuario servicioUsuario){
         this.servicioViaje = servicioViaje;
         this.servicioUsuario = servicioUsuario;}
+
     @RequestMapping(value="/usuario", method = RequestMethod.GET )
-    public ModelAndView irAPerfil(@RequestParam(required = false) Long idUsuario){
+    public ModelAndView irAPerfil(@RequestParam(required = false) Long idUsuario, HttpServletRequest request){
         ModelMap modelo = new ModelMap();
+        HttpSession session = request.getSession();
 
         //TODO: completar con try catch - manejar excepciones - revisar porque trae un mv
         Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(idUsuario);
 
         List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuarioBuscado);
+        modelo.put("session", session);
         modelo.put("usuario",usuarioBuscado);
         modelo.put("viajes",viajes);
         return new ModelAndView("perfil/perfil",modelo);

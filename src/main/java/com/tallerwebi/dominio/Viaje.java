@@ -1,5 +1,8 @@
 package com.tallerwebi.dominio;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Viaje {
@@ -12,13 +15,20 @@ public class Viaje {
     private  Integer cantidad;
     private String fecha;
 
+    private String fecha_hora;
+    private Boolean noFumar;
+    private Boolean noNinios;
+    private Boolean noMascotas;
     @ManyToOne
     private  Ciudad destino;
-
     @ManyToOne
     private Ciudad origen;
     @ManyToOne
     private Usuario usuario;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "Viaje_Compa",joinColumns ={@JoinColumn(name="id_viaje")}, inverseJoinColumns={@JoinColumn(name="id_usuario")})
+    private Set<Usuario> listaCompanieros = new HashSet<Usuario>();
 
 
 
@@ -27,7 +37,7 @@ public class Viaje {
 
         this.origen = origen;
         this.destino = destino;
-        this.fecha = fecha_hora;
+        this.fecha_hora = fecha_hora;
         this.cantidad = cantidad;
         this.descripcion = descripcion;
         this.usuario =  creador;
@@ -89,5 +99,37 @@ public class Viaje {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Set<Usuario> getListaCompanieros() {
+        return listaCompanieros;
+    }
+
+    public void setListaCompanieros(HashSet<Usuario> listaCompanieros) {
+        this.listaCompanieros = listaCompanieros;
+    }
+
+    public Boolean getNoFumar() {
+        return noFumar;
+    }
+
+    public void setNoFumar(Boolean noFumar) {
+        this.noFumar = noFumar;
+    }
+
+    public Boolean getNoNinios() {
+        return noNinios;
+    }
+
+    public void setNoNinios(Boolean noNinios) {
+        this.noNinios = noNinios;
+    }
+
+    public Boolean getNoMascotas() {
+        return noMascotas;
+    }
+
+    public void setNoMascotas(Boolean noMascotas) {
+        this.noMascotas = noMascotas;
     }
 }

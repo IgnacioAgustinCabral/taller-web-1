@@ -141,4 +141,7 @@ public class ServicioViajeTest {
         Ciudad tandil = new Ciudad ("Tandil",buenosAires,"");
         return new  Viaje(junin,tandil, LocalDateTime.now().toString(), 2, "probando", usuario);
     }
+    private Usuario crearUsuario() {
+        return new Usuario();
+    }
 }

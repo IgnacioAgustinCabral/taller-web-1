@@ -1,9 +1,9 @@
 package com.tallerwebi.dominio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Usuario {
@@ -23,6 +23,8 @@ public class Usuario {
     private Integer cod_area;
     private Long telefono;
 
+    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaCompanieros")
+    private List<Viaje> viajes;
 
     //TODO: constructor de pruebas.
     public Usuario(){};
@@ -113,5 +115,45 @@ public class Usuario {
 
     public void activar() {
         activo = true;
+    }
+
+    public Integer getCod_area() {
+        return cod_area;
+    }
+
+    public Long getDni() {
+        return dni;
+    }
+
+    public Long getTelefono() {
+        return telefono;
+    }
+
+    public String getFecha_nac() {
+        return fecha_nac;
+    }
+
+    public void setCod_area(Integer cod_area) {
+        this.cod_area = cod_area;
+    }
+
+    public void setDni(Long dni) {
+        this.dni = dni;
+    }
+
+    public void setFecha_nac(String fecha_nac) {
+        this.fecha_nac = fecha_nac;
+    }
+
+    public void setTelefono(Long telefono) {
+        this.telefono = telefono;
+    }
+
+    public List<Viaje> getViajes() {
+        return viajes;
+    }
+
+    public void setViajes(List<Viaje> viajes) {
+        this.viajes = viajes;
     }
 }

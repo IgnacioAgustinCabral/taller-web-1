@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-expand-lg navbar-light navigation">
+                <a th:href="@{/home}" class="navbar-brand">
+                    <img src="images/logo/logo_TA_web.png" alt="logo travelando" width="100" height="75">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto main-nav ">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-info" th:href="@{/crear-viaje}">Crear Viaje</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link card-link" th:href="@{/perfil/mi-perfil}">Mi Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link card-link" th:href="@{/mis-viajes}">Ver Mis Viajes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-danger" th:href="@{/logout}">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
