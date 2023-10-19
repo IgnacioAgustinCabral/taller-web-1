@@ -45,7 +45,7 @@ body{
 }
 
 .userInfo{
-    background-color: #016587;
+    background-color: #a5b1b5 !important;
     border-radius: 8px 0px 0px 8px;
     padding: 0 0.9375rem;
     font-weight: 500;
@@ -53,7 +53,12 @@ body{
     align-items: center;
     min-height: 50px;
 }
-
+.bottomSpace{
+    margin-bottom: 8px !important;
+}
+.topSpace{
+    margin-top: 8px !important;
+}
 .widget-49 .widget-49-title-wrapper {
     display: flex;
     align-items: center;

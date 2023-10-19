@@ -167,100 +167,57 @@
                                     <div class="card card-margin flex-row">
                                         <div class="flex-row userInfo text-center">
                                             <div class="flex-row">
-                                                    <img th:src="${'../' + viaje.usuario.avatar}" alt="avatar" class="rounded-circle img-avatar-size img-fluid">
-                                                    <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}" class="card-title"></h4>
-                                                    <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="card-link">Ver Perfil</a>
+                                                <img th:src="${'../' + viaje.usuario.avatar}" alt="avatar" class="rounded-circle img-avatar-size topSpace" style="max-width: 65% !important">
+                                                <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}" class="card-title"></h4>
+                                                <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="btn btn-primary bottomSpace">Ver perfil</a>
+                                                <a href="#" class="btn btn-secondary bottomSpace">Conectar</a>
                                             </div>
                                         </div>
-                                        <div class=" col-lg-10 d-block paddingNone">
+                                        <div class="col-lg-10 d-block">
                                             <div class="card-header no-border">
                                                 <div class="col-lg-4 card-body">
-                                                    <div class="widget-49">
-                                                        <div class="widget-49">
+                                                    <div class="widget-49-title-wrapper">
+                                                        <div class="widget-49-meeting-time">
                                                             <div class="widget-49-date-warning">
-<!--                                                            <span class="widget-49-pro-title">Fecha de salida</span>
-                                                                <span class="widget-49-date-day" th:text="${viaje.fecha_hora}"></span>-->
-                                                                <span class="widget-49-pro-title">Fecha de salida: </span>
+                                                                <span class="widget-49-pro-title dateInfo">Origen: </span>
+                                                                <span class="widget-49-pro-title" th:text="${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Destino: </span>
+                                                                <span class="widget-49-pro-title" th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Fecha de salida: </span>
                                                                 <span class="widget-49-pro-title" th:text="${viaje.fecha_hora}"></span>
                                                             </div>
-                                                            <div class="widget-49-meeting-info">
-                                                                <p class="card-text" th:text="'Origen: ' + ${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></p>
-                                                                <p class="card-text" th:text="'Destino: ' + ${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></p>
-<!--                                                                <span class="widget-49-pro-title" th:text="${viaje.destino.nombre}"></span>
-                                                                <span class="widget-49-meeting-time" th:text="${viaje.destino.provincia.nombre}"></span>-->
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget-49-title-wrapper">
                                                             <div class="widget-49-date-warning">
-                                                                <span class="widget-49-date-day">2</span>
-                                                                <p class="card-text" th:text="'Lugares disponibles: ' + ${viaje.cantidad}"></p>
+                                                                <span class="widget-49-pro-title">Lugares disponibles: </span>
+                                                                <span class="widget-49-pro-title" th:text="${viaje.cantidad}"></span>
                                                             </div>
-<!--                                                            <div class="widget-49-meeting-info">
-                                                                <span class="widget-49-pro-title">Lugares disponibles</span>
-                                                            </div>-->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 card-body">
-                                                    <div class="widget-49">
-                                                        <div class="widget-49-title-wrapper">
-                                                            <div class="widget-49-meeting-info ">
-                                                                <div class="flex-row">
-                                                                    <span class="widget-49-meeting-time">Viaje Publico</span>
-                                                                    <span class="widget-49-meeting-time">No Fumar</span>
-                                                                </div>
-                                                                <div class="flex-row">
-                                                                    <span class="widget-49-meeting-time">No niños</span>
-                                                                    <span class="widget-49-meeting-time">No Mascotas</span>
-                                                                </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title">Tiempo de viaje: </span>
+                                                                <span class="widget-49-meeting-time">6 horas</span>
                                                             </div>
-                                                        </div>
-                                                        <div class="widget-49-title-wrapper">
-                                                            <div class="widget-49-meeting-info flex-row">
-                                                                <span class="widget-49-pro-title">Distancia a recorrer</span>
-                                                                <span class="widget-49-meeting-time">291km</span>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title">No se aceptan niños</span>
                                                             </div>
-                                                        </div>
-                                                        <div class="widget-49-title-wrapper">
-                                                            <div class="widget-49-meeting-info flex-row">
-                                                                <span class="widget-49-pro-title">Tiempo estimado de viaje</span>
-                                                                <span class="widget-49-meeting-time">30 minutos</span>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-meeting-time">No se aceptan mascotas</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3 card-body">
-                                                    <div class="widget-49">
-                                                        <div class="widget-49-title-wrapper">
-                                                            <div class="widget-49-meeting-info ">
+                                                <div class="col-lg-6 card-body">
+                                                    <div class="widget-49-title-wrapper">
+                                                        <div class="widget-49-meeting-time">
+                                                            <div class="widget-49-date-warning">
                                                                 <div class="flex-row">
-                                                                    <span class="widget-49-meeting-time">Viaje Publico</span>
-                                                                    <span class="widget-49-meeting-time">No Fumar</span>
+                                                                    <span class="widget-49-pro-title">Descripción: </span>
+                                                                    <span class="widget-49-pro-title" th:text="${viaje.descripcion}"></span>
                                                                 </div>
-                                                                <div class="flex-row">
-                                                                    <span class="widget-49-meeting-time">No niños</span>
-                                                                    <span class="widget-49-meeting-time">No Mascotas</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget-49-title-wrapper">
-                                                            <div class="widget-49-meeting-info flex-row">
-                                                                <span class="widget-49-pro-title">Distancia a recorrer</span>
-                                                                <span class="widget-49-meeting-time">291km</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget-49-title-wrapper">
-                                                            <div class="widget-49-meeting-info flex-row">
-                                                                <span class="widget-49-pro-title">Tiempo estimado de viaje</span>
-                                                                <span class="widget-49-meeting-time">30 minutos</span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="widget-49-meeting-action d-flex" style="padding: 10px 10px;background-color: grey;">
-                                                    <a href="#" style="padding: 5px;background-color: red;color:white;font-size: medium;border-radius:3px;">ENVIAR MENSAJE</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -270,7 +227,6 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="trending-ads-slide">
-
                                     <div class="col-sm-12 col-lg-4" th:each="viaje : ${viajes}">
                                         <div class="col-sm-12 col-lg-4">
                                             <div class="card" style="width: 20rem;">
