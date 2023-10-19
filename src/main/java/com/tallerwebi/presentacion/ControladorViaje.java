@@ -26,12 +26,17 @@ public class ControladorViaje {
     }
 
     @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
-    public ModelAndView mostrarVistaCrearViaje() {
-        List<Ciudad> ciudades = servicioCiudad.obtenerListaDeCiudades();
-        ModelMap modelo = new ModelMap();
-        modelo.put("viaje", new Viaje());
-        modelo.put("ciudades", ciudades);
-        return new ModelAndView("crear-viaje",modelo);
+    public ModelAndView mostrarVistaCrearViaje(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session != null && session.getAttribute("isLogged") != null) {
+            List<Ciudad> ciudades = servicioCiudad.obtenerListaDeCiudades();
+            ModelMap modelo = new ModelMap();
+            modelo.put("viaje", new Viaje());
+            modelo.put("ciudades", ciudades);
+            return new ModelAndView("crear-viaje", modelo);
+        } else {
+            return new ModelAndView("redirect:/login");
+        }
     }
 
     @RequestMapping(path = "/creacion", method = RequestMethod.POST )
