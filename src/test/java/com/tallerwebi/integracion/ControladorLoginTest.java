@@ -46,18 +46,18 @@ public class ControladorLoginTest {
 	}
 
 	@Test
-	public void debeRetornarLaPaginaLoginCuandoSeNavegaALaRaiz() throws Exception {
-
+	public void debeRetornarLaPaginaHomeCuandoSeNavegaALaRaiz() throws Exception {
 		MvcResult result = this.mockMvc.perform(get("/"))
-				/*.andDo(print())*/
-				.andExpect(status().is3xxRedirection())
+				.andExpect(status().isOk())
 				.andReturn();
 
 		ModelAndView modelAndView = result.getModelAndView();
-        assert modelAndView != null;
-		assertThat("redirect:/login", equalToIgnoringCase(Objects.requireNonNull(modelAndView.getViewName())));
-		assertThat(true, is(modelAndView.getModel().isEmpty()));
+		assert modelAndView != null;
+		assertThat("home", equalToIgnoringCase(Objects.requireNonNull(modelAndView.getViewName())));
 	}
+
+
+
 
 	@Test
 	public void debeRetornarLaPaginaLoginCuandoSeNavegaALLogin() throws Exception {

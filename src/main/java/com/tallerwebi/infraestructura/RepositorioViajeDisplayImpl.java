@@ -12,12 +12,12 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class ViajeDisplayImpl implements RepositorioViajeDisplay {
+public class RepositorioViajeDisplayImpl implements RepositorioViajeDisplay {
 
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public ViajeDisplayImpl(SessionFactory sessionFactory) {
+    public RepositorioViajeDisplayImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
