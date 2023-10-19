@@ -76,9 +76,9 @@ ControladorLogin {
         return new ModelAndView("home");
     }*/
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+/*    @RequestMapping(path = "/", method = RequestMethod.GET)
     public ModelAndView inicio() {
         return new ModelAndView("redirect:/login");
-    }
+    }*/
 }
 
