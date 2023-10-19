@@ -651,12 +651,6 @@ ul.pagination .active a {
   background-size: cover;
 }
 
-.bg-login{
-  background: url("../images/fondo-login.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
 .navigation {
   padding: 20px 0;
 }
