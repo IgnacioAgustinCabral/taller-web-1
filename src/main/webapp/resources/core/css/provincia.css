@@ -43,7 +43,11 @@ body{
 .card-header:first-child {
     border-radius: calc(8px - 1px) calc(8px - 1px) 0 0;
 }
-
+.bg-5 {
+    background: url(../images/ciudades/villa-langostura.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .userInfo{
     background-color: #a5b1b5 !important;
     border-radius: 8px 0px 0px 8px;
@@ -52,6 +56,12 @@ body{
     display: flex;
     align-items: center;
     min-height: 50px;
+}
+.dateInfo{
+    color: #FFC868 !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    line-height: 1;
 }
 .bottomSpace{
     margin-bottom: 8px !important;

@@ -10,7 +10,7 @@ VALUES
 
 INSERT INTO Usuario(email, password,avatar, rol, activo,nombre,apellido,dni,fecha_nac,cod_area,telefono)
 VALUES
-    ('carolinarojas@unlam.edu.ar', 'contra1', 'images/avatars/av-1.jpg', 'admin', true, 'Carolina', 'Rojas', 12345678, '2000/01/01', 011, 12345678),
+    ('carolinarojas@unlam.edu.ar', 'test', 'images/avatars/av-1.jpg', 'admin', true, 'Carolina', 'Rojas', 12345678, '2000/01/01', 011, 12345678),
     ('marianoochoa@unlam.edu.ar', 'contra2', 'images/avatars/av-2.jpg', 'admin', true, 'Mariano', 'Ochoa', 23456789, '2000/02/02', 011, 23456789),
     ('juliaameghino@unlam.edu.ar', 'contra3', 'images/avatars/av-3.jpg', 'admin', true, 'Julia', 'Ameghino', 34567890, '2000/03/03', 011, 34567890),
     ('leandroulloa@unlam.edu.ar', 'contra4', 'images/avatars/av-4.jpg', 'admin', true, 'Leandro', 'Ulloa', 45678901, '2000/04/04', 011, 45678901),
@@ -84,7 +84,9 @@ VALUES
     ('images/ciudades/usuahia.png', 'Ushuaia', 22);
 
 INSERT INTO Viaje ( cantidad, descripcion, fecha_hora, destino_id, origen_id, usuario_id)
-VALUES (2,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 6, 2),
+VALUES (2,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec tempus urna. In hac habitasse platea dictumst. Nullam feugiat tristique tellus, viverra dictum leo ultricies in. In hac habitasse platea dictumst. In hac habitasse platea dictumst.' ,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 6, 2),
+       (5,'Probando viajesitoo',STR_TO_DATE('25/12/2023', '%d/%m/%Y'),9 , 12, 2),
+       (4,'Probando viaje de nuevoo',STR_TO_DATE('30/09/2024', '%d/%m/%Y'),22 , 8, 2),
        (3,null,STR_TO_DATE('25/09/2024', '%d/%m/%Y'),9,12,3),
        (3,null,STR_TO_DATE('05/04/2024', '%d/%m/%Y'),22,10,4),
        (3,null,STR_TO_DATE('22/12/2023', '%d/%m/%Y'),15,8,5),
