@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="utf-8">
     <title>TravelAndo</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="author" content="Themefisher">
     <meta name="generator" content="Themefisher Classified Marketplace Template v1.0">
-
     <meta name="theme-name" content="classimax"/>
 
     <!-- Use Thymeleaf expressions for CSS URLs -->
@@ -36,47 +34,24 @@
     <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <script th:src="@{/js/script.js}"></script>
-
 </head>
 
 <body class="body-wrapper">
 
-
 <header>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <nav class="navbar navbar-expand-lg navbar-light navigation">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto main-nav ">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="home">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link card-link" th:href="@{/perfil/mi-perfil}">Mi Perfil</a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav ml-auto mt-10">
-                            <li class="nav-item">
-                                <a class="nav-link login-button" th:href="@{/login}">Login</a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav ml-auto mt-10">
-                            <li>
-                                <a class="nav-link bg-danger p-3" th:href="@{/crear-viaje}">Crear Viaje</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
+
+    <div th:if="${session != null ? session.isLogged : false}">
+        <!-- Fragmento de barra de navegación para usuarios autenticados -->
+        <div th:replace="navbar-user"></div>
     </div>
+    <div th:unless="${session != null ? session.isLogged : false}">
+        <!-- Fragmento de barra de navegación para invitados -->
+        <div th:replace="navbar-guest"></div>
+    </div>
+
+
 </header>
+
 
 <section class="hero-area bg-5 text-center overly">
     <div class="container">
@@ -219,7 +194,7 @@
 </section>
 
 
-<section class=" section">
+<section class="section" th:if="${session.isLogged}">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -228,10 +203,12 @@
                 </div>
 
 
+
             </div>
         </div>
     </div>
 </section>
+
 <section class="call-to-action overly bg-3 section-sm">
     <div class="container">
         <div class="row justify-content-md-center text-center">
@@ -241,6 +218,7 @@
         </div>
     </div>
 </section>
+
 <footer class="footer-bottom">
     <div class="container">
         <div class="row">

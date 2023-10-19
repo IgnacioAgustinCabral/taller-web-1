@@ -10,26 +10,26 @@ VALUES
 
 INSERT INTO Usuario(email, password,avatar, rol, activo,nombre,apellido,dni,fecha_nac,cod_area,telefono)
 VALUES
-    ('carolinarojas@unlam.edu.ar', 'contraseña1', 'images/avatars/av-1.jpg', 'admin', true, 'Carolina', 'Rojas', 12345678, '2000/01/01', 011, 12345678),
-    ('marianoochoa@unlam.edu.ar', 'contraseña2', 'images/avatars/av-2.jpg', 'admin', true, 'Mariano', 'Ochoa', 23456789, '2000/02/02', 011, 23456789),
-    ('juliaameghino@unlam.edu.ar', 'contraseña3', 'images/avatars/av-3.jpg', 'admin', true, 'Julia', 'Ameghino', 34567890, '2000/03/03', 011, 34567890),
-    ('leandroulloa@unlam.edu.ar', 'contraseña4', 'images/avatars/av-4.jpg', 'admin', true, 'Leandro', 'Ulloa', 45678901, '2000/04/04', 011, 45678901),
-    ('federicoperez@unlam.edu.ar', 'contraseña5', 'images/avatars/av-5.jpg', 'admin', true, 'Federico', 'Perez', 56789012, '2000/05/05', 011, 56789012),
-    ('albertosamudio@unlam.edu.ar', 'contraseña6',null, 'default', true, 'Alberto', 'Samudio', 67890123, '2000/06/06', 011, 67890123),
-    ('barbaracampos@unlam.edu.ar', 'contraseña7',null, 'admin', true, 'Barbara', 'Campos', 78901234, '2000/07/07', 011, 78901234),
-    ('cristiantoloza@unlam.edu.ar', 'contraseña8',null, 'default', true, 'Cristian', 'Toloza', 89012345, '2000/08/08', 011, 89012345),
-    ('delfinarojas@unlam.edu.ar', 'contraseña9',null, 'admin', true, 'Delfina', 'Rojas', 90123456, '2000/09/09', 011, 90123456),
-    ('estebanmendez@unlam.edu.ar', 'contraseña10',null, 'default', true, 'Esteban', 'Mendez', 12345670, '2000/10/10', 011, 12345670),
-    ('fiorellagieco@unlam.edu.ar', 'contraseña11',null, 'admin', true, 'Fiorella', 'Gieco', 23456701, '2000/11/11', 011, 23456701),
-    ('guidotosco@unlam.edu.ar', 'contraseña12',null, 'default', true, 'Guido', 'Tosco', 34567812, '2000/12/12', 011, 34567812),
-    ('huilensoria@unlam.edu.ar', 'contraseña13',null, 'admin', true, 'Huilen', 'Soria', 45678923, '2000/01/13', 011, 45678923),
-    ('iñakitedeschi@unlam.edu.ar', 'contraseña14',null, 'default', true, 'Iñaki', 'Tedeschi', 56789034, '2000/02/14', 011, 56789034),
-    ('jazminugarte@unlam.edu.ar', 'contraseña15',null, 'admin', true, 'Jazmin', 'Ugarte', 67890145, '2000/03/15', 011, 67890145),
-    ('lucafigueroa@unlam.edu.ar', 'contraseña16',null, 'default', true, 'Luca', 'Figueroa', 78901256, '2000/04/16', 011, 78901256),
-    ('melinarodriguez@unlam.edu.ar', 'contraseña17',null, 'admin', true, 'Melina', 'Rodriguez', 89012367, '2000/05/17', 011, 89012367),
-    ('nicolasbenitez@unlam.edu.ar', 'contraseña18',null, 'default', true, 'Nicolas', 'Benitez', 90123478, '2000/06/18', 011, 90123478),
-    ('orianasalvatierra@unlam.edu.ar', 'contraseña19',null, 'admin', true, 'Oriana', 'Salvatierra', 12345689, '2000/07/19', 011, 12345689),
-    ('pedroromero@unlam.edu.ar', 'contraseña20',null, 'default', true, 'Pedro', 'Romero', 23456790, '2000/08/20', 011, 23456790);
+    ('carolinarojas@unlam.edu.ar', 'contra1', 'images/avatars/av-1.jpg', 'admin', true, 'Carolina', 'Rojas', 12345678, '2000/01/01', 011, 12345678),
+    ('marianoochoa@unlam.edu.ar', 'contra2', 'images/avatars/av-2.jpg', 'admin', true, 'Mariano', 'Ochoa', 23456789, '2000/02/02', 011, 23456789),
+    ('juliaameghino@unlam.edu.ar', 'contra3', 'images/avatars/av-3.jpg', 'admin', true, 'Julia', 'Ameghino', 34567890, '2000/03/03', 011, 34567890),
+    ('leandroulloa@unlam.edu.ar', 'contra4', 'images/avatars/av-4.jpg', 'admin', true, 'Leandro', 'Ulloa', 45678901, '2000/04/04', 011, 45678901),
+    ('federicoperez@unlam.edu.ar', 'contra5', 'images/avatars/av-5.jpg', 'admin', true, 'Federico', 'Perez', 56789012, '2000/05/05', 011, 56789012),
+    ('albertosamudio@unlam.edu.ar', 'contra6',null, 'default', true, 'Alberto', 'Samudio', 67890123, '2000/06/06', 011, 67890123),
+    ('barbaracampos@unlam.edu.ar', 'contra7',null, 'admin', true, 'Barbara', 'Campos', 78901234, '2000/07/07', 011, 78901234),
+    ('cristiantoloza@unlam.edu.ar', 'contra8',null, 'default', true, 'Cristian', 'Toloza', 89012345, '2000/08/08', 011, 89012345),
+    ('delfinarojas@unlam.edu.ar', 'contra9',null, 'admin', true, 'Delfina', 'Rojas', 90123456, '2000/09/09', 011, 90123456),
+    ('estebanmendez@unlam.edu.ar', 'contra10',null, 'default', true, 'Esteban', 'Mendez', 12345670, '2000/10/10', 011, 12345670),
+    ('fiorellagieco@unlam.edu.ar', 'contra11',null, 'admin', true, 'Fiorella', 'Gieco', 23456701, '2000/11/11', 011, 23456701),
+    ('guidotosco@unlam.edu.ar', 'contra12',null, 'default', true, 'Guido', 'Tosco', 34567812, '2000/12/12', 011, 34567812),
+    ('huilensoria@unlam.edu.ar', 'contra13',null, 'admin', true, 'Huilen', 'Soria', 45678923, '2000/01/13', 011, 45678923),
+    ('iñakitedeschi@unlam.edu.ar', 'contra14',null, 'default', true, 'Iñaki', 'Tedeschi', 56789034, '2000/02/14', 011, 56789034),
+    ('jazminugarte@unlam.edu.ar', 'contra15',null, 'admin', true, 'Jazmin', 'Ugarte', 67890145, '2000/03/15', 011, 67890145),
+    ('lucafigueroa@unlam.edu.ar', 'contra16',null, 'default', true, 'Luca', 'Figueroa', 78901256, '2000/04/16', 011, 78901256),
+    ('melinarodriguez@unlam.edu.ar', 'contra17',null, 'admin', true, 'Melina', 'Rodriguez', 89012367, '2000/05/17', 011, 89012367),
+    ('nicolasbenitez@unlam.edu.ar', 'contra18',null, 'default', true, 'Nicolas', 'Benitez', 90123478, '2000/06/18', 011, 90123478),
+    ('orianasalvatierra@unlam.edu.ar', 'contra19',null, 'admin', true, 'Oriana', 'Salvatierra', 12345689, '2000/07/19', 011, 12345689),
+    ('pedroromero@unlam.edu.ar', 'contra20',null, 'default', true, 'Pedro', 'Romero', 23456790, '2000/08/20', 011, 23456790);
 
 INSERT INTO Provincia (nombre, imagen)
 VALUES
@@ -91,4 +91,11 @@ VALUES (2,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 6, 2),
        (3,null,STR_TO_DATE('22/12/2023', '%d/%m/%Y'),15,8,5),
        (3,null,STR_TO_DATE('10/11/2023', '%d/%m/%Y'),1,7,6);
 
-/*INSERT INTO Viaje(cantidad,descripcion,destino,fecha_hora,origen, usuario_id) VALUES(2, 'contraseña1', 'purmamarca', '15/03/2024', 'casa', 1);*/
+INSERT INTO Viaje_Compa (id_viaje, id_usuario)
+VALUES
+    (1,2),
+    (1,6),
+    (2,3),
+    (2,5),
+    (3,4),
+    (3,7);
