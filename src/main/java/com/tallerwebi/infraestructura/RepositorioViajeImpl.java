@@ -64,9 +64,9 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     }
 
     @Override
-    public List<Viaje> buscarPorFecha(String fechaHora) {
+    public List buscarPorFecha(String fechaHora) {
         return sessionFactory.getCurrentSession().createCriteria(Viaje.class)
-                .add(Restrictions.eq("fecha_hora",fechaHora))
+                .add(Restrictions.eq("fecha",fechaHora))
                 .list();
     }
 
@@ -86,7 +86,7 @@ public class RepositorioViajeImpl implements RepositorioViaje {
         return sessionFactory.getCurrentSession().createCriteria(Viaje.class)
                 .add(Restrictions.eq("origen",origen))
                 .add(Restrictions.eq("destino", destino))
-                .add(Restrictions.eq("fecha_hora",fechaHora))
+                .add(Restrictions.eq("fecha",fechaHora))
                 .list();
                     }
 

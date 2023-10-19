@@ -89,25 +89,28 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-12 col-md-12 align-content-center">
-                                <form  th:action="@{/buscar-viaje}" method="POST">
+                                <form action="#"  th:action="@{/resultado-busqueda}"  th:object="${busqueda}" method="POST">
                                     <div class="form-row">
-                                        <div class="form-group col-lg-3 col-md-6">
-                                        <label for="origen">Origen:</label>
-                                        <select id="origen" name="origen">
-                                            <option value="">-- Seleccione Origen --</option>
-                                            <option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.nombre} + ', ' + ${ciudad.provincia.nombre}"></option>
+                                        <div class="form-group col-lg-3 col-md-6" >
+                                            <label>
+                                        <select name="origen" th:field="${busqueda.origen}">
+                                            <option value="">--Seleccione Origen--</option>
+                                            <option th:each="origen : ${listaCiudades}" th:value="${origen.id}" th:text="${origen.nombre} + ', ' + ${origen.provincia.nombre}"></option>
                                         </select>
+                                            </label>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-6">
-                                            <label for="destino">Destino:</label>
-                                            <select id="destino" name="destino">
+                                            <label>
+                                            <select name="destino" th:field="${busqueda.destino}">
                                                 <option value="">-- Seleccione Destino --</option>
-                                                <option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.id} + ', ' + ${ciudad.nombre} + ', ' + ${ciudad.provincia.nombre}"></option>
+                                                <option th:each="destino : ${listaCiudades}"  th:value="${destino}" th:text="${destino.nombre} + ', ' + ${destino.provincia.nombre}"></option>
                                             </select>
+                                            </label>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-6">
-                                            <label for="fecha_hora">Fecha:</label>
-                                            <input type="text" id="fecha_hora" name="fecha_hora"/>
+                                            <label for="fecha">
+                                            <input type="date" id="fecha" name="fecha" th:field="*{fecha}"/>
+                                            </label>
                                         </div>
                                         <div class="form-group col-xl-2 col-lg-3 col-md-6 align-self-center">
                                             <button type="submit" class="btn btn-primary active w-100">Buscar Viaje
@@ -122,6 +125,57 @@
             </div>
         </div>
     </div>
+</section>
+
+<section>
+    <div th:if="${result}">
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="trending-ads-slide">
+
+                    <div class="col-sm-12 col-lg-4" th:each=" viaje : ${result}" >
+                        <div class="col-sm-12 col-lg-4" >
+                            <div class="card" style="width: 20rem;">
+                                <div class="container p-0" style="height: 200px;">
+                                    <img th:src="${viaje.destino.background}" class=" m-0 p-0 w-100 h-100">
+                                </div>
+                                <!--<div th:style="'background-image: url('+ ${viaje.destino.background} + '); height: 200px;' "></div>-->
+                                <div class="card-body">
+                                    <div class="header-card">
+                                        <img th:src="${viaje.usuario.avatar}" alt="avatar" width="55px" height="55px"
+                                             class="rounded-circle">
+                                    </div>
+                                    <div><h5 class="card-title" th:text="${viaje.usuario.nombre}"></h5></div>
+                                    <!--TODO ver el tema del formato de la fecha , ya que salta error porque es String-->
+                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fecha}"></p>
+                                    </div>
+
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fa-solid fa-signs-post fa-xl"></i> Origen: <span
+                                            th:text="${viaje.origen.nombre + ', '+ viaje.origen.provincia.nombre}"></span></li>
+                                    <li class="list-group-item"><i class="fa-solid fa-flag-checkered fa-xl"></i> Destino:
+                                        <span th:text="${viaje.destino.nombre + ', '+ viaje.destino.provincia.nombre}"></span></li>
+                                    <li class="list-group-item">
+                                        <i class="fa-solid fa-paw fa-lg"></i>
+                                        <i class="fa-solid fa-ban-smoking fa-lg"></i>
+                                        <i class="fa-solid fa-guitar fa-lg"></i>
+                                        <i class="fa-solid fa-baby-carriage fa-lg"></i>
+                                    </li>
+                                </ul>
+                                <div class="card-body">
+                                    <a th:href="@{/ver-viaje(id=${viaje.id})}" class="card-link">Mas Info</a>
+                                    <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="card-link">Ver Perfil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </section>
 
 <section class="popular-deals section bg-gray">
@@ -151,7 +205,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -188,8 +241,8 @@
                                              class="rounded-circle">
                                     </div>
                                     <div><h5 class="card-title" th:text="${viaje.usuario.nombre}"></h5></div>
-                                    <!--TODO ver el tema del formato de la fecha, ya que salta error porque es String-->
-                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fecha_hora}"></p>
+                                    <!--TODO ver el tema del formato de la fecha , ya que salta error porque es String-->
+                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fecha}"></p>
                                     </div>
 
                                 </div>
@@ -217,6 +270,8 @@
         </div>
     </div>
 </section>
+
+
 
 
 <section class=" section">
@@ -271,7 +326,9 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
 <script src="plugins/google-map/map.js" defer></script>
 
+<!--
 <script th:src="@{js/script.js}"></script>
+-->
 
 </body>
 

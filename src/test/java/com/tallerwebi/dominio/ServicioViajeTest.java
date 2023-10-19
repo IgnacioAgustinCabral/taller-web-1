@@ -4,7 +4,6 @@ package com.tallerwebi.dominio;
 import com.tallerwebi.infraestructura.ServicioViajeImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -98,7 +97,7 @@ public class ServicioViajeTest {
         assertThat(viajesObtenidos.size(), is(3) );
 
         for (Viaje viaje: viajesObtenidos) {
-            assertThat(viaje.getFecha_hora(),equalTo(viajesEsperados.get(0).getFecha_hora()));
+            assertThat(viaje.getFecha(),equalTo(viajesEsperados.get(0).getFecha()));
         }
     }
 
@@ -123,7 +122,7 @@ public class ServicioViajeTest {
         for (Viaje viaje: viajesObtenidos) {
             assertThat(viaje.getOrigen(),equalTo(viajesEsperados.get(0).getOrigen()));
             assertThat(viaje.getDestino(),equalTo(viajesEsperados.get(0).getDestino()));
-            assertThat(viaje.getFecha_hora(),equalTo(viajesEsperados.get(0).getFecha_hora()));
+            assertThat(viaje.getFecha(),equalTo(viajesEsperados.get(0).getFecha()));
         }
     }
 

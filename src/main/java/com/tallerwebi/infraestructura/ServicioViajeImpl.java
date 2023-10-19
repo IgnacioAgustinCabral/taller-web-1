@@ -44,9 +44,31 @@ public class ServicioViajeImpl implements ServicioViaje {
         return repositorioViaje.buscarPorFecha(String.valueOf(fecha));
     }
 
+
     @Override
     public List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha) {
-        return repositorioViaje.buscarPorOrigenDestinoYfecha(origen,destino,fecha);
+
+        if (origen != null && destino != null && fecha != null) {
+           return repositorioViaje.buscarPorOrigenDestinoYfecha(origen,destino,fecha);
+        }
+        else if (origen != null && destino == null && fecha != null) {
+            return repositorioViaje.buscarPorOrigenDestinoYfecha(origen, null,fecha);
+
+        } else if (origen == null && destino != null && fecha != null) {
+            return  repositorioViaje.buscarPorOrigenDestinoYfecha(null, destino,fecha);
+        }
+
+        else if (origen == null && destino == null && fecha != null) {
+            return repositorioViaje.buscarPorFecha(fecha);
+        } else if(origen != null && destino == null) {
+            return repositorioViaje.buscarPorOrigen(origen);
+        }
+        else if(origen == null && destino != null){
+            return repositorioViaje.buscarPorDestino(destino);
+        }
+        else {
+            return repositorioViaje.listarViajes();
+        }
     }
 
     @Override

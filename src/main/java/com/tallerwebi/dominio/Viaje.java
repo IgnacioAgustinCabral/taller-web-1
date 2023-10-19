@@ -1,6 +1,5 @@
 package com.tallerwebi.dominio;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class Viaje {
@@ -11,7 +10,7 @@ public class Viaje {
     private  Long id;
     private String descripcion;
     private  Integer cantidad;
-    private String fecha_hora;
+    private String fecha;
 
     @ManyToOne
     private  Ciudad destino;
@@ -28,7 +27,7 @@ public class Viaje {
 
         this.origen = origen;
         this.destino = destino;
-        this.fecha_hora = fecha_hora;
+        this.fecha = fecha_hora;
         this.cantidad = cantidad;
         this.descripcion = descripcion;
         this.usuario =  creador;
@@ -56,12 +55,12 @@ public class Viaje {
         this.cantidad = cantidad;
     }
 
-    public String getFecha_hora() {
-        return this.fecha_hora;
+    public String getFecha() {
+        return this.fecha;
     }
 
-    public void setFecha_hora(String fecha_hora) {
-        this.fecha_hora = fecha_hora;
+    public void setFecha(String fecha_hora) {
+        this.fecha = fecha_hora;
     }
 
     public Ciudad getDestino() {
