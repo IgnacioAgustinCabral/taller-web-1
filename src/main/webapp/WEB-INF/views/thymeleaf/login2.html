@@ -17,14 +17,14 @@
     <link href="plugins/slick/slick-theme.css" rel="stylesheet">
     <link href="plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet">
 
-    <link th:href="@{css/style.css}" rel="stylesheet">
+    <link th:href="@{css/login.css}" rel="stylesheet">
 
 </head>
 
-<body class="body-wrapper">
+<body class="body-wrapper bg-login">
 
 
-<header>
+<header class="header">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -46,11 +46,11 @@
     </div>
 </header>
 
-<section class="bg-login py-5 border-top-1">
+<section class="py-5 border-top-1">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-8 align-item-center">
-                <div class="border">
+                <div class="border cont-login">
                     <h3 class="bg-gray p-4">Inicio de Sesión</h3>
                     <form action="#" th:action="@{/validar-login}" method="POST" th:object="${datosLogin}">
                         <fieldset class="p-4">

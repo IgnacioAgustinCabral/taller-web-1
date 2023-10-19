@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class ControladorLogin {
+public class
+ControladorLogin {
 
     private ServicioLogin servicioLogin;
 
