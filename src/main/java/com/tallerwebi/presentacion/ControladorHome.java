@@ -4,7 +4,6 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,7 +20,6 @@ public class ControladorHome {
 
     private ServicioProvincia servicioProvincia;
     private ServicioViaje servicioViaje;
-    private ServicioUsuario servicioUsuario;
     private ServicioCiudad servicioCiudad;
 
     @Autowired
@@ -48,7 +45,6 @@ public class ControladorHome {
         model.put("provincias", provincia);
         model.put("busqueda", new FiltroBusqueda());
         model.put("listaCiudades", ciudades);
-        model.put("busqueda", new FiltroBusqueda());
 
         return new ModelAndView("home", model);
     }
@@ -57,6 +53,7 @@ public class ControladorHome {
     public ModelAndView buscar(@ModelAttribute ("busqueda") FiltroBusqueda filtroBusqueda) {
         ModelMap model = new ModelMap();
         List<Viaje> viajesFiltrados;
+
 
 /*
         System.out.println("FILTRO = " + filtroBusqueda.getOrigen() + "!!!!!!!!!!"
