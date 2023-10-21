@@ -23,9 +23,9 @@ public class Usuario {
     private Integer cod_area;
     private Long telefono;
 
-    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaCompanieros")
+  /*  @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaCompanieros")
     private List<Viaje> viajes;
-
+*/
     //TODO: constructor de pruebas.
     public Usuario(){};
 
@@ -148,7 +148,9 @@ public class Usuario {
     public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
+}
 
+/*
     public List<Viaje> getViajes() {
         return viajes;
     }
@@ -157,3 +159,4 @@ public class Usuario {
         this.viajes = viajes;
     }
 }
+*/
