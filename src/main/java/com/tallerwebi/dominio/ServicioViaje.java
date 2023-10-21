@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -10,9 +11,9 @@ public interface ServicioViaje {
 
     List<Viaje> obtenerViajesPorOrigen(Ciudad origen);
 
-    List<Viaje> obtenerViajesPorFecha(String fecha);
+    List<Viaje> obtenerViajesPorFecha(LocalDate fecha);
 
-    List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha_hora);
+    List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, LocalDate fecha);
 
     void crearViaje(Viaje viaje);
 

@@ -60,7 +60,7 @@ public class ControladorHome {
                 + "FILTRO=" + filtroBusqueda.getFecha()+ " DESTINO" + filtroBusqueda.getDestino());
 */
 
-        viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(filtroBusqueda.getOrigen(),filtroBusqueda.getDestino(),String.valueOf(filtroBusqueda.getFecha()));
+        viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(filtroBusqueda.getOrigen(),filtroBusqueda.getDestino(),filtroBusqueda.getFecha());
 
         model.put("result",viajesFiltrados);
 

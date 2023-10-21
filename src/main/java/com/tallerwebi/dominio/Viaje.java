@@ -1,8 +1,7 @@
 package com.tallerwebi.dominio;
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Viaje {
@@ -13,7 +12,7 @@ public class Viaje {
     private  Long id;
     private String descripcion;
     private  Integer cantidad;
-    private String fecha;
+    private LocalDate fecha;
 
     private Boolean noFumar;
     private Boolean noNinios;
@@ -32,7 +31,7 @@ public class Viaje {
 
 
     public Viaje() {}
-    public Viaje(Ciudad origen, Ciudad destino, String fecha, Integer cantidad, String descripcion, Usuario creador) {
+    public Viaje(Ciudad origen, Ciudad destino, LocalDate fecha, Integer cantidad, String descripcion, Usuario creador) {
 
         this.origen = origen;
         this.destino = destino;
@@ -64,12 +63,12 @@ public class Viaje {
         this.cantidad = cantidad;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return this.fecha;
     }
 
-    public void setFecha(String fecha_hora) {
-        this.fecha = fecha_hora;
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     public Ciudad getDestino() {

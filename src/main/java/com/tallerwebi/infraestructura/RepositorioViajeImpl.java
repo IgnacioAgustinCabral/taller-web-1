@@ -5,13 +5,13 @@ import com.tallerwebi.dominio.RepositorioViaje;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Viaje;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -64,7 +64,7 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     }
 
     @Override
-    public List buscarPorFecha(String fecha) {
+    public List buscarPorFecha(LocalDate fecha) {
         return sessionFactory.getCurrentSession().createQuery("FROM Viaje WHERE fecha = :fecha ", Viaje.class)
                 .setParameter("fecha",fecha)
                 .list();
@@ -82,8 +82,8 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     }
 
     @Override
-    public List buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fecha) {
-        return sessionFactory.getCurrentSession().createQuery("FROM Viaje WHERE origen = :origen AND destino = :destino AND fecha = :fecha", Viaje.class)
+    public List buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, LocalDate fecha) {
+        return sessionFactory.getCurrentSession().createQuery("FROM Viaje WHERE origen = :origen OR destino = :destino OR fecha = :fecha", Viaje.class)
                 .setParameter("origen", origen)
                 .setParameter("destino", destino)
                 .setParameter("fecha", fecha)

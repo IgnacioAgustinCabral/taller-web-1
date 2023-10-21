@@ -1,16 +1,17 @@
 package com.tallerwebi.dominio;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class FiltroBusqueda {
 
     Ciudad origen;
     Ciudad destino;
-    Date fecha;
+    LocalDate fecha;
 
     public FiltroBusqueda() {}
 
-    public FiltroBusqueda(Ciudad origen, Ciudad destino, Date fecha){
+    public FiltroBusqueda(Ciudad origen, Ciudad destino, LocalDate fecha){
         this.origen = origen;
         this.destino = destino;
         this.fecha = fecha;
@@ -32,11 +33,11 @@ public class FiltroBusqueda {
         this.destino = destino;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 }

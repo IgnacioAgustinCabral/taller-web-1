@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,13 +42,13 @@ public class ServicioViajeImpl implements ServicioViaje {
     }
 
     @Override
-    public List<Viaje> obtenerViajesPorFecha(String fecha) {
-        return repositorioViaje.buscarPorFecha(String.valueOf(fecha));
+    public List<Viaje> obtenerViajesPorFecha(LocalDate fecha) {
+        return repositorioViaje.buscarPorFecha(fecha);
     }
 
 
     @Override
-    public List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha) {
+    public List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, LocalDate fecha) {
 
         if (origen != null && destino != null && fecha != null) {
            return repositorioViaje.buscarPorOrigenDestinoYfecha(origen,destino,fecha);

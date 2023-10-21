@@ -5,6 +5,7 @@ import com.tallerwebi.infraestructura.ServicioViajeImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,12 +87,12 @@ public class ServicioViajeTest {
         Ciudad junin = new Ciudad ("Junin",buenosAires,"");
         Ciudad tandil = new Ciudad ("Tandil",buenosAires,"");
 
-        viajesEsperados.add(new  Viaje(tandil,junin, LocalDateTime.now().withSecond(0).withNano(0).toString(), 2, "probando", usuario));
-        viajesEsperados.add(new  Viaje(tandil,junin, LocalDateTime.now().withSecond(0).withNano(0).toString(), 2, "probando", usuario));
-        viajesEsperados.add(new  Viaje(tandil,junin, LocalDateTime.now().withSecond(0).withNano(0).toString(), 2, "probando", usuario));
-        when(this.repositorioViaje.buscarPorFecha(anyString())).thenReturn(viajesEsperados);
+        viajesEsperados.add(new  Viaje(tandil,junin, LocalDate.now(), 2, "probando", usuario));
+        viajesEsperados.add(new  Viaje(tandil,junin, LocalDate.now(), 2, "probando", usuario));
+        viajesEsperados.add(new  Viaje(tandil,junin, LocalDate.now(), 2, "probando", usuario));
+        when(this.repositorioViaje.buscarPorFecha(any())).thenReturn(viajesEsperados);
 
-        List <Viaje> viajesObtenidos = this.servicioViaje.obtenerViajesPorFecha(LocalDateTime.now().withSecond(0).withNano(0).toString());
+        List <Viaje> viajesObtenidos = this.servicioViaje.obtenerViajesPorFecha(LocalDate.now());
 
         assertThat(viajesObtenidos,not(empty()));
         assertThat(viajesObtenidos.size(), is(3) );
@@ -109,12 +110,12 @@ public class ServicioViajeTest {
         Provincia buenosAires = new Provincia("Buenos Aires","");
         Ciudad junin = new Ciudad ("Junin",buenosAires,"");
         Ciudad tandil = new Ciudad ("Tandil",buenosAires,"");
-        viajesEsperados.add(new  Viaje(tandil,junin, LocalDateTime.now().withSecond(0).withNano(0).toString(), 2, "probando", usuario));
-        viajesEsperados.add(new  Viaje(tandil,junin, LocalDateTime.now().withSecond(0).withNano(0).toString(), 2, "probando", usuario));
-        viajesEsperados.add(new  Viaje(tandil,junin, LocalDateTime.now().withSecond(0).withNano(0).toString(), 2, "probando", usuario));
-        when(this.repositorioViaje.buscarPorOrigenDestinoYfecha(any(),any(),anyString())).thenReturn(viajesEsperados);
+        viajesEsperados.add(new  Viaje(tandil,junin, LocalDate.now(), 2, "probando", usuario));
+        viajesEsperados.add(new  Viaje(tandil,junin, LocalDate.now(), 2, "probando", usuario));
+        viajesEsperados.add(new  Viaje(tandil,junin, LocalDate.now(), 2, "probando", usuario));
+        when(this.repositorioViaje.buscarPorOrigenDestinoYfecha(any(),any(),any())).thenReturn(viajesEsperados);
 
-        List <Viaje> viajesObtenidos = this.servicioViaje.obtenerViajesPorFiltroMultiple(tandil,junin,LocalDateTime.now().withSecond(0).withNano(0).toString());
+        List <Viaje> viajesObtenidos = this.servicioViaje.obtenerViajesPorFiltroMultiple(tandil,junin,LocalDate.now());
 
         assertThat(viajesObtenidos,not(empty()));
         assertThat(viajesObtenidos.size(), is(3) );
@@ -139,7 +140,7 @@ public class ServicioViajeTest {
         Provincia buenosAires = new Provincia("Buenos Aires","");
         Ciudad junin = new Ciudad ("Junin",buenosAires,"");
         Ciudad tandil = new Ciudad ("Tandil",buenosAires,"");
-        return new  Viaje(junin,tandil, LocalDateTime.now().toString(), 2, "probando", usuario);
+        return new  Viaje(junin,tandil, LocalDate.now(), 2, "probando", usuario);
     }
     private Usuario crearUsuario() {
         return new Usuario();

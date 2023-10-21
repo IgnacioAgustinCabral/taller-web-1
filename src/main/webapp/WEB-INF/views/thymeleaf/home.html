@@ -70,15 +70,15 @@
                                                 <label>
                                             <select class="ignore" name="origen" th:field="*{origen}">
                                                 <option value="">--Seleccione Origen--</option>
-                                                <option th:each="origen : ${listaCiudades}" th:value="${origen}" th:text="${origen.nombre} + ', ' + ${origen.provincia.nombre}"></option>
+                                                <option th:each="origen : ${listaCiudades}" th:value="${origen.id}" th:text="${origen.nombre} + ', ' + ${origen.provincia.nombre}"></option>
                                             </select>
                                                 </label>
                                             </div>
                                             <div class="form-group col-lg-3 col-md-6">
                                                 <label>
-                                                <select class="ignore dropdown" name="destino" th:field="*{destino}">
+                                                <select class="ignore" name="destino" th:field="*{destino}">
                                                     <option value="">-- Seleccione Destino --</option>
-                                                    <option class="dropdown-item" th:each="destino : ${listaCiudades}"  th:value="${destino}" th:text="${destino.nombre} + ', ' + ${destino.provincia.nombre}"></option>
+                                                    <option class="" th:each="destino : ${listaCiudades}"  th:value="${destino.id}" th:text="${destino.nombre} + ', ' + ${destino.provincia.nombre}"></option>
                                                 </select>
                                                 </label>
                                             </div>
