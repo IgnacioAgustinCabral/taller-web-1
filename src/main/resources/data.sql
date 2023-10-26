@@ -83,21 +83,19 @@ VALUES
     ('images/ciudades/trelew-chubut.webp', 'Trelew', 4),
     ('images/ciudades/usuahia.png', 'Ushuaia', 22);
 
-INSERT INTO Viaje ( cantidad, descripcion, fecha_hora, destino_id, origen_id, usuario_id)
-
+INSERT INTO Viaje ( cantidad, descripcion, fecha, destino_id, origen_id, usuario_id)
 VALUES (2,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 5, 2),
        (5,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate vehicula mauris, ac interdum nunc porttitor vel. In hac habitasse platea dictumst. Aliquam erat volutpat. Vestibulum ornare rutrum interdum. Sed faucibus orci ac rhoncus egestas' ,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),9 , 4, 2),
        (4,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),22 , 6, 2),
        (2,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec tempus urna. In hac habitasse platea dictumst. Nullam feugiat tristique tellus, viverra dictum leo ultricies in. In hac habitasse platea dictumst. In hac habitasse platea dictumst.' ,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 6, 2),
        (5,'Probando viajesitoo',STR_TO_DATE('25/12/2023', '%d/%m/%Y'),9 , 12, 2),
        (4,'Probando viaje de nuevoo',STR_TO_DATE('30/09/2024', '%d/%m/%Y'),22 , 8, 2),
-
        (3,null,STR_TO_DATE('25/09/2024', '%d/%m/%Y'),9,12,3),
        (3,null,STR_TO_DATE('05/04/2024', '%d/%m/%Y'),22,10,4),
        (3,null,STR_TO_DATE('22/12/2023', '%d/%m/%Y'),15,8,5),
        (3,null,STR_TO_DATE('22/12/2023', '%d/%m/%Y'),15,8,5),
        (3,null,STR_TO_DATE('10/11/2023', '%d/%m/%Y'),1,7,6);
-
+/*
 INSERT INTO Viaje_Compa (id_viaje, id_usuario)
 VALUES
     (1,2),
@@ -105,4 +103,4 @@ VALUES
     (2,3),
     (2,5),
     (3,4),
-    (3,7);
+    (3,7);*/

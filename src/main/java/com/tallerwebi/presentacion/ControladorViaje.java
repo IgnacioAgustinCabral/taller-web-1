@@ -77,4 +77,6 @@ public class ControladorViaje {
 
         return new ModelAndView("provinciaDetalle", modelo);
     }
+
+
 }

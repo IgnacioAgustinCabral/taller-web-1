@@ -5,7 +5,6 @@ import com.tallerwebi.dominio.RepositorioViaje;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Viaje;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -64,9 +63,9 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     }
 
     @Override
-    public List<Viaje> buscarPorFecha(String fechaHora) {
-        return sessionFactory.getCurrentSession().createCriteria(Viaje.class)
-                .add(Restrictions.eq("fecha_hora",fechaHora))
+    public List buscarPorFecha(String fecha) {
+        return sessionFactory.getCurrentSession().createQuery("FROM Viaje WHERE fecha = :fecha ", Viaje.class)
+                .setParameter("fecha",fecha)
                 .list();
     }
 
@@ -82,11 +81,11 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     }
 
     @Override
-    public List buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fechaHora) {
-        return sessionFactory.getCurrentSession().createCriteria(Viaje.class)
-                .add(Restrictions.eq("origen",origen))
-                .add(Restrictions.eq("destino", destino))
-                .add(Restrictions.eq("fecha_hora",fechaHora))
+    public List buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fecha) {
+        return sessionFactory.getCurrentSession().createQuery("FROM Viaje WHERE origen = :origen OR destino = :destino OR fecha = :fecha", Viaje.class)
+                .setParameter("origen", origen)
+                .setParameter("destino", destino)
+                .setParameter("fecha", fecha)
                 .list();
                     }
 
