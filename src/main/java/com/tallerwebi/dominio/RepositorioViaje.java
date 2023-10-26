@@ -1,6 +1,5 @@
 package com.tallerwebi.dominio;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface RepositorioViaje {
@@ -16,13 +15,13 @@ public interface RepositorioViaje {
 
     List<Viaje> buscarPorOrigen(Ciudad origen);
 
-    List<Viaje> buscarPorFecha(LocalDate fecha);
+    List<Viaje> buscarPorFecha(String fecha);
 
     void eliminar(Viaje viaje);
 
     List<Viaje> buscarPorUsuario(Usuario usuario);
 
-    List<Viaje> buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, LocalDate fechaHora);
+    List<Viaje> buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fechaHora);
 
     List<Viaje> listarPorProvincia(String provincia);
 }

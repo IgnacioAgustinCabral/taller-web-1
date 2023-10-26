@@ -42,13 +42,13 @@ public class ServicioViajeImpl implements ServicioViaje {
     }
 
     @Override
-    public List<Viaje> obtenerViajesPorFecha(LocalDate fecha) {
+    public List<Viaje> obtenerViajesPorFecha(String fecha) {
         return repositorioViaje.buscarPorFecha(fecha);
     }
 
 
     @Override
-    public List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, LocalDate fecha) {
+    public List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha) {
 
         if (origen != null && destino != null && fecha != null) {
            return repositorioViaje.buscarPorOrigenDestinoYfecha(origen,destino,fecha);

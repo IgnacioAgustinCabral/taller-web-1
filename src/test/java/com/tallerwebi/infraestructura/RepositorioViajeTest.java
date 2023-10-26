@@ -86,7 +86,7 @@ public class RepositorioViajeTest {
     @Test
     public void queSePuedaBuscarViajesPorFecha(){
         dadoQueTengo2ViajesGuardadosConDistintaFecha();
-        List <Viaje> busqueda = cuandoBuscoPorFecha(LocalDate.now());
+        List <Viaje> busqueda = cuandoBuscoPorFecha(LocalDate.now().toString());
         entoncesElTamanioEs1(busqueda);
     }
     @Transactional
@@ -114,8 +114,8 @@ public class RepositorioViajeTest {
         Ciudad tandil = new Ciudad ("Tandil",buenosAires,"");
         repositorioCiudad.guardar(tandil);
 
-        Viaje viaje = new Viaje(tandil, junin,LocalDate.now(), 2, "probando", creador);
-        Viaje viaje2 = new Viaje(tandil, junin, LocalDate.now(), 2, "probando", creador);
+        Viaje viaje = new Viaje(tandil, junin,LocalDate.now().toString(), 2, "probando", creador);
+        Viaje viaje2 = new Viaje(tandil, junin, LocalDate.now().toString(), 2, "probando", creador);
 
         repositorio.guardar(viaje);
         repositorio.guardar(viaje2);
@@ -143,9 +143,9 @@ public class RepositorioViajeTest {
         Ciudad tandil = new Ciudad ("Tandil",buenosAires,"");
         repositorioCiudad.guardar(tandil);
 
-        Viaje viaje = new Viaje(junin, tandil, LocalDate.now(), 2, "probando", usuario);
-        Viaje viaje2 = new Viaje(junin  , junin, LocalDate.now(), 2, "probando", usuario);
-        Viaje viaje3 = new Viaje(junin, tandil, LocalDate.now(), 2, "probando", usuario);
+        Viaje viaje = new Viaje(junin, tandil, LocalDate.now().toString(), 2, "probando", usuario);
+        Viaje viaje2 = new Viaje(junin  , junin, LocalDate.now().toString(), 2, "probando", usuario);
+        Viaje viaje3 = new Viaje(junin, tandil, LocalDate.now().toString(), 2, "probando", usuario);
 
         repositorio.guardar(viaje);
         repositorio.guardar(viaje2);
@@ -171,7 +171,7 @@ public class RepositorioViajeTest {
         repositorioCiudad.guardar(junin);
         Ciudad tandil = new Ciudad ("Tandil",buenosAires,"");
         repositorioCiudad.guardar(tandil);
-        Viaje viaje = new Viaje(junin, tandil, LocalDate.now(), 2, "probando", usuario);
+        Viaje viaje = new Viaje(junin, tandil, LocalDate.now().toString(), 2, "probando", usuario);
         //ejecucion
         repositorio.guardar(viaje);
         return viaje;
@@ -206,9 +206,9 @@ public class RepositorioViajeTest {
         repositorioCiudad.guardar(tandil);
 
 
-        Viaje viaje = new Viaje(junin,tandil, LocalDate.now(), 2, "probando", usuario);
-        Viaje viaje2 = new Viaje(tandil,junin, LocalDate.now(), 3, "probando", usuario);
-        Viaje viaje3 = new Viaje(junin,tandil, LocalDate.now(), 4, "probando", usuario);
+        Viaje viaje = new Viaje(junin,tandil, LocalDate.now().toString(), 2, "probando", usuario);
+        Viaje viaje2 = new Viaje(tandil,junin, LocalDate.now().toString(), 3, "probando", usuario);
+        Viaje viaje3 = new Viaje(junin,tandil, LocalDate.now().toString(), 4, "probando", usuario);
 
         viajes.add(viaje);
         viajes.add(viaje2);
@@ -263,7 +263,7 @@ public class RepositorioViajeTest {
         assertThat(busqueda, is(notNullValue()));
     }
 
-    private List<Viaje> cuandoBuscoPorFecha(LocalDate fecha) {
+    private List<Viaje> cuandoBuscoPorFecha(String fecha) {
         return repositorio.buscarPorFecha(fecha);
     }
 
@@ -276,8 +276,8 @@ public class RepositorioViajeTest {
         repositorioCiudad.guardar(junin);
         Ciudad tandil = new Ciudad ("Tandil",buenosAires,"");
         repositorioCiudad.guardar(tandil);
-        Viaje viaje = new Viaje(tandil,junin, LocalDate.now(), 2, "probando", creador);
-        Viaje viaje2 = new Viaje(tandil,junin, LocalDate.parse("2023-10-20"), 2, "probando", creador);
+        Viaje viaje = new Viaje(tandil,junin, LocalDate.now().toString(), 2, "probando", creador);
+        Viaje viaje2 = new Viaje(tandil,junin, "2023-10-20", 2, "probando", creador);
         //ejecucion
         repositorio.guardar(viaje);
         repositorio.guardar(viaje2);

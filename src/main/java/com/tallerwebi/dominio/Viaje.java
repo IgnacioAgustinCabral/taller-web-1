@@ -12,7 +12,7 @@ public class Viaje {
     private  Long id;
     private String descripcion;
     private  Integer cantidad;
-    private LocalDate fecha;
+    private String fecha;
 
     private Boolean noFumar;
     private Boolean noNinios;
@@ -31,7 +31,7 @@ public class Viaje {
 
 
     public Viaje() {}
-    public Viaje(Ciudad origen, Ciudad destino, LocalDate fecha, Integer cantidad, String descripcion, Usuario creador) {
+    public Viaje(Ciudad origen, Ciudad destino, String fecha, Integer cantidad, String descripcion, Usuario creador) {
 
         this.origen = origen;
         this.destino = destino;
@@ -63,11 +63,11 @@ public class Viaje {
         this.cantidad = cantidad;
     }
 
-    public LocalDate getFecha() {
+    public String getFecha() {
         return this.fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

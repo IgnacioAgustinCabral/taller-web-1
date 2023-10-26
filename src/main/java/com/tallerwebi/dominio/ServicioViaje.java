@@ -11,9 +11,9 @@ public interface ServicioViaje {
 
     List<Viaje> obtenerViajesPorOrigen(Ciudad origen);
 
-    List<Viaje> obtenerViajesPorFecha(LocalDate fecha);
+    List<Viaje> obtenerViajesPorFecha(String fecha);
 
-    List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, LocalDate fecha);
+    List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha);
 
     void crearViaje(Viaje viaje);
 
