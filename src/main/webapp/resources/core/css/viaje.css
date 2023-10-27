@@ -59,6 +59,9 @@ body{
 .topSpace{
     margin-top: 8px !important;
 }
+.rightSpace{
+    margin-right: 5px !important;
+}
 .widget-49 .widget-49-title-wrapper {
     display: flex;
     align-items: center;
