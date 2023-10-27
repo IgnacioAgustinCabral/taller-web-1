@@ -34,8 +34,8 @@
   <link th:href="@{/css/perfil.css}" rel="stylesheet">
   <link th:href="@{/css/viaje.css}" rel="stylesheet">
 </head>
-<body class="body-wrapper">
-<header>
+<body class="body-wrapper bg-darkness">
+<header class="fixed-top">
   <div th:if="${session != null ? session.isLogged : false}">
     <!-- Fragmento de barra de navegación para usuarios autenticados -->
     <div th:replace="navbar-user"></div>
@@ -46,7 +46,8 @@
   </div>
 </header>
 
-<div class="container">
+<body>
+<div class="container spaceToHeaderFixed">
     <div class="card mb-3">
       <img class="card-img-top bottomSpace" th:src="${viajes.destino.background}" height="280" alt="Imagen descriptiva del destino del viaje">
       <h1 class="card-title text-center" th:text="'Viaje creado por ' + ${viajes.usuario.nombre + ' ' + viajes.usuario.apellido}"></h1>
@@ -179,4 +180,5 @@
 <script type="text/javascript">
 </script>
 </body>
-</html>
+<!--
+</html>-->
