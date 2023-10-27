@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title th:text="'Viaje creado por ' + ${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"></title>
+  <title th:text="'Viaje creado por ' + ${viajes.usuario.nombre + ' ' + viajes.usuario.apellido}"></title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <!-- Use Thymeleaf expressions for CSS URLs -->
@@ -46,35 +46,49 @@
   </div>
 </header>
 
-
-
 <div class="container">
+  <div class="row">
+    <div class="card mb-3">
+      <img class="card-img-top" src="..." alt="Card image cap">
+      <div class="card-body">
+        <div th:each="viajes : ${viajes}">
+          <h3 class="card-title" th:text="'Viaje creado por ' + ${viajes.usuario.nombre + ' ' + viajes.usuario.apellido}"></h3>
+          <h5 class="card-text">Origen</h5>
+          <p class="card-text" th:text="${viajes.origen.provincia.nombre} + ', ' + ${viajes.origen.nombre}"></p>
+          <h53 class="card-text">Destino</h53>
+          <p class="card-text" th:text="${viajes.destino.provincia.nombre} + ', ' + ${viajes.destino.nombre}"></p>
+          <h5 class="card-text">Fecha de salida</h5>
+          <p class="card-text" th:text="${viajes.fecha}"></p>
+          <h5 class="card-text">Lugares disponibles</h5>
+          <p class="card-text" th:text="${viajes.cantidad}"></p>
+          <h5 class="card-text">Tiempo de viaje</h5>
+          <p class="card-text">6 horas</p>
+          <h5 class="card-text">Descripción</h5>
+          <p class="card-text" th:text="${viajes.descripcion}"></p>
 
-<div class="card mb-3" >
-  <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-  <div class="card-body">
-    <div th:each="viaje : ${viajes}">
-      <h2>test</h2>
-    <h1 class="card-title" th:text="'Viaje creado por ' + ${viaje.usuario.nombre + ' ' + usuario.apellido}"></h1>
-    <h3 class="card-text">Origen</h3>
-    <p class="card-text" th:text="${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></p>
-    <h3 class="card-text">Destino</h3>
-    <p class="card-text" th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></p>
-    <h3 class="card-text">Fecha de salida</h3>
-    <p class="card-text" th:text="${viaje.fecha}"></p>
-    <h3 class="card-text">Lugares disponibles</h3>
-    <p class="card-text" th:text="${viaje.cantidad}"></p>
-    <h3 class="card-text">Tiempo de viaje</h3>
-    <p class="card-text">6 horas</p>
-    <h3 class="card-text">Descripción</h3>
-    <p class="card-text" th:text="${viaje.descripcion}"></p>
-
-    <a href="#" class="btn btn-secondary">Conectar</a>
-    <p class="card-text"><small class="text-muted">Última actualización: hace 10 minutos</small></p>
+          <a href="#" class="btn btn-secondary">Conectar</a>
+          <p class="card-text"><small class="text-muted">Última actualización: hace 10 minutos</small></p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
+
+<div class="card mb-3">
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    <h3 class="card-title">Card title</h3>
+    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
 </div>
 <!--
 <span th:text="${'Viaje: ' + viaje.destino.nombre+', '+viaje.destino.provincia.nombre + ' - '

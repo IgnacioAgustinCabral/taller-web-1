@@ -57,13 +57,25 @@ public class ControladorViaje {
     }
 
     @RequestMapping(path = "/ver-viaje", method = RequestMethod.GET )
+    public ModelAndView masInfo(@RequestParam(required = false) String id) {
+        ModelMap model = new ModelMap();
+
+        Viaje viajeBuscado = servicioViaje.obtenerViajePorId(Long.valueOf(id));
+        model.put("viajes", viajeBuscado);
+        return new ModelAndView("viaje/viaje", model);
+        //mv.addObject("viaje", viajeBuscado);
+        //mv.setViewName("viaje/viaje");
+        //return mv;
+    }
+
+/*    @RequestMapping(path = "/ver-viaje", method = RequestMethod.GET )
     public ModelAndView masInfo(@RequestParam(required = false) String id, ModelAndView mv) {
 
         Viaje viajeBuscado = servicioViaje.obtenerViajePorId(Long.valueOf(id));
         mv.addObject("viaje", viajeBuscado);
         mv.setViewName("viaje/viaje");
         return mv;
-    }
+    }*/
 
 
     @RequestMapping(path = "/listar-provincia", method = GET)
