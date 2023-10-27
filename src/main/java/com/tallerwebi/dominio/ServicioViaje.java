@@ -2,6 +2,7 @@ package com.tallerwebi.dominio;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public interface ServicioViaje {
     List<Viaje> obtenerViajes();
@@ -12,7 +13,7 @@ public interface ServicioViaje {
 
     List<Viaje> obtenerViajesPorFecha(String fecha);
 
-    List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha_hora);
+    List<Viaje> obtenerViajesPorFiltroMultiple(FiltroViaje filtro);
 
     void crearViaje(Viaje viaje);
 

@@ -1,18 +1,14 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Ciudad;
-import com.tallerwebi.dominio.ServicioCiudad;
-import com.tallerwebi.dominio.ServicioViaje;
-import com.tallerwebi.dominio.Viaje;
+import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +25,7 @@ public class ControladorBusqueda{
         this.servicioCiudad = servicioCiudad;
     }
 
-    @RequestMapping(path= "/buscar-viaje", method = RequestMethod.POST)
+    /*@RequestMapping(path= "/buscar-viaje", method = RequestMethod.POST)
     public ModelAndView buscar(@RequestParam(required = false) Ciudad origen, @RequestParam(required = false)Ciudad destino , @RequestParam(required = false)@DateTimeFormat(pattern = "dd/MM/yyyy") Date fecha_hora){
         ModelMap model = new ModelMap();
         List<Viaje> viajesFiltrados;
@@ -54,5 +50,21 @@ public class ControladorBusqueda{
         }
 
         return new ModelAndView("/busqueda/busqueda",model);
+    }*/
+
+    @RequestMapping(value="/buscar-viaje", method= RequestMethod.POST)
+    public ModelAndView buscarViaje(@ModelAttribute("viajeBuscado") FiltroViaje viajeBuscado, ModelMap model) {
+
+        System.out.println("ORIGEN DEL VIAJE BUSCADO:" +  viajeBuscado.getOrigen().getId()+"///////////////////////////////");
+        System.out.println("DESTINO DEL VIAJE BUSCADO:" +  viajeBuscado.getDestino().getId() +"//////////////////////////////////");
+        System.out.println("FECHA DEL VIAJE BUSCADO:" +  viajeBuscado.getFecha().toString() +"//////////////////////////////////");
+
+        var viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(viajeBuscado);
+
+        model.addAttribute("filtroBuscado",viajeBuscado);
+        model.addAttribute("viajesFiltrados",viajesFiltrados);
+
+
+        return new ModelAndView("pruebadefiltro",model);
     }
 }

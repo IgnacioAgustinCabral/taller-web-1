@@ -154,7 +154,6 @@ public class RepositorioViajeTest {
 
         assertThat(buscados,is(hasSize(2)));
         assertThat(buscados,is(notNullValue()));
-
     }
 
     private void entoncesEsperoQueBusquedaNoSeaNull(Viaje busqueda) {

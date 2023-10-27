@@ -16,8 +16,8 @@ public class Ciudad {
     private  String background;
 
     public Ciudad() {
-
     }
+
     public Ciudad(String nombre, Provincia provincia, String background) {
         this.nombre = nombre;
         this.provincia = provincia;

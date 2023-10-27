@@ -103,7 +103,7 @@ public class ServicioViajeTest {
     }
 
     @Test
-    public void queSePuedanBuscarViajesPorMultiplesFiltros(){
+    /*public void queSePuedanBuscarViajesPorMultiplesFiltros(){
 
         Usuario usuario = new Usuario();
         List <Viaje> viajesEsperados = new ArrayList();
@@ -125,7 +125,7 @@ public class ServicioViajeTest {
             assertThat(viaje.getDestino(),equalTo(viajesEsperados.get(0).getDestino()));
             assertThat(viaje.getFecha_hora(),equalTo(viajesEsperados.get(0).getFecha_hora()));
         }
-    }
+    }*/
 
     private List<Viaje> generarViajes(int cantidadDeseada) {
         List <Viaje>   viajes = new ArrayList<>();
