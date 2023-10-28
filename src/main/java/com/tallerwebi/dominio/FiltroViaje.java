@@ -11,7 +11,9 @@ public class FiltroViaje {
     private LocalDate fecha;
 
     public FiltroViaje() {
-
+        this.origen = null;
+        this.destino = null;
+        this.fecha = null;
     }
 
     public Ciudad getOrigen() {

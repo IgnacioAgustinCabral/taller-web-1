@@ -8,9 +8,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class ControladorBusqueda{
@@ -53,17 +56,24 @@ public class ControladorBusqueda{
     }*/
 
     @RequestMapping(value="/buscar-viaje", method= RequestMethod.POST)
-    public ModelAndView buscarViaje(@ModelAttribute("viajeBuscado") FiltroViaje viajeBuscado, ModelMap model) {
+    public ModelAndView buscarViaje(@ModelAttribute("viajeBuscado") FiltroViaje viajeBuscado, ModelMap model, HttpServletRequest request) {
 
-        System.out.println("ORIGEN DEL VIAJE BUSCADO:" +  viajeBuscado.getOrigen().getId()+"///////////////////////////////");
-        System.out.println("DESTINO DEL VIAJE BUSCADO:" +  viajeBuscado.getDestino().getId() +"//////////////////////////////////");
-        System.out.println("FECHA DEL VIAJE BUSCADO:" +  viajeBuscado.getFecha().toString() +"//////////////////////////////////");
+        //TODO: crear customExceptions para los casos poner try catch en los controladores
+        /*try{
+            var viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(viajeBuscado);
+        }catch(CustomExcetionNuestras e){
+            devolver vista error
+        }catch(Exception e){
+            devolver vista error inatajable
+        }*/
 
-        var viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(viajeBuscado);
+        Set<Viaje> viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(viajeBuscado);
+
+        HttpSession session = request.getSession();
 
         model.addAttribute("filtroBuscado",viajeBuscado);
         model.addAttribute("viajesFiltrados",viajesFiltrados);
-
+        model.put("session", session);
 
         return new ModelAndView("pruebadefiltro",model);
     }

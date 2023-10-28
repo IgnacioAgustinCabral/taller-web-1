@@ -13,7 +13,7 @@ public interface ServicioViaje {
 
     List<Viaje> obtenerViajesPorFecha(String fecha);
 
-    List<Viaje> obtenerViajesPorFiltroMultiple(FiltroViaje filtro);
+    Set<Viaje> obtenerViajesPorFiltroMultiple(FiltroViaje filtro);
 
     void crearViaje(Viaje viaje);
 
