@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +44,14 @@ public class ServicioViajeTest {
     @Test
     public void queSePuedanBuscarViajesPorDestino(){
         List <Viaje> viajesEsperados = generarViajes(CANTIDAD_VIAJES);
-        when(this.repositorioViaje.buscarPorDestino(any())).thenReturn(viajesEsperados);
+        when(this.repositorioViaje.buscarPorDestino(anyLong())).thenReturn(viajesEsperados);
 
         List <Viaje> viajesObtenidos = new ArrayList<>();
         for (Viaje viaje: viajesEsperados) {
             viajesObtenidos = this.servicioViaje.obtenerViajesPorDestino(viaje.getDestino());
         }
 
-        assertThat(viajesObtenidos,not(empty()));
+        //assertThat(viajesObtenidos,not(empty()));
         assertThat(viajesObtenidos.size(), is(CANTIDAD_VIAJES) );
 
     }
@@ -61,11 +62,11 @@ public class ServicioViajeTest {
     public void queSePuedanBuscarViajesPorOrigen(){
         List <Viaje> viajesEsperados = generarViajes(CANTIDAD_VIAJES);
 
-        when(this.repositorioViaje.buscarPorOrigen(any())).thenReturn(viajesEsperados);
+        when(this.repositorioViaje.buscarPorOrigen(anyLong())).thenReturn(viajesEsperados);
 
         List <Viaje> viajesObtenidos = new ArrayList<>();
         for (Viaje viaje : viajesEsperados) {
-            viajesObtenidos = this.servicioViaje.obtenerViajesPorOrigen(viaje.getOrigen());
+            viajesObtenidos = this.servicioViaje.obtenerViajesPorOrigen(viaje.getOrigen().getId());
 
         }
         assertThat(viajesObtenidos,not(empty()));
@@ -140,7 +141,7 @@ public class ServicioViajeTest {
         Provincia buenosAires = new Provincia("Buenos Aires","");
         Ciudad junin = new Ciudad ("Junin",buenosAires,"");
         Ciudad tandil = new Ciudad ("Tandil",buenosAires,"");
-        return new  Viaje(junin,tandil, LocalDateTime.now().toString(), 2, "probando", usuario);
+        return new  Viaje(junin,tandil, LocalDate.now().toString(), 2, "probando", usuario);
     }
     private Usuario crearUsuario() {
         return new Usuario();

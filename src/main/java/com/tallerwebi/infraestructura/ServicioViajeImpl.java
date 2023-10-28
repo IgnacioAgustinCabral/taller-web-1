@@ -5,12 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -47,7 +42,10 @@ public class ServicioViajeImpl implements ServicioViaje {
     }
 
     @Override
-    public List<Viaje> obtenerViajesPorFiltroMultiple(FiltroViaje filtro) {
+    public List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha) {
+        return repositorioViaje.buscarPorOrigenDestinoYfecha(origen,destino,fecha);
+
+
 
         /*Set<Viaje> viajesFiltrados = new HashSet<>();
 
@@ -60,7 +58,7 @@ public class ServicioViajeImpl implements ServicioViaje {
 
         return viajesFiltrados;*/
 
-        if (filtro.getOrigen() != null && filtro.getDestino() != null && filtro.getFecha() != null) {
+        /*if (filtro.getOrigen() != null && filtro.getDestino() != null && filtro.getFecha() != null) {
             return repositorioViaje.buscarPorOrigenDestinoYfecha(filtro.getOrigen(),filtro.getDestino(),filtro.getFecha().toString());
         }
         else if (filtro.getOrigen() != null && filtro.getDestino() == null && filtro.getFecha() != null) {
@@ -80,7 +78,7 @@ public class ServicioViajeImpl implements ServicioViaje {
         }
         else {
             return repositorioViaje.listarViajes();
-        }
+        }*/
     }
 
     @Override
@@ -96,6 +94,21 @@ public class ServicioViajeImpl implements ServicioViaje {
     @Override
     public List<Viaje> obtenerViajesCreadosPorUnUsuario(Usuario usuario) {
         return repositorioViaje.buscarPorUsuario(usuario);
+    }
+
+    @Override
+    public List<Viaje> obtenerViajesPorFiltroMultiple(Long origen, Long destino, String fecha) {
+        return repositorioViaje.buscarPorOrigenDestinoYfecha(origen,destino,fecha);
+    }
+
+    @Override
+    public List<Viaje> obtenerViajesPorOrigen(Long origen) {
+        return repositorioViaje.buscarPorOrigen(origen);
+    }
+
+    @Override
+    public List<Viaje> obtenerViajesPorDestino(Long destino) {
+        return repositorioViaje.buscarPorDestino(destino);
     }
 
     @Override

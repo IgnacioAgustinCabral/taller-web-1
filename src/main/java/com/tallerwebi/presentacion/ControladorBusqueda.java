@@ -8,9 +8,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static org.springframework.util.StringUtils.isEmpty;
 
 @Controller
 public class ControladorBusqueda{
@@ -53,18 +56,31 @@ public class ControladorBusqueda{
     }*/
 
     @RequestMapping(value="/buscar-viaje", method= RequestMethod.POST)
-    public ModelAndView buscarViaje(@ModelAttribute("viajeBuscado") FiltroViaje viajeBuscado, ModelMap model) {
+    public ModelAndView buscarViaje(@RequestParam (required = false) Long origen,
+                                    @RequestParam (required = false) Long destino,
+                                    @RequestParam (required = false) String fecha) {
 
-        System.out.println("ORIGEN DEL VIAJE BUSCADO:" +  viajeBuscado.getOrigen().getId()+"///////////////////////////////");
-        System.out.println("DESTINO DEL VIAJE BUSCADO:" +  viajeBuscado.getDestino().getId() +"//////////////////////////////////");
-        System.out.println("FECHA DEL VIAJE BUSCADO:" +  viajeBuscado.getFecha().toString() +"//////////////////////////////////");
-
-        var viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(viajeBuscado);
-
-        model.addAttribute("filtroBuscado",viajeBuscado);
-        model.addAttribute("viajesFiltrados",viajesFiltrados);
+        ModelMap model = new ModelMap();
 
 
-        return new ModelAndView("pruebadefiltro",model);
+        System.out.println("ORIGEN DEL VIAJE BUSCADO:" +  origen+"///////////////////////////////");
+        System.out.println("DESTINO DEL VIAJE BUSCADO:" +  destino+"//////////////////////////////////");
+        System.out.println("FECHA DEL VIAJE BUSCADO:" +  fecha +"//////////////////////////////////");
+        List<Viaje> viajesFiltrados = new ArrayList<>();
+
+
+        if(!isEmpty(origen) && !isEmpty(destino) && !isEmpty(fecha))
+            viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(origen,destino,fecha);
+        if(!isEmpty(origen) && isEmpty(destino)&& isEmpty(fecha))
+            viajesFiltrados = servicioViaje.obtenerViajesPorOrigen(origen);
+      if(isEmpty(origen) && !isEmpty(destino) && isEmpty(fecha))
+            viajesFiltrados = servicioViaje.obtenerViajesPorDestino(destino);
+        if(isEmpty(origen)&& isEmpty(destino) && !isEmpty(fecha))
+            viajesFiltrados = servicioViaje.obtenerViajesPorFecha(fecha);
+
+        model.put("resultado",viajesFiltrados);
+
+
+        return new ModelAndView("busqueda/busqueda",model);
     }
 }
