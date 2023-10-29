@@ -8,12 +8,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static org.springframework.util.StringUtils.isEmpty;
+import java.util.Set;
 
 @Controller
 public class ControladorBusqueda{
@@ -56,31 +56,25 @@ public class ControladorBusqueda{
     }*/
 
     @RequestMapping(value="/buscar-viaje", method= RequestMethod.POST)
-    public ModelAndView buscarViaje(@RequestParam (required = false) Long origen,
-                                    @RequestParam (required = false) Long destino,
-                                    @RequestParam (required = false) String fecha) {
+    public ModelAndView buscarViaje(@ModelAttribute("viajeBuscado") FiltroViaje viajeBuscado, ModelMap model, HttpServletRequest request) {
 
-        ModelMap model = new ModelMap();
+        //TODO: crear customExceptions para los casos poner try catch en los controladores
+        /*try{
+            var viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(viajeBuscado);
+        }catch(CustomExcetionNuestras e){
+            devolver vista error
+        }catch(Exception e){
+            devolver vista error inatajable
+        }*/
 
+        Set<Viaje> viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(viajeBuscado);
 
-        System.out.println("ORIGEN DEL VIAJE BUSCADO:" +  origen+"///////////////////////////////");
-        System.out.println("DESTINO DEL VIAJE BUSCADO:" +  destino+"//////////////////////////////////");
-        System.out.println("FECHA DEL VIAJE BUSCADO:" +  fecha +"//////////////////////////////////");
-        List<Viaje> viajesFiltrados = new ArrayList<>();
+        HttpSession session = request.getSession();
 
+        model.addAttribute("filtroBuscado",viajeBuscado);
+        model.addAttribute("viajesFiltrados",viajesFiltrados);
+        model.put("session", session);
 
-        if(!isEmpty(origen) && !isEmpty(destino) && !isEmpty(fecha))
-            viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(origen,destino,fecha);
-        if(!isEmpty(origen) && isEmpty(destino)&& isEmpty(fecha))
-            viajesFiltrados = servicioViaje.obtenerViajesPorOrigen(origen);
-      if(isEmpty(origen) && !isEmpty(destino) && isEmpty(fecha))
-            viajesFiltrados = servicioViaje.obtenerViajesPorDestino(destino);
-        if(isEmpty(origen)&& isEmpty(destino) && !isEmpty(fecha))
-            viajesFiltrados = servicioViaje.obtenerViajesPorFecha(fecha);
-
-        model.put("resultado",viajesFiltrados);
-
-
-        return new ModelAndView("busqueda/busqueda",model);
+        return new ModelAndView("pruebadefiltro",model);
     }
 }
