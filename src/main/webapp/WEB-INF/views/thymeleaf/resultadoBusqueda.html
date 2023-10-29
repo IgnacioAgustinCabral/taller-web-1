@@ -47,10 +47,11 @@
     </div>
 </header>
 
+
 <div class="container-fluid">
-    <h1 class="mb-2" >Viajes encontrados:</h1>
-    <div class="row row-cols-4 gx-4 gy-4 mt-4">
-        <div class="col" th:each="viaje : ${viajesFiltrados}">
+    <h2 class="mt-4 tab-title p-5 bg-light text-center m-0 mb-2 mt-2" >Resultado Busqueda</h2>
+    <div class="row row-cols-4 gx-4 gy-4 " th:if="${viajesFiltrados != null}">
+        <div class="col bg-shadow bg-light bg-gradient p-4" th:each="viaje : ${viajesFiltrados}">
             <div class="card" style="width: 100%;">
                 <div class="container p-0" style="height: 200px;">
                     <img th:src="${viaje.destino.background}" class=" m-0 p-0 w-100 h-100">
@@ -63,7 +64,7 @@
                     </div>
                     <div><h5 class="card-title" th:text="${viaje.usuario.nombre}"></h5></div>
                     <!--TODO ver el tema del formato de la fecha, ya que salta error porque es String-->
-                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fecha_hora}"></p>
+                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fecha}"></p>
                     </div>
 
                 </div>
@@ -83,6 +84,20 @@
                     <a th:href="@{/ver-viaje(id=${viaje.id})}" class="card-link">Mas Info</a>
                     <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="card-link">Ver Perfil</a>
                 </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+<div th:if="!${viajesFiltrados == null}">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 class="display-4 alert-light mt-20 mb-20">No se encontraron elementos</h1>
+                <i class="fa-solid fa-exclamation-triangle mt-3"></i>
+                <p class="lead mt-20 mb-3">Lo sentimos,no hay viajes que conicidan con su búsqueda.</p>
+                <a href="/spring" class="mt-4  btn btn-light">Volver a Home <i> </i></a>
             </div>
         </div>
     </div>
