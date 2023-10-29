@@ -1,9 +1,7 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Usuario {
@@ -22,6 +20,8 @@ public class Usuario {
     private String fecha_nac;
     private Integer cod_area;
     private Long telefono;
+    @Lob
+    private byte[] imagenDePerfil;
 
   /*  @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaCompanieros")
     private List<Viaje> viajes;
@@ -54,6 +54,21 @@ public class Usuario {
         this.password= password;
         this.avatar = avatar;
         this.activo = activo;
+    }
+
+    public Usuario(String nombre, String apellido, Long dni, String fecha_nac, Integer cod_area, Long telefono, String email, String password,String avatar, String rol, Boolean activo, byte[] imagenDePerfil){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.fecha_nac = fecha_nac;
+        this.cod_area = cod_area;
+        this.telefono = telefono;
+        this.email = email;
+        this.rol = rol;
+        this.password= password;
+        this.avatar = avatar;
+        this.activo = activo;
+        this.imagenDePerfil = imagenDePerfil;
     }
 
     public Long getId() {
@@ -157,6 +172,14 @@ public class Usuario {
 
     public void setViajes(List<Viaje> viajes) {
         this.viajes = viajes;
+    }
+
+    public byte[] getImagenDePerfil() {
+        return imagenDePerfil;
+    }
+
+    public void setImagenDePerfil(byte[] imagenDePerfil) {
+        this.imagenDePerfil = imagenDePerfil;
     }
 }
 */
