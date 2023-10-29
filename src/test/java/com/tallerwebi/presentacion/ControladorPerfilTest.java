@@ -69,7 +69,6 @@ public class ControladorPerfilTest {
     public void queCuandoVayaAMisViajesSinUnaSesionMeRedirijaAlLogin(){
         // preparacion
 
-
         // ejecucion
         ModelAndView modelAndView = controladorPerfil.verMisViajes(sessionMockUsuario);
 

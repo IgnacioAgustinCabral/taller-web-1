@@ -54,6 +54,9 @@ body{
 .bottomSpace{
     margin-bottom: 8px !important;
 }
+.rightSpace{
+    margin-right: 5px !important;
+}
 .dateInfo{
     color: #FFC868 !important;
     font-weight: 700 !important;

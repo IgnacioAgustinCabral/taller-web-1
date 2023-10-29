@@ -1,8 +1,7 @@
 package com.tallerwebi.dominio;
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Viaje {
@@ -13,7 +12,8 @@ public class Viaje {
     private  Long id;
     private String descripcion;
     private  Integer cantidad;
-    private String fecha_hora;
+    private String fecha;
+
     private Boolean noFumar;
     private Boolean noNinios;
     private Boolean noMascotas;
@@ -24,18 +24,18 @@ public class Viaje {
     @ManyToOne
     private Usuario usuario;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+/*    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "Viaje_Compa",joinColumns ={@JoinColumn(name="id_viaje")}, inverseJoinColumns={@JoinColumn(name="id_usuario")})
-    private Set<Usuario> listaCompanieros = new HashSet<Usuario>();
+    private Set<Usuario> listaCompanieros = new HashSet<Usuario>();*/
 
 
 
     public Viaje() {}
-    public Viaje(Ciudad origen, Ciudad destino, String fecha_hora, Integer cantidad, String descripcion, Usuario creador) {
+    public Viaje(Ciudad origen, Ciudad destino, String fecha, Integer cantidad, String descripcion, Usuario creador) {
 
         this.origen = origen;
         this.destino = destino;
-        this.fecha_hora = fecha_hora;
+        this.fecha = fecha;
         this.cantidad = cantidad;
         this.descripcion = descripcion;
         this.usuario =  creador;
@@ -63,12 +63,12 @@ public class Viaje {
         this.cantidad = cantidad;
     }
 
-    public String getFecha_hora() {
-        return this.fecha_hora;
+    public String getFecha() {
+        return this.fecha;
     }
 
-    public void setFecha_hora(String fecha_hora) {
-        this.fecha_hora = fecha_hora;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
     public Ciudad getDestino() {
@@ -99,14 +99,14 @@ public class Viaje {
         this.usuario = usuario;
     }
 
-    public Set<Usuario> getListaCompanieros() {
+  /*  public Set<Usuario> getListaCompanieros() {
         return listaCompanieros;
     }
 
     public void setListaCompanieros(HashSet<Usuario> listaCompanieros) {
         this.listaCompanieros = listaCompanieros;
     }
-
+*/
     public Boolean getNoFumar() {
         return noFumar;
     }

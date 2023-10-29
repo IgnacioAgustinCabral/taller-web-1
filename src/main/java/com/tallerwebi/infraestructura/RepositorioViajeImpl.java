@@ -54,20 +54,13 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     public List<Viaje> listarViajes() {
         return sessionFactory.getCurrentSession().createQuery("FROM Viaje", Viaje.class).list();
     }
-    @Override
-    public List<Viaje> buscarPorOrigen(Ciudad origen) {
-        return sessionFactory.getCurrentSession().createQuery("FROM Viaje V WHERE V.origen.id = :origen_viaje", Viaje.class)
-                .setParameter("origen_viaje",origen.getId())
-                .list();
-    }
 
     @Override
-    public List<Viaje> buscarPorOrigen(Long origen) {
-        return sessionFactory.getCurrentSession().createQuery("FROM Viaje V WHERE V.origen.id = :origen_viaje", Viaje.class)
+    public List<Viaje> buscarPorOrigen(Ciudad origen) {
+        return sessionFactory.getCurrentSession().createQuery("FROM Viaje V WHERE V.origen = :origen_viaje", Viaje.class)
                 .setParameter("origen_viaje",origen)
                 .list();
     }
-
 
     @Override
     public List<Viaje> buscarPorFecha(String fecha) {
@@ -88,11 +81,11 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     }
 
     @Override
-    public List buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fecha) {
-        return sessionFactory.getCurrentSession().createQuery("FROM Viaje WHERE origen.id = :origen AND destino.id = :destino AND fecha_hora = :fecha ",Viaje.class)
-                .setParameter("origen", origen.getId())
-                .setParameter("destino",destino.getId())
-                .setParameter("fecha",fecha)
+    public List<Viaje> buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fecha) {
+        return sessionFactory.getCurrentSession().createQuery("FROM Viaje WHERE origen = :origen OR destino = :destino OR fecha = :fecha", Viaje.class)
+                .setParameter("origen", origen)
+                .setParameter("destino", destino)
+                .setParameter("fecha", fecha)
                 .list();
                     }
 
@@ -105,25 +98,4 @@ public class RepositorioViajeImpl implements RepositorioViaje {
                 .setParameter("provincia", provincia)
                 .list();
     }
-
-    @Override
-    public List<Viaje> buscarPorOrigenDestinoYfecha(Long origen, Long destino, String fecha) {
-        return sessionFactory.getCurrentSession().createQuery("FROM Viaje WHERE origen.id = :origen AND destino.id = :destino AND fecha_hora = :fecha ",Viaje.class)
-                .setParameter("origen", origen)
-                .setParameter("destino",destino)
-                .setParameter("fecha",fecha)
-                .list();
-
-    }
-
-    @Override
-    public List<Viaje> buscarPorDestino(Long destino) {
-        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
-        CriteriaQuery<Viaje> criteria = builder.createQuery(Viaje.class);
-        Root<Viaje> root = criteria.from(Viaje.class);
-        criteria.select(root).where(builder.equal(root.get("destino"), destino));
-
-        return sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
-    }
 }
-
