@@ -43,7 +43,7 @@ public class ServicioViajeTest {
     @Test
     public void queSePuedanBuscarViajesPorDestino(){
         List <Viaje> viajesEsperados = generarViajes(CANTIDAD_VIAJES);
-        when(this.repositorioViaje.buscarPorDestino(anyLong())).thenReturn(viajesEsperados);
+        when(this.repositorioViaje.buscarPorDestino(any())).thenReturn(viajesEsperados);
 
         List <Viaje> viajesObtenidos = new ArrayList<>();
         for (Viaje viaje: viajesEsperados) {
@@ -61,11 +61,11 @@ public class ServicioViajeTest {
     public void queSePuedanBuscarViajesPorOrigen(){
         List <Viaje> viajesEsperados = generarViajes(CANTIDAD_VIAJES);
 
-        when(this.repositorioViaje.buscarPorOrigen(anyLong())).thenReturn(viajesEsperados);
+        when(this.repositorioViaje.buscarPorOrigen(any())).thenReturn(viajesEsperados);
 
         List <Viaje> viajesObtenidos = new ArrayList<>();
         for (Viaje viaje : viajesEsperados) {
-            viajesObtenidos = this.servicioViaje.obtenerViajesPorOrigen(viaje.getOrigen().getId());
+            viajesObtenidos = this.servicioViaje.obtenerViajesPorOrigen(viaje.getOrigen());
 
         }
         assertThat(viajesObtenidos,not(empty()));

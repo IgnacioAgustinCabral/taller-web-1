@@ -13,8 +13,6 @@ public interface RepositorioViaje {
 
     List<Viaje> listarViajes();
 
-    List<Viaje> buscarPorOrigen(Long origen);
-
     List<Viaje> buscarPorOrigen(Ciudad origen);
 
     List<Viaje> buscarPorFecha(String fecha);
@@ -26,8 +24,5 @@ public interface RepositorioViaje {
     List<Viaje> buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fechaHora);
 
     List<Viaje> listarPorProvincia(String provincia);
-
-    List<Viaje> buscarPorOrigenDestinoYfecha(Long origen, Long destino, String fecha);
-
-    List<Viaje> buscarPorDestino(Long destino);
 }
+

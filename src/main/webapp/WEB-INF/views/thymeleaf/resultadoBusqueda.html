@@ -87,10 +87,9 @@
             </div>
         </div>
     </div>
+
     </div>
-
-
-<div th:if="!${viajesFiltrados == null}">
+<div th:if="${viajesFiltrados == null || viajesFiltrados.isEmpty()}">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -102,5 +101,8 @@
         </div>
     </div>
 </div>
+
+
+
 </body>
 </html>

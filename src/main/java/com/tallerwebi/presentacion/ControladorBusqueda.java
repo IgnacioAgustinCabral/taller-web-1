@@ -2,7 +2,6 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -75,6 +71,6 @@ public class ControladorBusqueda{
         model.addAttribute("viajesFiltrados",viajesFiltrados);
         model.put("session", session);
 
-        return new ModelAndView("pruebadefiltro",model);
+        return new ModelAndView("resultadoBusqueda",model);
     }
 }

@@ -52,7 +52,6 @@
 
 </header>
 
-<body>
     <section class="hero-area bg-5 text-center overly">
         <div class="container">
             <div class="row">
@@ -60,35 +59,39 @@
                     <div class="content-block">
                         <h1>Encontrá tu próximo compañero de viaje</h1>
                     </div>
-                    <div class="advance-search">
+                    <div class="advance-search" style="margin-top:0;height: 50%;padding: 0!important;padding-top: 2rem!important;margin-bottom: -5rem!important;">
                         <div class="container">
                             <div class="row justify-content-center">
-                                <div class="col-lg-12 col-md-12 align-content-center">
-                                    <form action="#"  th:action="@{/buscar-viaje}" method="POST">
+                                <div class="col-lg-12 col-md-12 align-content-center p-2 mw-75 h-25">
+                                    <form action="#"  th:action="@{/buscar-viaje}" th:object="${viajeBuscado}" method="POST">
                                         <div class="form-row">
-                                            <div class="form-group col-lg-3 col-md-6" >
+                                            <div class="form-group col-lg-4 col-md-6" >
                                                 <label>
-                                            <select class="ignore" name="origen" >
-                                                <option value="">--Seleccione Origen--</option>
+                                            <select class="ignore w-100" name="origen" th:field="*{origen.id}" style="height: 2rem;font-size: 15px;padding-left: 1rem;margin-top: 1.5rem;">
+                                                <option class="h-25" value="">--Seleccione Origen--</option>
                                                 <option th:each="origen : ${listaCiudades}" th:value="${origen.id}" th:text="${origen.nombre} + ', ' + ${origen.provincia.nombre}"></option>
                                             </select>
                                                 </label>
                                             </div>
                                             <div class="form-group col-lg-3 col-md-6">
                                                 <label>
-                                                <select class="ignore" name="destino">
-                                                    <option value="">-- Seleccione Destino --</option>
-                                                    <option class="" th:each="destino : ${listaCiudades}"  th:value="${destino.id}" th:text="${destino.nombre} + ', ' + ${destino.provincia.nombre}"></option>
+                                                <select class="ignore" name="destino" th:field="*{destino.id}"
+                                                        style="height: 2rem;
+                                                               font-size: 15px;
+                                                               padding-left: 1rem;
+                                                               margin-top: 1.5rem;">
+                                                    <option class="h-25" value="">-- Seleccione Destino --</option>
+                                                    <option  th:each="destino : ${listaCiudades}"  th:value="${destino.id}" th:text="${destino.nombre} + ', ' + ${destino.provincia.nombre}"></option>
                                                 </select>
                                                 </label>
                                             </div>
                                             <div class="form-group col-lg-3 col-md-6">
                                                 <label>
-                                                <input class="" type="date" id="fecha" name="fecha" pattern="dd-MM-yyyy"/>
+                                                <input class="" type="date" id="fecha" name="fecha" th:field="*{fecha}" pattern="dd-MM-yyyy" style="height: 2rem;font-size: 15px;padding-left: 1rem;margin-top: 1.5rem;"/>
                                                 </label>
                                             </div>
-                                            <div class="form-group col-xl-2 col-lg-3 col-md-6 align-self-center">
-                                                <button type="submit" class="btn btn-primary active w-100">Buscar Viaje
+                                            <div class=" col-xl-2 col-lg-3 col-md-6 align-self-end">
+                                                <button type="submit" style="margin-bottom: 15px!important;" class="form-check btn btn-info active mt-0">Buscar Viaje
                                                 </button>
                                             </div>
                                         </div>
@@ -102,63 +105,12 @@
         </div>
     </section>
 
-    <section>
-        <div th:if="${result}">
-            <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="trending-ads-slide">
-
-                        <div class="col-sm-12 col-lg-4" th:each=" viaje : ${result}" >
-                            <div class="col-sm-12 col-lg-4" >
-                                <div class="card" style="width: 20rem;">
-                                    <div class="container p-0" style="height: 200px;">
-                                        <img th:src="${viaje.destino.background}" class=" m-0 p-0 w-100 h-100">
-                                    </div>
-                                    <!--<div th:style="'background-image: url('+ ${viaje.destino.background} + '); height: 200px;' "></div>-->
-                                    <div class="card-body">
-                                        <div class="header-card">
-                                            <img th:src="${viaje.usuario.avatar}" alt="avatar" width="55px" height="55px"
-                                                 class="rounded-circle">
-                                        </div>
-                                        <div><h5 class="card-title" th:text="${viaje.usuario.nombre}"></h5></div>
-                                        <!--TODO ver el tema del formato de la fecha , ya que salta error porque es String-->
-                                        <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fecha}"></p>
-                                        </div>
-
-                                    </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><i class="fa-solid fa-signs-post fa-xl"></i> Origen: <span
-                                                th:text="${viaje.origen.nombre + ', '+ viaje.origen.provincia.nombre}"></span></li>
-                                        <li class="list-group-item"><i class="fa-solid fa-flag-checkered fa-xl"></i> Destino:
-                                            <span th:text="${viaje.destino.nombre + ', '+ viaje.destino.provincia.nombre}"></span></li>
-                                        <li class="list-group-item">
-                                            <i class="fa-solid fa-paw fa-lg"></i>
-                                            <i class="fa-solid fa-ban-smoking fa-lg"></i>
-                                            <i class="fa-solid fa-guitar fa-lg"></i>
-                                            <i class="fa-solid fa-baby-carriage fa-lg"></i>
-                                        </li>
-                                    </ul>
-                                    <div class="card-body">
-                                        <a th:href="@{/ver-viaje(id=${viaje.id})}" class="card-link">Mas Info</a>
-                                        <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="card-link">Ver Perfil</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </section>
-
-    <section class="popular-deals section bg-gray">
+    <section class="popular-deals section bg-gray " style="padding-top: 10rem;padding-bottom: 3rem">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2>Provincias populares</h2>
+                        <h2 class="mt-20">Provincias populares</h2>
                         <p>Les destacamos las provincias mas visitadas por nuestros usuarios</p>
                     </div>
                 </div>
@@ -186,7 +138,7 @@
         </div>
     </section>
 
-    <section class="popular-deals section bg-gray">
+    <section class="popular-deals section bg-gray mt-0" style="padding-top: 0">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -249,7 +201,7 @@
 
 
 
-    <section class=" section">
+    <section class=" section" style="padding: 0">
         <section class="section" th:if="${session.isLogged}">
             <div class="container">
                 <div class="row">

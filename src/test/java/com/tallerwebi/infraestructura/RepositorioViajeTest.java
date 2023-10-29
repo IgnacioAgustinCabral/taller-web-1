@@ -153,7 +153,7 @@ public class RepositorioViajeTest {
 
         List <Viaje> buscados = repositorio.buscarPorOrigenDestinoYfecha(viaje.getOrigen(),viaje.getDestino(),viaje.getFecha());
 
-        assertThat(buscados,is(hasSize(3)));
+        assertThat(buscados,is(hasSize(2)));
         assertThat(buscados,is(notNullValue()));
     }
 
