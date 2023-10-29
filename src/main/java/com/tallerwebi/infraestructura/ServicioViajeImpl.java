@@ -1,18 +1,15 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Ciudad;
-import com.tallerwebi.dominio.RepositorioViaje;
-import com.tallerwebi.dominio.ServicioViaje;
-import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.dominio.Viaje;
+import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -43,34 +40,50 @@ public class ServicioViajeImpl implements ServicioViaje {
 
     @Override
     public List<Viaje> obtenerViajesPorFecha(String fecha) {
+
         return repositorioViaje.buscarPorFecha(fecha);
     }
 
-
     @Override
-    public List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha) {
+    public Set<Viaje> obtenerViajesPorFiltroMultiple(FiltroViaje filtro) {
 
-        if (origen != null && destino != null && fecha != null) {
-           return repositorioViaje.buscarPorOrigenDestinoYfecha(origen,destino,fecha);
-        }
-        else if (origen != null && destino == null && fecha != null) {
-            return repositorioViaje.buscarPorOrigenDestinoYfecha(origen, null,fecha);
+        Set<Viaje> viajesFiltrados = new HashSet<>();
 
-        } else if (origen == null && destino != null && fecha != null) {
-            return  repositorioViaje.buscarPorOrigenDestinoYfecha(null, destino,fecha);
+        if(filtro.getOrigen().getId() != null )
+            viajesFiltrados.addAll(repositorioViaje.buscarPorOrigen(filtro.getOrigen()));
+        if(filtro.getDestino().getId() != null)
+            viajesFiltrados.addAll(repositorioViaje.buscarPorDestino(filtro.getDestino()));
+        if(filtro.getFecha() != null )
+            viajesFiltrados.addAll(repositorioViaje.buscarPorFecha(filtro.getFecha().toString()));
+
+        //TODO: faltan custom exceptions
+        /*if(filtro == null)
+            Throw FiltroNuloException("por alguna razon el filtro esta nulo");*/
+
+
+        return viajesFiltrados;
+
+       /* if (filtro.getOrigen().getId() != null && filtro.getDestino().getId() != null && filtro.getFecha() != null) {
+            return repositorioViaje.buscarPorOrigenDestinoYfecha(filtro.getOrigen(),filtro.getDestino(),filtro.getFecha().toString());
+        }
+        else if (filtro.getOrigen().getId() != null && filtro.getDestino().getId() == null && filtro.getFecha() != null) {
+            return repositorioViaje.buscarPorOrigenDestinoYfecha(filtro.getOrigen(), null,filtro.getFecha().toString());
+
+        } else if (filtro.getOrigen().getId() == null && filtro.getDestino().getId() != null && filtro.getFecha() != null) {
+            return  repositorioViaje.buscarPorOrigenDestinoYfecha(null, filtro.getDestino(),filtro.getFecha().toString());
         }
 
-        else if (origen == null && destino == null && fecha != null) {
-            return repositorioViaje.buscarPorFecha(fecha);
-        } else if(origen != null && destino == null) {
-            return repositorioViaje.buscarPorOrigen(origen);
+        else if (filtro.getOrigen().getId() == null && filtro.getDestino() == null && filtro.getFecha() != null) {
+            return repositorioViaje.buscarPorFecha(filtro.getFecha().toString());
+        } else if(filtro.getOrigen().getId() != null && filtro.getDestino() == null) {
+            return repositorioViaje.buscarPorOrigen(filtro.getOrigen());
         }
-        else if(origen == null && destino != null){
-            return repositorioViaje.buscarPorDestino(destino);
+        else if(filtro.getOrigen().getId() == null && filtro.getDestino() != null){
+            return repositorioViaje.buscarPorDestino(filtro.getDestino());
         }
         else {
             return repositorioViaje.listarViajes();
-        }
+        }*/
     }
 
     @Override

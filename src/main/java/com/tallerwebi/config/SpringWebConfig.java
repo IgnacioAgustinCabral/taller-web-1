@@ -77,7 +77,4 @@ public class SpringWebConfig implements WebMvcConfigurer {
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;
     }
-
-
-
 }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Resultados</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Agency HTML Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="author" content="Themefisher">
+    <meta name="generator" content="Themefisher Classified Marketplace Template v1.0">
+    <meta name="theme-name" content="classimax"/>
+
+    <!-- Use Thymeleaf expressions for CSS URLs -->
+    <link th:href="@{/plugins/nerd-fonts/css/nerd-fonts.css}" rel="stylesheet">
+    <link th:href="@{/plugins/bootstrap/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/plugins/bootstrap/bootstrap-slider.css}" rel="stylesheet">
+    <!--    <link th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet">-->
+    <link th:href="@{/plugins/slick/slick.css}" rel="stylesheet">
+    <link th:href="@{/plugins/slick/slick-theme.css}" rel="stylesheet">
+    <link th:href="@{/plugins/jquery-nice-select/css/nice-select.css}" rel="stylesheet">
+
+    <!-- Use Thymeleaf expressions for JavaScript URLs -->
+    <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap/popper.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap/bootstrap.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap/bootstrap-slider.js}"></script>
+    <script th:src="@{/plugins/tether/js/tether.min.js}"></script>
+    <script th:src="@{/plugins/raty/jquery.raty-fa.js}"></script>
+    <script th:src="@{/plugins/slick/slick.min.js}"></script>
+    <script th:src="@{/plugins/jquery-nice-select/js/jquery.nice-select.min.js}"></script>
+    <script th:src="@{/plugins/google-map/map.js}" defer></script>
+    <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
+
+    <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!--    <script th:src="@{/js/script.js}"></script>-->
+</head>
+<body>
+<header>
+    <div th:if="${session != null ? session.isLogged : false}">
+        <!-- Fragmento de barra de navegación para usuarios autenticados -->
+        <div th:replace="navbar-user"></div>
+    </div>
+    <div th:unless="${session != null ? session.isLogged : false}">
+        <!-- Fragmento de barra de navegación para invitados -->
+        <div th:replace="navbar-guest"></div>
+    </div>
+</header>
+
+
+<div class="container-fluid">
+    <h2 class="mt-4 tab-title p-5 bg-light text-center m-0 mb-2 mt-2" >Resultado Busqueda</h2>
+    <div class="row row-cols-4 gx-4 gy-4 " th:if="${viajesFiltrados != null}">
+        <div class="col bg-shadow bg-light bg-gradient p-4" th:each="viaje : ${viajesFiltrados}">
+            <div class="card" style="width: 100%;">
+                <div class="container p-0" style="height: 200px;">
+                    <img th:src="${viaje.destino.background}" class=" m-0 p-0 w-100 h-100">
+                </div>
+                <!--<div th:style="'background-image: url('+ ${viaje.destino.background} + '); height: 200px;' "></div>-->
+                <div class="card-body">
+                    <div class="header-card">
+                        <img th:src="${viaje.usuario.avatar}" alt="avatar" width="55px" height="55px"
+                             class="rounded-circle">
+                    </div>
+                    <div><h5 class="card-title" th:text="${viaje.usuario.nombre}"></h5></div>
+                    <!--TODO ver el tema del formato de la fecha, ya que salta error porque es String-->
+                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fecha}"></p>
+                    </div>
+
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fa-solid fa-signs-post fa-xl"></i> Origen: <span
+                            th:text="${viaje.origen.nombre + ', '+ viaje.origen.provincia.nombre}"></span></li>
+                    <li class="list-group-item"><i class="fa-solid fa-flag-checkered fa-xl"></i> Destino:
+                        <span th:text="${viaje.destino.nombre + ', '+ viaje.destino.provincia.nombre}"></span></li>
+                    <li class="list-group-item">
+                        <i class="fa-solid fa-paw fa-lg"></i>
+                        <i class="fa-solid fa-ban-smoking fa-lg"></i>
+                        <i class="fa-solid fa-guitar fa-lg"></i>
+                        <i class="fa-solid fa-baby-carriage fa-lg"></i>
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <a th:href="@{/ver-viaje(id=${viaje.id})}" class="card-link">Mas Info</a>
+                    <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="card-link">Ver Perfil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+<div th:if="${viajesFiltrados == null || viajesFiltrados.isEmpty()}">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 class="display-4 alert-light mt-20 mb-20">No se encontraron elementos</h1>
+                <i class="fa-solid fa-exclamation-triangle mt-3"></i>
+                <p class="lead mt-20 mb-3">Lo sentimos,no hay viajes que conicidan con su búsqueda.</p>
+                <a href="/spring" class="mt-4  btn btn-light">Volver a Home <i> </i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

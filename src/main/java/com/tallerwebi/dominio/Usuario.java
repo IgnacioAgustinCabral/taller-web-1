@@ -163,16 +163,15 @@ public class Usuario {
     public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
-}
 
-/*
-    public List<Viaje> getViajes() {
+
+  /*  public List<Viaje> getViajes() {
         return viajes;
     }
 
     public void setViajes(List<Viaje> viajes) {
         this.viajes = viajes;
-    }
+    }*/
 
     public byte[] getImagenDePerfil() {
         return imagenDePerfil;
@@ -182,4 +181,3 @@ public class Usuario {
         this.imagenDePerfil = imagenDePerfil;
     }
 }
-*/
