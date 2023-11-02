@@ -6,14 +6,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
+@Transactional
 public class ControladorViaje {
 
     private  ServicioViaje servicioViaje;
@@ -57,11 +60,16 @@ public class ControladorViaje {
     }
 
     @RequestMapping(path = "/ver-viaje", method = RequestMethod.GET )
-    public ModelAndView masInfo(@RequestParam(required = false) String id) {
+    public ModelAndView masInfo(@RequestParam(required = false) String id,HttpSession session) {
         ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
 
         Viaje viajeBuscado = servicioViaje.obtenerViajePorId(Long.valueOf(id));
-        model.put("viajes", viajeBuscado);
+
+        Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado,usuario);
+        System.out.println("el usuario esta unido?? " + unido + "/////////////////////////////////");
+        model.put("viaje", viajeBuscado);
+        model.put("unido", unido);
         return new ModelAndView("viaje/viaje", model);
         //mv.addObject("viaje", viajeBuscado);
         //mv.setViewName("viaje/viaje");
@@ -90,5 +98,15 @@ public class ControladorViaje {
         return new ModelAndView("provinciaDetalle", modelo);
     }
 
-
+    @RequestMapping(value = "/unir-a-viaje", method = RequestMethod.GET)
+    public ModelAndView unirseAUnViaje(@RequestParam("viaje") Long viaje, HttpSession session) {
+        try {
+            System.out.println("VIAJEEEEE///////////////////////" + viaje);
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            Boolean unido = servicioViaje.UnirAViaje(usuario, viaje);
+        } catch (Exception e) {
+            return new ModelAndView("redirect:/home");
+        }
+        return new ModelAndView("redirect:/home");
+    }
 }

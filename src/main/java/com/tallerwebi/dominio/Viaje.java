@@ -2,6 +2,8 @@ package com.tallerwebi.dominio;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Viaje {
@@ -23,10 +25,12 @@ public class Viaje {
     private Ciudad origen;
     @ManyToOne
     private Usuario usuario;
-
-/*    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "Viaje_Compa",joinColumns ={@JoinColumn(name="id_viaje")}, inverseJoinColumns={@JoinColumn(name="id_usuario")})
-    private Set<Usuario> listaCompanieros = new HashSet<Usuario>();*/
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "Viaje_Pasajero",
+            joinColumns = @JoinColumn(name="viaje_id"),
+            inverseJoinColumns = @JoinColumn(name="usuario_id"))
+    private Set<Usuario> listaPasajeros = new HashSet<Usuario>();
 
 
 
@@ -99,14 +103,13 @@ public class Viaje {
         this.usuario = usuario;
     }
 
-  /*  public Set<Usuario> getListaCompanieros() {
-        return listaCompanieros;
+    public Set<Usuario> getListaPasajeros() {
+        return listaPasajeros;
+    }
+    public void setListaPasajeros(Set<Usuario> listaPasajeros) {
+        this.listaPasajeros = listaPasajeros;
     }
 
-    public void setListaCompanieros(HashSet<Usuario> listaCompanieros) {
-        this.listaCompanieros = listaCompanieros;
-    }
-*/
     public Boolean getNoFumar() {
         return noFumar;
     }
@@ -129,5 +132,9 @@ public class Viaje {
 
     public void setNoMascotas(Boolean noMascotas) {
         this.noMascotas = noMascotas;
+    }
+
+    public Boolean agregarPasajero(Usuario pasajero) {
+        return this.listaPasajeros.add(pasajero);
     }
 }

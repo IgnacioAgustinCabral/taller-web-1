@@ -1,6 +1,6 @@
-INSERT IGNORE INTO Usuario(id, email, password, rol, activo) VALUES(null, 'test@unlam.edu.ar', 'test', 'ADMIN', true);
+INSERT INTO Usuario(id, email, password, rol, activo) VALUES(null, 'test@unlam.edu.ar', 'test', 'ADMIN', true);
 
-INSERT IGNORE INTO Usuario(email, password,avatar, rol, activo,nombre,apellido,dni,fecha_nac,cod_area,telefono,imagenDePerfil)
+INSERT INTO Usuario(email, password,avatar, rol, activo,nombre,apellido,dni,fecha_nac,cod_area,telefono,imagenDePerfil)
 VALUES
     ('carolinarojas@unlam.edu.ar', 'test', 'images/avatars/av-1.jpg', 'admin', true, 'Carolina', 'Rojas', 12345678, '2000/01/01', 011, 12345678,null),
     ('marianoochoa@unlam.edu.ar', 'contra2', 'images/avatars/av-2.jpg', 'admin', true, 'Mariano', 'Ochoa', 23456789, '2000/02/02', 011, 23456789,null),
@@ -23,7 +23,7 @@ VALUES
     ('orianasalvatierra@unlam.edu.ar', 'contra19',null, 'admin', true, 'Oriana', 'Salvatierra', 12345689, '2000/07/19', 011, 12345689,null),
     ('pedroromero@unlam.edu.ar', 'contra20',null, 'default', true, 'Pedro', 'Romero', 23456790, '2000/08/20', 011, 23456790,null);
 
-INSERT IGNORE INTO Provincia (nombre, imagen)
+INSERT INTO Provincia (nombre, imagen)
 VALUES
     ('Buenos Aires', "images/products/marDelPlata.jpg"),
     ('Catamarca', NULL),
@@ -49,7 +49,7 @@ VALUES
     ('Tierra del Fuego', NULL),
     ('Tucumán', NULL);
 
-INSERT IGNORE INTO Ciudad (background, nombre, provincia_id)
+INSERT INTO Ciudad (background, nombre, provincia_id)
 VALUES
     ('images/ciudades/Bahía-Blanca.jpg', 'Bahía Blanca', 1),
     ('images/ciudades/colon.jpg', 'Colón', 7),
@@ -75,7 +75,7 @@ VALUES
     ('images/ciudades/trelew-chubut.webp', 'Trelew', 4),
     ('images/ciudades/usuahia.png', 'Ushuaia', 22);
 
-INSERT IGNORE INTO Viaje ( cantidad, descripcion, fecha, destino_id, origen_id, usuario_id)
+INSERT INTO Viaje ( cantidad, descripcion, fecha, destino_id, origen_id, usuario_id)
 VALUES (2,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 5, 2),
        (5,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate vehicula mauris, ac interdum nunc porttitor vel. In hac habitasse platea dictumst. Aliquam erat volutpat. Vestibulum ornare rutrum interdum. Sed faucibus orci ac rhoncus egestas' ,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),9 , 4, 2),
        (4,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),22 , 6, 2),

@@ -20,13 +20,15 @@ import static org.mockito.Mockito.*;
 public class ServicioViajeTest {
 
     private RepositorioViaje repositorioViaje;
+    private RepositorioUsuario repositorioUsuario;
     private ServicioViaje servicioViaje;
     public static final Integer CANTIDAD_VIAJES = 4;
 
     @BeforeEach
     public void init(){
         this.repositorioViaje = mock(RepositorioViaje.class);
-        this.servicioViaje = new ServicioViajeImpl(this.repositorioViaje);
+        this.repositorioUsuario = mock(RepositorioUsuario.class);
+        this.servicioViaje = new ServicioViajeImpl(this.repositorioViaje,this.repositorioUsuario);
     }
     @Test
     public void queSeObtenganTodosLosViajes(){

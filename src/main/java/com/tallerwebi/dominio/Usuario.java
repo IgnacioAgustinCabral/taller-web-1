@@ -2,6 +2,7 @@ package com.tallerwebi.dominio;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Usuario {
@@ -22,10 +23,9 @@ public class Usuario {
     private Long telefono;
     @Lob
     private byte[] imagenDePerfil;
-
-  /*  @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaCompanieros")
+    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros")
     private List<Viaje> viajes;
-*/
+
     //TODO: constructor de pruebas.
     public Usuario(){};
 
@@ -179,5 +179,18 @@ public class Usuario {
 
     public void setImagenDePerfil(byte[] imagenDePerfil) {
         this.imagenDePerfil = imagenDePerfil;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id) && Objects.equals(email, usuario.email) && Objects.equals(password, usuario.password) && Objects.equals(dni, usuario.dni);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, password, dni);
     }
 }

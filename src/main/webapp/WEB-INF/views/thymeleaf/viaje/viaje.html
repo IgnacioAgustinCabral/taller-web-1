@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title th:text="'Viaje creado por ' + ${viajes.usuario.nombre + ' ' + viajes.usuario.apellido}"></title>
+  <title th:text="'Viaje creado por ' + ${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"></title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <!-- Use Thymeleaf expressions for CSS URLs -->
@@ -49,16 +49,16 @@
 <body>
 <div class="container spaceToHeaderFixed">
     <div class="card mb-3">
-      <img class="card-img-top bottomSpace" th:src="${viajes.destino.background}" height="280" alt="Imagen descriptiva del destino del viaje">
-      <h1 class="card-title text-center" th:text="'Viaje creado por ' + ${viajes.usuario.nombre + ' ' + viajes.usuario.apellido}"></h1>
+      <img class="card-img-top bottomSpace" th:src="${viaje.destino.background}" height="280" alt="Imagen descriptiva del destino del viaje">
+      <h1 class="card-title text-center" th:text="'Viaje creado por ' + ${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"></h1>
       <!--<h5 class="card-text">Descripción</h5>-->
-      <p class="card-text text-center topSpace" th:text="${viajes.descripcion}"></p>
-      <div class="card-body row row-cols-2" th:each="viajes : ${viajes}">
+      <p class="card-text text-center topSpace" th:text="${viaje.descripcion}"></p>
+      <div class="card-body row row-cols-2">
           <div class="col text-center">
             <h5 class="card-text">Origen</h5>
-            <p class="card-text" th:text="${viajes.origen.provincia.nombre} + ', ' + ${viajes.origen.nombre}"></p>
+            <p class="card-text" th:text="${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></p>
             <h5 class="card-text">Fecha de salida</h5>
-            <p class="card-text" th:text="${viajes.fecha}"></p>
+            <p class="card-text" th:text="${viaje.fecha}"></p>
             <h5 class="card-text">Condiciones</h5>
             <li class="list-group-item">
               <i class="fa-solid fa-paw fa-lg"></i>
@@ -69,17 +69,18 @@
           </div>
           <div class="col text-center">
             <h5 class="card-text">Destino</h5>
-            <p class="card-text" th:text="${viajes.destino.provincia.nombre} + ', ' + ${viajes.destino.nombre}"></p>
+            <p class="card-text" th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></p>
             <h5 class="card-text">Tiempo de viaje</h5>
             <p class="card-text">6 horas</p>
             <h5 class="card-text">Lugares disponibles</h5>
-            <p class="card-text" th:text="${viajes.cantidad}"></p>
+            <p class="card-text" th:text="${viaje.cantidad}"></p>
           </div>
         </div>
         <p class="card-text text-center topSpace"><small class="text-muted">Última actualización: hace 2 días</small></p>
         <div class="d-flex justify-content-center">
-          <a th:href="@{/perfil/usuario(idUsuario= ${viajes.usuario.id})}" class="btn btn-primary bottomSpace rightSpace">Ver perfil</a>
-          <a href="#" class="btn btn-secondary bottomSpace">Conectar</a>
+          <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="btn btn-primary bottomSpace rightSpace">Ver perfil</a>
+          <a href="#" class="btn btn-secondary bottomSpace rightSpace">Conectar</a>
+          <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" class="btn  bottomSpace rightSpace" th:classappend="${unido ? 'btn-secondary' : 'btn-primary'}" th:text="${unido ? 'Unido' : 'Unirme'}"></a>
         </div>
       </div>
   </div>

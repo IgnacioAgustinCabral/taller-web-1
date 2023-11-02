@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -23,4 +24,7 @@ public interface ServicioViaje {
 
     List<Viaje> obtenerViajesCreadosPorUnUsuario(Usuario usuario);
 
+    Boolean UnirAViaje(Usuario usuario, Long viaje);
+
+    Boolean UsuarioUnido(Viaje viajeBuscado, Usuario usuario);
 }
