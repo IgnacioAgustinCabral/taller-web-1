@@ -11,19 +11,21 @@ public class Ciudad {
     private Long id;
 
     private  String nombre;
+
+    @Lob
+    private byte[] imagen;
+
     @ManyToOne
     private  Provincia provincia;
-    private  String background;
 
     public Ciudad() {
     }
 
-    public Ciudad(String nombre, Provincia provincia, String background) {
+    public Ciudad(String nombre, Provincia provincia, byte[] imagen) {
         this.nombre = nombre;
         this.provincia = provincia;
-        this.background = background;
+        this.imagen = imagen;
     }
-
 
     public void setId(Long id) {
         this.id = id;
@@ -49,9 +51,11 @@ public class Ciudad {
         this.provincia = provincia;
     }
 
-    public String getBackground() {
-        return background;
+    public byte[] getImagen() {
+        return imagen;
     }
 
-
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
 }

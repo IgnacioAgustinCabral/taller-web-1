@@ -49,8 +49,8 @@
 <body>
 <div class="container spaceToHeaderFixed">
     <div class="card mb-3">
-      <img class="card-img-top bottomSpace" th:src="${viaje.destino.background}" height="280" alt="Imagen descriptiva del destino del viaje">
-      <h1 class="card-title text-center" th:text="'Viaje creado por ' + ${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"></h1>
+      <img class="card-img-top bottomSpace" th:src="@{'/destino/imagen/' + ${viajes.getId()}}" height="280" alt="Imagen descriptiva del destino del viaje">
+      <h1 class="card-title text-center" th:text="'Viaje creado por ' + ${viajes.usuario.nombre + ' ' + viajes.usuario.apellido}"></h1>
       <!--<h5 class="card-text">Descripción</h5>-->
       <p class="card-text text-center topSpace" th:text="${viaje.descripcion}"></p>
       <div class="card-body row row-cols-2">

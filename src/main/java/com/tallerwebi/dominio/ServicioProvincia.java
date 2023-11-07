@@ -8,4 +8,6 @@ public interface ServicioProvincia {
     Provincia obtenerProvinciaPorNombre(String nombre);
 
     List <Provincia> obtenerProvinciasConImagenes();
+
+    Provincia obtenerProvinciaPorId(Long id);
 }

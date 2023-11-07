@@ -3,6 +3,8 @@ package com.tallerwebi.dominio;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 @Entity
 public class Usuario {
@@ -12,7 +14,6 @@ public class Usuario {
     private Long id;
     private String email;
     private String password;
-    private String avatar;
     private String rol;
     private Boolean activo = false;
     private String nombre;
@@ -29,20 +30,7 @@ public class Usuario {
     //TODO: constructor de pruebas.
     public Usuario(){};
 
-    public Usuario(Long id, String nombre, String apellido, Long dni, String fecha_nac, Integer cod_area, Long telefono, String email, String password, Integer calificacion, Boolean activo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.fecha_nac = fecha_nac;
-        this.cod_area = cod_area;
-        this.telefono = telefono;
-        this.email = email;
-        this.password= password;
-        this.activo = activo;
-    }
-
-    public Usuario(String nombre, String apellido, Long dni, String fecha_nac, Integer cod_area, Long telefono, String email, String password,String avatar, String rol, Boolean activo){
+    public Usuario(String nombre, String apellido, Long dni, String fecha_nac, Integer cod_area, Long telefono, String email, String password, String rol, Boolean activo, byte[] imagenDePerfil){
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -52,21 +40,6 @@ public class Usuario {
         this.email = email;
         this.rol = rol;
         this.password= password;
-        this.avatar = avatar;
-        this.activo = activo;
-    }
-
-    public Usuario(String nombre, String apellido, Long dni, String fecha_nac, Integer cod_area, Long telefono, String email, String password,String avatar, String rol, Boolean activo, byte[] imagenDePerfil){
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.fecha_nac = fecha_nac;
-        this.cod_area = cod_area;
-        this.telefono = telefono;
-        this.email = email;
-        this.rol = rol;
-        this.password= password;
-        this.avatar = avatar;
         this.activo = activo;
         this.imagenDePerfil = imagenDePerfil;
     }
@@ -91,14 +64,6 @@ public class Usuario {
     }
     public String getRol() {
         return rol;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public void setRol(String rol) {

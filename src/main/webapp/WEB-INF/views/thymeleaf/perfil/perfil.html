@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="d-flex align-items-start">
-                        <img th:src="${'../' + usuario.avatar}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+                        <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
                         <div class="w-100 ms-3">
                             <h4 th:text="${usuario.nombre + ' ' + usuario.apellido}" class="my-0"></h4>
                             <p class="text-muted" th:text="${usuario.email}"></p>
@@ -145,7 +145,7 @@
                                     <div class="card card-margin flex-row">
                                         <div class="flex-row userInfo text-center">
                                             <div class="flex-row">
-                                                <img th:src="${'../' + viaje.usuario.avatar}" alt="avatar" class="rounded-circle img-avatar-size topSpace" style="max-width: 65% !important">
+                                                <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar" class="rounded-circle img-avatar-size topSpace" style="max-width: 65% !important">
                                                 <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}" class="card-title"></h4>
                                                 <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="btn btn-primary bottomSpace">Ver perfil</a>
                                                 <a href="#" class="btn btn-secondary bottomSpace">Conectar</a>
@@ -211,12 +211,12 @@
                                         <div class="col-sm-12 col-lg-4">
                                             <div class="card" style="width: 20rem;">
                                                 <div class="container p-0" style="height: 200px;">
-                                                    <img th:src="${'../' + viaje.destino.background}" class=" m-0 p-0 w-100 h-100">
+                                                    <img th:src="@{'/destino/imagen/' + ${viaje.destino.getId()}}" class=" m-0 p-0 w-100 h-100">
                                                 </div>
                                                 <!--<div th:style="'background-image: url(' + ${viaje.destino.background} + '); height: 200px;'"></div>-->
                                                 <div class="card-body">
                                                     <div class="header-card">
-                                                        <img th:src="${'../' + viaje.usuario.avatar}" alt="avatar" width="55px" height="55px"
+                                                        <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar" width="55px" height="55px"
                                                              class="rounded-circle">
                                                     </div>
 
