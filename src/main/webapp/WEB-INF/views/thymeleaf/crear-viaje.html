@@ -58,6 +58,33 @@
                             <label for="cantidad" class="mb-3"><strong>Cantidad de pasajeros:</strong></label>
                             <input type="number" id="cantidad" name="cantidad" th:field="*{cantidad}" class="form-control mb-3" />
 
+                            <label class="mb-3"><strong>¿Se puede fumar?</strong></label>
+                            <label class="pr-1">
+                                <select class="form-control mb-3" name="viaje.noFumar" th:field="${viaje.noFumar}" >
+                                    <option value="">-</option>
+                                    <option value="true">Se puede fumar</option>
+                                    <option value="false">No se puede fumar</option>
+                                </select>
+                            </label>
+
+                            <label class="mb-3"><strong>¿Se aceptan mascotas?</strong></label>
+                            <label class="pr-1">
+                                <select class="form-control mb-3" name="viaje.noMascotas" th:field="${viaje.noMascotas}" >
+                                    <option value="">-</option>
+                                    <option value="true">Se aceptan mascotas</option>
+                                    <option value="false">No se aceptan mascotas</option>
+                                </select>
+                            </label>
+
+                            <label class="mb-3"><strong>¿Se aceptan niños?</strong></label>
+                            <label class="pr-1">
+                                <select class="form-control mb-3" name="viaje.noNinios" th:field="${viaje.noNinios}" >
+                                    <option value="">-</option>
+                                    <option value="true">Se aceptan niños</option>
+                                    <option value="false">No se aceptan niños</option>
+                                </select>
+                            </label>
+
                             <label for="descripcion" class="mb-3"><strong>Descripción del viaje:</strong></label>
                             <textarea class="form-control bg-gray mb-3" id="descripcion" name="descripcion" th:field="*{descripcion}"></textarea>
 

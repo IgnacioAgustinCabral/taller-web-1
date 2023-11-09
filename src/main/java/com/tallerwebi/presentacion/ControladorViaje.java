@@ -51,29 +51,31 @@ public class ControladorViaje {
         LocalDate fechaViaje = null;
 
         try {
-            fechaViaje = LocalDate.parse(viaje.getFecha());
+            fechaViaje = LocalDate.parse(viaje.getFecha().toString());
+
         } catch (DateTimeParseException ex) {
             model = cargarOrigenYDestinoAlModel();
             model.put("error", "El formato de fecha es inválido");
             ex.printStackTrace();
             return new ModelAndView("crear-viaje", model);
         }
+
         if (fechaViaje.isBefore(fechaHoy)) {
             model = cargarOrigenYDestinoAlModel();
             model.put("error", "La fecha del viaje no es válida o es una fecha pasada");
             return new ModelAndView("crear-viaje", model);
         }
-        if (viaje.getNoFumar() == null || !viaje.getNoFumar()) {
+        if (viaje.getNoFumar() == null) {
             model = cargarOrigenYDestinoAlModel();
             model.put("error", "Debe especificar si se puede fumar");
             return new ModelAndView("crear-viaje", model);
         }
-        if (viaje.getNoNinios() == null || !viaje.getNoNinios()) {
+        if (viaje.getNoNinios() == null) {
             model = cargarOrigenYDestinoAlModel();
             model.put("error", "Debe especificar si se puede viajar con niños");
             return new ModelAndView("crear-viaje", model);
         }
-        if (viaje.getNoMascotas() == null || !viaje.getNoMascotas()) {
+        if (viaje.getNoMascotas() == null) {
             model = cargarOrigenYDestinoAlModel();
             model.put("error", "Debe especificar si se puede viajar con mascotas");
             return new ModelAndView("crear-viaje", model);
@@ -95,7 +97,7 @@ public class ControladorViaje {
             this.servicioViaje.crearViaje(viaje);
         } catch (Exception e) {
             e.printStackTrace();
-            model.put("error", "Error al registrar el viaje");
+            model.put("error", "Error al registrar el viaje, revise los campos");
             return new ModelAndView("crear-viaje", model);
         }
         return new ModelAndView("redirect:/home");
