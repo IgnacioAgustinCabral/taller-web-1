@@ -26,6 +26,9 @@ public class Usuario {
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaCompanieros")
     private List<Viaje> viajes;
 
+    //private List<Comentario> comentarios;
+
+
     //TODO: constructor de pruebas.
     public Usuario(){};
 

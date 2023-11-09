@@ -44,8 +44,6 @@
     </div>
   </div>
 </header>
-<span th:text="${'Viaje: ' + viaje.destino.nombre+', '+viaje.destino.provincia.nombre + ' - '
-                              + viaje.origen.nombre + ', '+viaje.origen.provincia.nombre}"></span>
 <div class="container">
   <div class="row text-center">
     <div class="col-lg-10 mx-auto">
@@ -53,7 +51,7 @@
         <div class="col-lg-3 userInfo">
           <div>
             <img th:src="@{/images/avatars/av-3.jpg}" alt="avatar" width="50px" height="50px" class="rounded-circle">
-            <h5 th:text="${viaje.destino.nombre}" class="card-title"></h5>
+            <h5 th:text="${viaje.usuario.nombre}" class="card-title"></h5>
           </div>
           <div>
             <a th:href="@{/perfil/usuario(email='marianoochoa@unlam.edu.ar')}" class="card-link">Ver Perfil</a>
