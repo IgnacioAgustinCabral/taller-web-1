@@ -5,7 +5,6 @@ import com.tallerwebi.dominio.RepositorioViaje;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.Viaje;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -58,15 +57,18 @@ public class RepositorioViajeImpl implements RepositorioViaje {
 
     @Override
     public List<Viaje> buscarPorOrigen(Ciudad origen) {
-        return sessionFactory.getCurrentSession().createQuery("FROM Viaje V WHERE V.origen = :origen_viaje", Viaje.class)
-                .setParameter("origen_viaje",origen)
+        return sessionFactory.getCurrentSession().createQuery("FROM Viaje V WHERE V.origen.id = :origen_viaje", Viaje.class)
+                .setParameter("origen_viaje",origen.getId())
                 .list();
     }
 
+
+
+
     @Override
-    public List<Viaje> buscarPorFecha(String fechaHora) {
-        return sessionFactory.getCurrentSession().createCriteria(Viaje.class)
-                .add(Restrictions.eq("fecha_hora",fechaHora))
+    public List<Viaje> buscarPorFecha(String fecha) {
+        return sessionFactory.getCurrentSession().createQuery("FROM Viaje WHERE fecha = :fecha", Viaje.class)
+                .setParameter("fecha",fecha)
                 .list();
     }
 
@@ -82,11 +84,11 @@ public class RepositorioViajeImpl implements RepositorioViaje {
     }
 
     @Override
-    public List buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fechaHora) {
-        return sessionFactory.getCurrentSession().createCriteria(Viaje.class)
-                .add(Restrictions.eq("origen",origen))
-                .add(Restrictions.eq("destino", destino))
-                .add(Restrictions.eq("fecha_hora",fechaHora))
+    public List buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fecha) {
+        return sessionFactory.getCurrentSession().createQuery("FROM Viaje WHERE origen.id = :origen AND destino.id = :destino AND fecha = :fecha ",Viaje.class)
+                .setParameter("origen", origen.getId())
+                .setParameter("destino",destino.getId())
+                .setParameter("fecha",fecha)
                 .list();
                     }
 
@@ -99,4 +101,7 @@ public class RepositorioViajeImpl implements RepositorioViaje {
                 .setParameter("provincia", provincia)
                 .list();
     }
+
+
 }
+

@@ -15,7 +15,7 @@ public interface RepositorioViaje {
 
     List<Viaje> buscarPorOrigen(Ciudad origen);
 
-    List<Viaje> buscarPorFecha(String fechaHora);
+    List<Viaje> buscarPorFecha(String fecha);
 
     void eliminar(Viaje viaje);
 
@@ -25,3 +25,4 @@ public interface RepositorioViaje {
 
     List<Viaje> listarPorProvincia(String provincia);
 }
+

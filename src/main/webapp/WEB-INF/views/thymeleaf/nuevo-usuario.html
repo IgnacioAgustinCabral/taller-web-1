@@ -8,32 +8,21 @@
   <link th:href="@{css/registro.css}" rel="stylesheet">
 </head>
 <body class="container-body">
-<header class="header">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <nav class="navbar navbar-expand-lg navbar-light navigation">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto main-nav ">
-              <li class="nav-item @@home">
-                <a class="nav-link login-button" th:href="@{/home}">Home</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </div>
+<header>
+  <div th:if="${session != null ? session.isLogged : false}">
+    <!-- Fragmento de barra de navegación para usuarios autenticados -->
+    <div th:replace="navbar-user"></div>
+  </div>
+  <div th:unless="${session != null ? session.isLogged : false}">
+    <!-- Fragmento de barra de navegación para invitados -->
+    <div th:replace="navbar-guest" class="bg-light"></div>
   </div>
 </header>
 <div class="container mt-2">
   <div class="row justify-content-center">
     <div class="col-md-6 cont-registro align-item-center">
       <h3 class="p-4">Nuevo usuario</h3>
-      <form class="p-4" th:action="@{/registrarme}" th:object="${usuario}" method="POST">
+      <form class="p-4" th:action="@{/registrarme}" th:object="${usuario}" method="POST" enctype="multipart/form-data">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="nombre">Nombre</label>
@@ -55,23 +44,28 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="fechaNacimiento">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" id="fechaNacimiento"  th:field="*{fecha_nac}">
+            <input type="date" class="form-control" id="fechaNacimiento" th:field="*{fecha_nac}">
           </div>
           <div class="form-group col-md-6">
             <label for="dni">DNI</label>
-            <input type="text" class="form-control" id="dni" placeholder="Dni"  th:field="*{dni}">
+            <input type="text" class="form-control" id="dni" placeholder="Dni" th:field="*{dni}">
           </div>
         </div>
         <div class="form-group">
           <div class="form-group col-md-6">
             <label for="codigoArea">Código de Área</label>
-            <input type="text" class="form-control" id="codigoArea" placeholder="Código de Área"  th:field="*{cod_area}">
+            <input type="text" class="form-control" id="codigoArea" placeholder="Código de Área" th:field="*{cod_area}">
           </div>
           <div class="form-group col-md-6">
             <label for="telefono">Teléfono</label>
-            <input type="tel" class="form-control" id="telefono" placeholder="Teléfono"  th:field="*{telefono}">
+            <input type="tel" class="form-control" id="telefono" placeholder="Teléfono" th:field="*{telefono}">
           </div>
         </div>
+        <div class="form-group">
+          <label for="imagenDePerfil">Imagen de Perfil</label>
+          <input type="file" class="form-control" id="imagenDePerfil" name="imagenDePerfil" th:field="*{imagenDePerfil}" />
+        </div>
+
         <button type="submit" class="btn btn-lg btn-primary font-weight-bold mt-3">Registrarse</button><br>
 
         <a class="mt-3 d-inline-block text-primary" href="login">Ya tienes una cuenta? Inicia Sesión</a>

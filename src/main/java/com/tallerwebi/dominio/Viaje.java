@@ -1,6 +1,13 @@
 package com.tallerwebi.dominio;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,31 +18,56 @@ public class Viaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
+    /*@NotNull(message = "La descripción no puede estar vacía")*/
     private String descripcion;
+    //@NotNull(message = "La cantidad es requerida")
+    //@Min(value = 1, message = "La cantidad debe ser al menos 1")
     private  Integer cantidad;
-    private String fecha_hora;
+    /*@NotNull(message = "La fecha del viaje es requerida")*/
+    /*@Future(message = "La fecha del viaje debe ser en el futuro")*/
+    private String fecha;
+/*    @NotNull(message = "Debes especificar si se permite fumar")*/
     private Boolean noFumar;
+/*    @NotNull(message = "Debes especificar si se permiten niños")*/
     private Boolean noNinios;
+//    @NotNull(message = "Debes especificar si se permiten mascotas")
     private Boolean noMascotas;
     @ManyToOne
+//    @NotNull(message = "El destino es un campo requerido")
     private  Ciudad destino;
     @ManyToOne
+    /*@NotNull(message = "El origen es un campo requerido")*/
     private Ciudad origen;
     @ManyToOne
     private Usuario usuario;
-
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "Viaje_Compa",joinColumns ={@JoinColumn(name="id_viaje")}, inverseJoinColumns={@JoinColumn(name="id_usuario")})
-    private Set<Usuario> listaCompanieros = new HashSet<Usuario>();
+    @JoinTable(
+            name = "Viaje_Pasajero",
+            joinColumns = @JoinColumn(name="viaje_id"),
+            inverseJoinColumns = @JoinColumn(name="usuario_id"))
+    private Set<Usuario> listaPasajeros = new HashSet<Usuario>();
 
 
 
     public Viaje() {}
-    public Viaje(Ciudad origen, Ciudad destino, String fecha_hora, Integer cantidad, String descripcion, Usuario creador) {
+    public Viaje(Ciudad origen, Ciudad destino, String fecha, Boolean noFumar, Boolean noNinios, Boolean noMascotas, Integer cantidad, String descripcion, Usuario creador) {
 
         this.origen = origen;
         this.destino = destino;
-        this.fecha_hora = fecha_hora;
+        this.fecha = fecha;
+        this.noFumar = noFumar;
+        this.noNinios = noNinios;
+        this.noMascotas = noMascotas;
+        this.cantidad = cantidad;
+        this.descripcion = descripcion;
+        this.usuario =  creador;
+    }
+
+    public Viaje(Ciudad origen, Ciudad destino, String fecha, Integer cantidad, String descripcion, Usuario creador) {
+
+        this.origen = origen;
+        this.destino = destino;
+        this.fecha = fecha;
         this.cantidad = cantidad;
         this.descripcion = descripcion;
         this.usuario =  creador;
@@ -63,12 +95,12 @@ public class Viaje {
         this.cantidad = cantidad;
     }
 
-    public String getFecha_hora() {
-        return this.fecha_hora;
+    public String getFecha() {
+        return this.fecha;
     }
 
-    public void setFecha_hora(String fecha_hora) {
-        this.fecha_hora = fecha_hora;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
     public Ciudad getDestino() {
@@ -99,12 +131,11 @@ public class Viaje {
         this.usuario = usuario;
     }
 
-    public Set<Usuario> getListaCompanieros() {
-        return listaCompanieros;
+    public Set<Usuario> getListaPasajeros() {
+        return listaPasajeros;
     }
-
-    public void setListaCompanieros(HashSet<Usuario> listaCompanieros) {
-        this.listaCompanieros = listaCompanieros;
+    public void setListaPasajeros(Set<Usuario> listaPasajeros) {
+        this.listaPasajeros = listaPasajeros;
     }
 
     public Boolean getNoFumar() {
@@ -130,4 +161,18 @@ public class Viaje {
     public void setNoMascotas(Boolean noMascotas) {
         this.noMascotas = noMascotas;
     }
+
+    public Boolean agregarPasajero(Usuario pasajero) {
+        return this.listaPasajeros.add(pasajero);
+    }
+
+/*    public Boolean isOrigenValid() {
+        return this.origen != null && this.origen.getNombre() != null && !this.origen.getNombre().equals("-- Selecciona una ciudad de Origen --");
+    }
+
+    public Boolean isDestinoValid() {
+        return this.destino != null && this.destino.getNombre() != null && !this.destino.getNombre().equals("-- Selecciona una ciudad de Origen --");
+    }*/
+
+
 }

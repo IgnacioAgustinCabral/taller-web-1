@@ -9,6 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,15 +51,15 @@ ControladorLogin {
         return new ModelAndView("login2", model);
     }
 
-    @RequestMapping(path = "/registrarme", method = RequestMethod.POST)
-    public ModelAndView registrarme(@ModelAttribute("usuario") Usuario usuario) {
+    @RequestMapping(path = "/registrarme", method = RequestMethod.POST,consumes = {"multipart/form-data"})
+    public ModelAndView registrarme(@ModelAttribute("usuario") Usuario usuario, @RequestPart("imagenDePerfil") MultipartFile imagenDePerfil) {
         ModelMap model = new ModelMap();
-        try{
-            servicioLogin.registrar(usuario);
-        } catch (UsuarioExistente e){
+        try {
+            servicioLogin.registrar(usuario, imagenDePerfil);
+        } catch (UsuarioExistente e) {
             model.put("error", "El usuario ya existe");
             return new ModelAndView("nuevo-usuario", model);
-        } catch (Exception e){
+        } catch (Exception e) {
             model.put("error", "Error al registrar el nuevo usuario");
             return new ModelAndView("nuevo-usuario", model);
         }

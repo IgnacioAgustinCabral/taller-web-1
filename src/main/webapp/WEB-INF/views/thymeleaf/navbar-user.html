@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid bg-light">
     <div class="row">
         <div class="col-md-12">
             <nav class="navbar navbar-expand-lg navbar-light navigation">
@@ -13,10 +13,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto main-nav ">
                         <li class="nav-item">
-                            <a class="nav-link btn btn-info" th:href="@{/crear-viaje}">Crear Viaje</a>
+                            <a class="nav-link card-link" th:href="@{/home}">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link card-link" th:href="@{/perfil/mi-perfil}">Mi Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-info mr-2" th:href="@{/crear-viaje}">Crear Viaje</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link btn btn-danger" th:href="@{/logout}">Cerrar Sesión</a>

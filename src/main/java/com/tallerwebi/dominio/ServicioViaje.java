@@ -1,7 +1,9 @@
 package com.tallerwebi.dominio;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public interface ServicioViaje {
     List<Viaje> obtenerViajes();
@@ -12,7 +14,7 @@ public interface ServicioViaje {
 
     List<Viaje> obtenerViajesPorFecha(String fecha);
 
-    List<Viaje> obtenerViajesPorFiltroMultiple(Ciudad origen, Ciudad destino, String fecha_hora);
+    Set<Viaje> obtenerViajesPorFiltroMultiple(FiltroViaje filtro);
 
     void crearViaje(Viaje viaje);
 
@@ -22,4 +24,7 @@ public interface ServicioViaje {
 
     List<Viaje> obtenerViajesCreadosPorUnUsuario(Usuario usuario);
 
+    Boolean UnirAViaje(Usuario usuario, Long viaje);
+
+    Boolean UsuarioUnido(Viaje viajeBuscado, Usuario usuario);
 }

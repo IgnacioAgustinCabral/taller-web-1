@@ -1,9 +1,8 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 @Entity
 public class Usuario {
@@ -22,8 +21,9 @@ public class Usuario {
     private String fecha_nac;
     private Integer cod_area;
     private Long telefono;
-
-    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaCompanieros")
+    @Lob
+    private byte[] imagenDePerfil;
+    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros")
     private List<Viaje> viajes;
 
     //private List<Comentario> comentarios;
@@ -57,6 +57,21 @@ public class Usuario {
         this.password= password;
         this.avatar = avatar;
         this.activo = activo;
+    }
+
+    public Usuario(String nombre, String apellido, Long dni, String fecha_nac, Integer cod_area, Long telefono, String email, String password,String avatar, String rol, Boolean activo, byte[] imagenDePerfil){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.fecha_nac = fecha_nac;
+        this.cod_area = cod_area;
+        this.telefono = telefono;
+        this.email = email;
+        this.rol = rol;
+        this.password= password;
+        this.avatar = avatar;
+        this.activo = activo;
+        this.imagenDePerfil = imagenDePerfil;
     }
 
     public Long getId() {
@@ -152,11 +167,33 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public List<Viaje> getViajes() {
+
+  /*  public List<Viaje> getViajes() {
         return viajes;
     }
 
     public void setViajes(List<Viaje> viajes) {
         this.viajes = viajes;
+    }*/
+
+    public byte[] getImagenDePerfil() {
+        return imagenDePerfil;
+    }
+
+    public void setImagenDePerfil(byte[] imagenDePerfil) {
+        this.imagenDePerfil = imagenDePerfil;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id) && Objects.equals(email, usuario.email) && Objects.equals(password, usuario.password) && Objects.equals(dni, usuario.dni);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, password, dni);
     }
 }
