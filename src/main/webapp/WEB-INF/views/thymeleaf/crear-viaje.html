@@ -38,16 +38,17 @@
                 <div style="margin-top:50px;" class="border mb-30 ms-0  ">
                     <h3 class="bg-gray p-4">Crear Nuevo Viaje</h3>
                     <form class="p-3" action="#" th:action="@{/creacion}" th:object="${viaje}" method="POST">
-                        <label>
-                        <select name="origen.id" th:field="${viaje.origen.id}" >
-                            <option value="">-- Selecciona una ciudad de Origen --</option>
+                        <label for="origen">Origen:
+                        <select name="origen.id" th:field="${viaje.origen.id}" id="origen">
+                            <option value="null">-- Selecciona una ciudad de Origen --</option>
                             <option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.nombre}+ ','+${ciudad.provincia.nombre}"></option>
                         </select>
                         </label>
                         <br>
-                        <label >
-                            <select name="destino.id" th:field="${viaje.destino.id}" >
-                                <option value="">-- Selecciona una ciudad de Destino --</option>
+                        <label for="destino">Destino: </label>
+                        <label>
+                            <select name="destino.id" th:field="${viaje.destino.id}" id="destino">
+                                <option value="null">-- Selecciona una ciudad de Destino --</option>
                                 <option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.nombre}+ ','+${ciudad.provincia.nombre}"></option>
                             </select>
                         </label>
@@ -57,13 +58,40 @@
                         <br>
                         <label for="cantidad">Cantidad de pasajeros:</label>
                         <input type="number" id="cantidad" name="cantidad" th:field="*{cantidad}" />
+                        <label>¿Se puede fumar?</label>
+                        <label>
+                            <select name="viaje.noFumar" th:field="${viaje.noFumar}" >
+                                <option value="">-</option>
+                                <option value="true">Se puede fumar</option>
+                                <option value="false">No se puede fumar</option>
+                            </select>
+                        </label>
+                        <br>
+                        <label>¿Se aceptan niños?</label>
+                        <label>
+                            <select name="viaje.noNinios" th:field="${viaje.noNinios}" >
+                                <option value="">-</option>
+                                <option value="true">Se aceptan niños</option>
+                                <option value="false">No se aceptan niños</option>
+                            </select>
+                        </label>
+                        <br>
+                        <label>¿Se aceptan mascotas?</label>
+                        <label>
+                            <select name="viaje.noMascotas" th:field="${viaje.noMascotas}" >
+                                <option value="">-</option>
+                                <option value="true">Se aceptan mascotas</option>
+                                <option value="false">No se aceptan mascotas</option>
+                            </select>
+                        </label>
                         <br>
                         <div class="form-group">
                         <label for="descripcion">Descripción:</label>
                         <textarea class="form-control bg-gray" id="descripcion" name="descripcion" th:field="*{descripcion}"></textarea>
                         <br>
                         </div>
-                        <button class="p-2" type="submit">Crear Viaje</button>
+                        <p th:if="${error != null}" class="alert alert-danger m-2" th:text="${error}"></p>
+                        <button class="p-3 btn btn-primary" type="submit">Crear Viaje</button>
                     </form>
 
                 </div>
