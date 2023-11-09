@@ -18,25 +18,25 @@ public class Viaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
-    //@NotNull(message = "La descripción no puede estar vacía")
+    /*@NotNull(message = "La descripción no puede estar vacía")*/
     private String descripcion;
     //@NotNull(message = "La cantidad es requerida")
     //@Min(value = 1, message = "La cantidad debe ser al menos 1")
     private  Integer cantidad;
-    //@NotNull(message = "La fecha del viaje es requerida")
-    //@Future(message = "La fecha del viaje debe ser en el futuro")
+    /*@NotNull(message = "La fecha del viaje es requerida")*/
+    /*@Future(message = "La fecha del viaje debe ser en el futuro")*/
     private String fecha;
-    //@NotNull(message = "Debes especificar si se permite fumar")
+/*    @NotNull(message = "Debes especificar si se permite fumar")*/
     private Boolean noFumar;
-    //@NotNull(message = "Debes especificar si se permiten niños")
+/*    @NotNull(message = "Debes especificar si se permiten niños")*/
     private Boolean noNinios;
-    //@NotNull(message = "Debes especificar si se permiten mascotas")
+//    @NotNull(message = "Debes especificar si se permiten mascotas")
     private Boolean noMascotas;
     @ManyToOne
-    //@NotEmpty(message = "El destino es un campo requerido")
+//    @NotNull(message = "El destino es un campo requerido")
     private  Ciudad destino;
     @ManyToOne
-    //@NotNull(message = "El origen es un campo requerido")
+    /*@NotNull(message = "El origen es un campo requerido")*/
     private Ciudad origen;
     @ManyToOne
     private Usuario usuario;

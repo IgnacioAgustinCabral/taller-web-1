@@ -39,16 +39,16 @@
                     <h3 class="bg-gray p-4">Crear Nuevo Viaje</h3>
                     <form class="p-3" action="#" th:action="@{/creacion}" th:object="${viaje}" method="POST">
                         <label for="origen">Origen:
-                        <select name="origen.id" th:field="${viaje.origen.id}" id="origen">
-                            <option value="null">-- Selecciona una ciudad de Origen --</option>
+                        <select name="origen.id" th:field="${viaje.origen.id}" id="origen" required>
+                            <option value="">-- Selecciona una ciudad de Origen --</option>
                             <option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.nombre}+ ','+${ciudad.provincia.nombre}"></option>
                         </select>
                         </label>
                         <br>
                         <label for="destino">Destino: </label>
                         <label>
-                            <select name="destino.id" th:field="${viaje.destino.id}" id="destino">
-                                <option value="null">-- Selecciona una ciudad de Destino --</option>
+                            <select name="destino.id" th:field="${viaje.destino.id}" id="destino" required>
+                                <option value="">-- Selecciona una ciudad de Destino --</option>
                                 <option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.nombre}+ ','+${ciudad.provincia.nombre}"></option>
                             </select>
                         </label>

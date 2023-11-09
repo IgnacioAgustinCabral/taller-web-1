@@ -55,16 +55,12 @@ public class ControladorViaje {
         } catch (DateTimeParseException ex) {
             model = cargarOrigenYDestinoAlModel();
             model.put("error", "El formato de fecha es inválido");
+            ex.printStackTrace();
             return new ModelAndView("crear-viaje", model);
         }
         if (fechaViaje.isBefore(fechaHoy)) {
             model = cargarOrigenYDestinoAlModel();
             model.put("error", "La fecha del viaje no es válida o es una fecha pasada");
-            return new ModelAndView("crear-viaje", model);
-        }
-        if (viaje.getCantidad() == null || viaje.getCantidad() <= 0) {
-            model = cargarOrigenYDestinoAlModel();
-            model.put("error", "La cantidad de pasajeros debe ser al menos 1");
             return new ModelAndView("crear-viaje", model);
         }
         if (viaje.getNoFumar() == null || !viaje.getNoFumar()) {
@@ -82,16 +78,23 @@ public class ControladorViaje {
             model.put("error", "Debe especificar si se puede viajar con mascotas");
             return new ModelAndView("crear-viaje", model);
         }
+        if (viaje.getCantidad() == null || viaje.getCantidad() <= 0) {
+            model = cargarOrigenYDestinoAlModel();
+            model.put("error", "La cantidad de pasajeros debe ser al menos 1");
+            return new ModelAndView("crear-viaje", model);
+        }
         if (viaje.getDescripcion() == null || viaje.getDescripcion().isEmpty()) {
             model = cargarOrigenYDestinoAlModel();
             model.put("error", "La descripción no puede estar vacía");
             return new ModelAndView("crear-viaje", model);
         }
+
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             viaje.setUsuario(usuario);
             this.servicioViaje.crearViaje(viaje);
         } catch (Exception e) {
+            e.printStackTrace();
             model.put("error", "Error al registrar el viaje");
             return new ModelAndView("crear-viaje", model);
         }

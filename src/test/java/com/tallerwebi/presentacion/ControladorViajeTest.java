@@ -44,8 +44,8 @@ public class ControladorViajeTest {
     private ServicioViaje servicioViajeMock;
     private Viaje viajeMock;
     private ServicioCiudad servicioCiudadMock;
-
     private HttpSession sessionMockUsuario;
+    private BindingResult bindingResultMock;
 
     @BeforeEach
     public void init(){
@@ -56,6 +56,7 @@ public class ControladorViajeTest {
         sessionMock = mock(HttpSession.class);
         servicioViajeMock = mock(ServicioViaje.class);
         servicioCiudadMock = mock(ServicioCiudad.class);
+        bindingResultMock = mock(BindingResult.class);
         controladorViaje = new ControladorViaje(servicioViajeMock,servicioCiudadMock);
         sessionMockUsuario = mock(HttpSession.class);
     }
