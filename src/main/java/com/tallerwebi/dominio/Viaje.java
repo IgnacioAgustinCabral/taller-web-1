@@ -1,7 +1,6 @@
 package com.tallerwebi.dominio;
+
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,15 +12,23 @@ public class Viaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
     private String descripcion;
+    //@NotNull(message = "La cantidad es requerida")
+    //@Min(value = 1, message = "La cantidad debe ser al menos 1")
     private  Integer cantidad;
+    /*@NotNull(message = "La fecha del viaje es requerida")*/
+    /*@Future(message = "La fecha del viaje debe ser en el futuro")*/
     private String fecha;
-
+/*    @NotNull(message = "Debes especificar si se permite fumar")*/
     private Boolean noFumar;
+/*    @NotNull(message = "Debes especificar si se permiten niños")*/
     private Boolean noNinios;
+//    @NotNull(message = "Debes especificar si se permiten mascotas")
     private Boolean noMascotas;
     @ManyToOne
+//    @NotNull(message = "El destino es un campo requerido")
     private  Ciudad destino;
     @ManyToOne
+    /*@NotNull(message = "El origen es un campo requerido")*/
     private Ciudad origen;
     @ManyToOne
     private Usuario usuario;
@@ -35,6 +42,19 @@ public class Viaje {
 
 
     public Viaje() {}
+    public Viaje(Ciudad origen, Ciudad destino, String fecha, Boolean noFumar, Boolean noNinios, Boolean noMascotas, Integer cantidad, String descripcion, Usuario creador) {
+
+        this.origen = origen;
+        this.destino = destino;
+        this.fecha = fecha;
+        this.noFumar = noFumar;
+        this.noNinios = noNinios;
+        this.noMascotas = noMascotas;
+        this.cantidad = cantidad;
+        this.descripcion = descripcion;
+        this.usuario =  creador;
+    }
+
     public Viaje(Ciudad origen, Ciudad destino, String fecha, Integer cantidad, String descripcion, Usuario creador) {
 
         this.origen = origen;
@@ -137,4 +157,14 @@ public class Viaje {
     public Boolean agregarPasajero(Usuario pasajero) {
         return this.listaPasajeros.add(pasajero);
     }
+
+/*    public Boolean isOrigenValid() {
+        return this.origen != null && this.origen.getNombre() != null && !this.origen.getNombre().equals("-- Selecciona una ciudad de Origen --");
+    }
+
+    public Boolean isDestinoValid() {
+        return this.destino != null && this.destino.getNombre() != null && !this.destino.getNombre().equals("-- Selecciona una ciudad de Origen --");
+    }*/
+
+
 }

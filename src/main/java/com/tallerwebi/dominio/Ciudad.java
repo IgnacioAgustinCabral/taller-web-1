@@ -18,6 +18,9 @@ public class Ciudad {
     @ManyToOne
     private  Provincia provincia;
 
+    private Double latitud;
+    private Double longitud;
+
     public Ciudad() {
     }
 
@@ -26,6 +29,7 @@ public class Ciudad {
         this.provincia = provincia;
         this.imagen = imagen;
     }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -55,6 +59,21 @@ public class Ciudad {
         return imagen;
     }
 
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }

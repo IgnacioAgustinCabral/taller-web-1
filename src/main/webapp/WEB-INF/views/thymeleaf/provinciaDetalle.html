@@ -56,8 +56,10 @@
             <div class="col-md-12">
                 <div class="content-block">
                     <div th:once>
-                        <h1>Viajes con destino a <span th:text="${viajes[0].destino.provincia.nombre}"></span></h1>
-                        <!--<h1 th:text="'Viajes con destino a ' + ${viaje.destino.provincia.nombre}"></h1>-->
+                        <h1 th:if="${viajes != null and not #lists.isEmpty(viajes)}">
+                            Viajes con destino a <span th:text="${viajes[0].destino.provincia.nombre}"></span>
+                        </h1>
+                        <!--<h1>Viajes con destino a <span th:text="${viajes[0].destino.provincia.nombre}"></span></h1>-->
                     </div>
                 </div>
             </div>
@@ -140,6 +142,19 @@
         </div>
     </div>
 </section>
+
+<div th:unless="${viajes != null and not #lists.isEmpty(viajes)}">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <i class="fa-solid fa-exclamation-triangle mt-3" style="font-size: 8em;"></i>
+                <h1 class="display-4 alert-light mt-20 mb-20">No se encontraron elementos</h1>
+                <p class="lead mt-20 mb-3">Lo sentimos, no hay viajes que coincidan con su búsqueda.</p>
+                <a href="/spring" class="mt-4 p-3 btn btn-primary">Volver al Inicio<i> </i></a>
+            </div>
+        </div>
+    </div>
+</div>
 <br>
 <br>
 <section>

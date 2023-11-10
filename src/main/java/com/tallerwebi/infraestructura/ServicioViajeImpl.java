@@ -1,13 +1,11 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.config.GoogleMapsConfig;
 import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +21,6 @@ public class ServicioViajeImpl implements ServicioViaje {
     @Autowired
     public ServicioViajeImpl(RepositorioViaje repositorioViaje, RepositorioUsuario repositorioUsuario) {
         this.repositorioViaje = repositorioViaje;
-        this. repositorioUsuario = repositorioUsuario;
     }
 
     @Override
@@ -142,7 +139,15 @@ public class ServicioViajeImpl implements ServicioViaje {
     @Override
     public List<Viaje> obtenerViajesPorProvincia(String provincia) {
         return repositorioViaje.listarPorProvincia(provincia);
-
-
     }
+
+    @Override
+    public String obtenerClaveApiGoogleMaps() {
+        return GoogleMapsConfig.GOOGLE_MAPS_API_KEY;
+    }
+
+
+
 }
+
+
