@@ -4,14 +4,17 @@ import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -66,14 +69,22 @@ public class ControladorViaje {
 
         Viaje viajeBuscado = servicioViaje.obtenerViajePorId(Long.valueOf(id));
 
+        String coordenadaOrigen = viajeBuscado.getOrigen().getLatitud().toString() +','+ viajeBuscado.getOrigen().getLongitud().toString();
+        String coordenadaDestino = viajeBuscado.getDestino().getLatitud().toString() +','+viajeBuscado.getDestino().getLongitud().toString();
+        String claveApi = servicioViaje.obtenerClaveApiGoogleMaps();
+
+        model.put("viajes", viajeBuscado);
+        model.put("coordenadaOrigen",coordenadaOrigen);
+        model.put("coordenadaDestino",coordenadaDestino);
+        model.put("claveApi",claveApi);
+
+
         Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado,usuario);
         System.out.println("el usuario esta unido?? " + unido + "/////////////////////////////////");
         model.put("viaje", viajeBuscado);
         model.put("unido", unido);
         return new ModelAndView("viaje/viaje", model);
-        //mv.addObject("viaje", viajeBuscado);
-        //mv.setViewName("viaje/viaje");
-        //return mv;
+
     }
 
 /*    @RequestMapping(path = "/ver-viaje", method = RequestMethod.GET )
@@ -92,7 +103,12 @@ public class ControladorViaje {
         List<Viaje> listadoDeViaje = servicioViaje.obtenerViajesPorProvincia(provincia);
 
         if (listadoDeViaje != null) {
-            modelo.put("viajes", listadoDeViaje);
+            try {
+                modelo.put("viajes", listadoDeViaje);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         return new ModelAndView("provinciaDetalle", modelo);
