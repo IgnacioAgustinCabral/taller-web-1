@@ -105,19 +105,25 @@ public class ControladorViaje {
 
     @RequestMapping(path = "/ver-viaje", method = RequestMethod.GET)
     public ModelAndView masInfo(@RequestParam(required = false) String id, HttpSession session) {
-        ModelMap model = new ModelMap();
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        try{
+            ModelMap model = new ModelMap();
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-        Viaje viajeBuscado = servicioViaje.obtenerViajePorId(Long.valueOf(id));
+            if(usuario == null)
+                throw new Exception();
 
-        Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado, usuario);
-        System.out.println("el usuario esta unido?? " + unido + "/////////////////////////////////");
-        model.put("viaje", viajeBuscado);
-        model.put("unido", unido);
-        return new ModelAndView("viaje/viaje", model);
-        //mv.addObject("viaje", viajeBuscado);
-        //mv.setViewName("viaje/viaje");
-        //return mv;
+            Viaje viajeBuscado = servicioViaje.obtenerViajePorId(Long.valueOf(id));
+
+            Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado, usuario);
+
+            model.put("viaje", viajeBuscado);
+            model.put("unido", unido);
+            return new ModelAndView("viaje/viaje", model);
+        }catch(Exception e){
+            ModelMap model = new ModelMap();
+            model.put("mensaje","Debes estar registrado para poder acceder.");
+            return new ModelAndView("error/error",model);
+        }
     }
 
     @RequestMapping(path = "/listar-provincia", method = GET)
