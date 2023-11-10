@@ -70,6 +70,7 @@
                                             <select class="ignore w-100" name="origen" th:field="*{origen.id}" style="height: 2rem;font-size: 15px;padding-left: 1rem;margin-top: 1.5rem;">
                                                 <option class="h-25" value="">--Seleccione Origen--</option>
                                                 <option th:each="origen : ${listaCiudades}" th:value="${origen.id}" th:text="${origen.nombre} + ', ' + ${origen.provincia.nombre}"></option>
+
                                             </select>
                                                 </label>
                                             </div>
