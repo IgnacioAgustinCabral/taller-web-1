@@ -49,7 +49,7 @@
 
 
 <div class="container-fluid">
-    <h2 class="mt-4 tab-title p-5 bg-light text-center m-0 mb-2 mt-2" >Resultado Busqueda</h2>
+    <h2 class="mt-4 tab-title p-5 bg-light text-center m-0 mb-2 mt-2" >Resultados de Búsqueda</h2>
     <div class="row row-cols-4 gx-4 gy-4 " th:if="${viajesFiltrados != null}">
         <div class="col bg-shadow bg-light bg-gradient p-4" th:each="viaje : ${viajesFiltrados}">
             <div class="card" style="width: 100%;">
@@ -90,13 +90,13 @@
 
     </div>
 <div th:if="${viajesFiltrados == null || viajesFiltrados.isEmpty()}">
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
             <div class="col-md-12 text-center">
+                <i class="fa-solid fa-exclamation-triangle mt-3" style="font-size: 8em;"></i>
                 <h1 class="display-4 alert-light mt-20 mb-20">No se encontraron elementos</h1>
-                <i class="fa-solid fa-exclamation-triangle mt-3"></i>
-                <p class="lead mt-20 mb-3">Lo sentimos,no hay viajes que conicidan con su búsqueda.</p>
-                <a href="/spring" class="mt-4  btn btn-light">Volver a Home <i> </i></a>
+                <p class="lead mt-20 mb-3">Lo sentimos, no hay viajes que coincidan con su búsqueda.</p>
+                <a href="/spring" class="mt-4  btn btn-primary">Volver al Inicio<i> </i></a>
             </div>
         </div>
     </div>

@@ -127,7 +127,10 @@ public class ControladorViaje {
 
         if (listadoDeViaje != null) {
             modelo.put("viajes", listadoDeViaje);
+        }else {
+            modelo.put("mensaje", "No hay viajes disponibles para la provincia seleccionada");
         }
+
 
         return new ModelAndView("provinciaDetalle", modelo);
     }
