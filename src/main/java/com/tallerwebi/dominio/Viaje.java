@@ -1,7 +1,6 @@
 package com.tallerwebi.dominio;
+
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -136,5 +135,8 @@ public class Viaje {
 
     public Boolean agregarPasajero(Usuario pasajero) {
         return this.listaPasajeros.add(pasajero);
+    }
+
+    public void setId(String id) {
     }
 }
