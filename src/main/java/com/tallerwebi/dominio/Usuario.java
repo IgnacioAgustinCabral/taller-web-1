@@ -3,6 +3,7 @@ package com.tallerwebi.dominio;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Usuario {
@@ -26,7 +27,13 @@ public class Usuario {
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros")
     private List<Viaje> viajes;
 
-    //private List<Comentario> comentarios;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "usuario_comentario",
+            joinColumns = @JoinColumn(name = "id_usuario"),
+            inverseJoinColumns = @JoinColumn(name = "id_comentario")
+    )
+    private Set<Comentario> comentarios;
 
 
     //TODO: constructor de pruebas.
