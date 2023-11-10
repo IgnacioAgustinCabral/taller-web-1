@@ -116,13 +116,10 @@ public class ControladorViaje {
 
             String coordenadaOrigen = viajeBuscado.getOrigen().getLatitud().toString() + ',' + viajeBuscado.getOrigen().getLongitud().toString();
             String coordenadaDestino = viajeBuscado.getDestino().getLatitud().toString() + ',' + viajeBuscado.getDestino().getLongitud().toString();
-            String claveApi = servicioViaje.obtenerClaveApiGoogleMaps();
 
             model.put("viajes", viajeBuscado);
             model.put("coordenadaOrigen", coordenadaOrigen);
             model.put("coordenadaDestino", coordenadaDestino);
-            model.put("claveApi", claveApi);
-
 
             Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado, usuario);
             System.out.println("el usuario esta unido?? " + unido + "/////////////////////////////////");
