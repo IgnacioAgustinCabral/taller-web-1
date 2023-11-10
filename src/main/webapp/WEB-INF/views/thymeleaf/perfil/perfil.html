@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="border border-light p-2 mb-3">
-                        <h3 class="header-title mb-3">Tus próximos viajes...</h3>
+                        <h3 class="header-title mb-3" th:text="'Viajes creados por ' + ${usuario.nombre + ' ' + usuario.apellido}"></h3>
                             <div th:each="viaje : ${viajes}">
                                     <div class="card card-margin flex-row">
                                         <div class="flex-row userInfo text-center">
@@ -202,8 +202,8 @@
                                     </div>
                             </div>
 
+<!--
 
-                        <!-- SIN USO -->
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="trending-ads-slide">
@@ -213,7 +213,7 @@
                                                 <div class="container p-0" style="height: 200px;">
                                                     <img th:src="${'../' + viaje.destino.background}" class=" m-0 p-0 w-100 h-100">
                                                 </div>
-                                                <!--<div th:style="'background-image: url(' + ${viaje.destino.background} + '); height: 200px;'"></div>-->
+                                                &lt;!&ndash;<div th:style="'background-image: url(' + ${viaje.destino.background} + '); height: 200px;'"></div>&ndash;&gt;
                                                 <div class="card-body">
                                                     <div class="header-card">
                                                         <img th:src="${'../' + viaje.usuario.avatar}" alt="avatar" width="55px" height="55px"
@@ -244,64 +244,15 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-           <!-- <div class="card">
-                <div class="card-body">
-                    <div class="border border-light p-2 mb-3">
-                        <h4 class="header-title mb-3">Viajes realizados</h4>
-                        <div class="trending-ads-slide">
-
-                            <div class="col-sm-12 col-lg-4" th:each="viaje : ${viajes}">
-                                <div class="col-sm-12 col-lg-4">
-                                    <div class="card" style="width: 20rem;">
-                                        <div th:style="'background-image: url(' + ${'../'+ viaje.background} + '); height: 200px;'"></div>
-                                        <div class="card-body">
-                                            <div class="header-card">
-                                                <img th:src="${'../'+viaje.avatar}" alt="avatar" width="55px" height="55px"
-                                                     class="rounded-circle">
-                                            </div>
-                                            <div><h5 class="card-title" th:text="${viaje.nombre}"></h5></div>
-                                            <div><p class="card-text" th:text="'Fecha de Salida: ' + ${#dates.format(viaje.fechaViaje, 'dd/MM/yyyy')}"></p>
-                                            </div>
-
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><i class="fa-solid fa-signs-post fa-xl"></i> Origen: <span
-                                                    th:text="${viaje.origen}"></span></li>
-                                            <li class="list-group-item"><i class="fa-solid fa-flag-checkered fa-xl"></i> Destino:
-                                                <span th:text="${viaje.destino}"></span></li>
-                                            <li class="list-group-item">
-                                                <i class="fa-solid fa-paw fa-lg"></i>
-                                                <i class="fa-solid fa-ban-smoking fa-lg"></i>
-                                                <i class="fa-solid fa-guitar fa-lg"></i>
-                                                <i class="fa-solid fa-baby-carriage fa-lg"></i>
-                                            </li>
-                                        </ul>
-                                        <div class="card-body">
-                                            <a th:href="@{/ver-viaje(id=${viaje.id})}" class="card-link">Mas Info</a>
-                                            <a th:href="@{/perfil/usuario(email='marianoochoa@unlam.edu.ar')}" class="card-link">Ver Perfil</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+-->
 
 
-
-                        </div>
-                        <div class="text-center">
-                            <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> Load more </a>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <div class="card">
                 <div class="card-body">
                     <div class="border border-light p-2 mb-3">
