@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Comentario {
@@ -10,6 +11,9 @@ public class Comentario {
     private Long id;
     private Double calificacion;
     private String descripcion;
+
+    @ManyToMany(mappedBy = "comentarios")
+    private Set<Usuario> usuarios;
 
     public Comentario () {
 
