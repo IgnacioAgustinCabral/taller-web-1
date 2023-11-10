@@ -6,5 +6,9 @@ public interface ServicioComentario {
 
     List<Comentario> obtenerComentarios();
 
-    List<Comentario> obtenerComentariosPorUsuario ();
+    List<Comentario> obtenerComentariosPorUsuario(Usuario idUsuario);
+
+    Comentario obtenerComentarioPorId(Comentario idComentario);
+
+    void crearComentario(Comentario comentario);
 }
