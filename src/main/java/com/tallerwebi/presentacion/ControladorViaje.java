@@ -4,15 +4,15 @@ import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -105,21 +105,29 @@ public class ControladorViaje {
 
     @RequestMapping(path = "/ver-viaje", method = RequestMethod.GET)
     public ModelAndView masInfo(@RequestParam(required = false) String id, HttpSession session) {
-        try{
+        try {
             ModelMap model = new ModelMap();
             Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-            if(usuario == null)
+            if (usuario == null)
                 throw new Exception();
 
             Viaje viajeBuscado = servicioViaje.obtenerViajePorId(Long.valueOf(id));
 
-            Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado, usuario);
+            String coordenadaOrigen = viajeBuscado.getOrigen().getLatitud().toString() + ',' + viajeBuscado.getOrigen().getLongitud().toString();
+            String coordenadaDestino = viajeBuscado.getDestino().getLatitud().toString() + ',' + viajeBuscado.getDestino().getLongitud().toString();
 
+            model.put("viajes", viajeBuscado);
+            model.put("coordenadaOrigen", coordenadaOrigen);
+            model.put("coordenadaDestino", coordenadaDestino);
+
+            Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado, usuario);
+            System.out.println("el usuario esta unido?? " + unido + "/////////////////////////////////");
             model.put("viaje", viajeBuscado);
             model.put("unido", unido);
             return new ModelAndView("viaje/viaje", model);
-        }catch(Exception e){
+
+        } catch (Exception e) {
             ModelMap model = new ModelMap();
             model.put("mensaje","Debes estar registrado para poder acceder.");
             return new ModelAndView("error/error",model);
@@ -135,6 +143,12 @@ public class ControladorViaje {
             modelo.put("viajes", listadoDeViaje);
         }else {
             modelo.put("mensaje", "No hay viajes disponibles para la provincia seleccionada");
+            try {
+                modelo.put("viajes", listadoDeViaje);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
 

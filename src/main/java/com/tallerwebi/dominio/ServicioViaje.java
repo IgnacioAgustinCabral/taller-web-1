@@ -24,6 +24,8 @@ public interface ServicioViaje {
 
     List<Viaje> obtenerViajesCreadosPorUnUsuario(Usuario usuario);
 
+    String obtenerClaveApiGoogleMaps();
+
     Boolean UnirAViaje(Usuario usuario, Long viaje);
 
     Boolean UsuarioUnido(Viaje viajeBuscado, Usuario usuario);

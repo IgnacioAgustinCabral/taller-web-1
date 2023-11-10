@@ -1,6 +1,6 @@
-INSERT INTO Usuario(id, email, password, rol, activo) VALUES(null, 'test@unlam.edu.ar', 'test', 'ADMIN', true);
+INSERT IGNORE INTO Usuario(id, email, password, rol, activo) VALUES(null, 'test@unlam.edu.ar', 'test', 'ADMIN', true);
 
-INSERT INTO Usuario(email, password,avatar, rol, activo,nombre,apellido,dni,fecha_nac,cod_area,telefono,imagenDePerfil)
+INSERT IGNORE INTO Usuario(email, password,avatar, rol, activo,nombre,apellido,dni,fecha_nac,cod_area,telefono,imagenDePerfil)
 VALUES
     ('carolinarojas@unlam.edu.ar', 'test', 'images/avatars/av-1.jpg', 'admin', true, 'Carolina', 'Rojas', 12345678, '2000/01/01', 011, 12345678,null),
     ('marianoochoa@unlam.edu.ar', 'contra2', 'images/avatars/av-2.jpg', 'admin', true, 'Mariano', 'Ochoa', 23456789, '2000/02/02', 011, 23456789,null),
@@ -23,7 +23,7 @@ VALUES
     ('orianasalvatierra@unlam.edu.ar', 'contra19',null, 'admin', true, 'Oriana', 'Salvatierra', 12345689, '2000/07/19', 011, 12345689,null),
     ('pedroromero@unlam.edu.ar', 'contra20',null, 'default', true, 'Pedro', 'Romero', 23456790, '2000/08/20', 011, 23456790,null);
 
-INSERT INTO Provincia (nombre, imagen)
+INSERT IGNORE INTO Provincia (nombre, imagen)
 VALUES
     ('Buenos Aires', "images/products/marDelPlata.jpg"),
     ('Catamarca', NULL),
@@ -49,33 +49,33 @@ VALUES
     ('Tierra del Fuego', NULL),
     ('Tucumán', NULL);
 
-INSERT INTO Ciudad (background, nombre, provincia_id)
+INSERT INTO Ciudad (background, nombre, provincia_id, latitud, longitud)
 VALUES
-    ('images/ciudades/Bahía-Blanca.jpg', 'Bahía Blanca', 1),
-    ('images/ciudades/colon.jpg', 'Colón', 7),
-    ('images/ciudades/concordia.jpg', 'Concordia', 7),
-    ('images/ciudades/gualeguaychu.jpg', 'Gualeguaichu', 7),
-    ('images/ciudades/la-falda.jpg', 'La Falda', 5),
-    ('images/ciudades/mar-del-plata.jpg', 'Mar del Plata', 1),
-    ('images/ciudades/bariloche.jpg', 'San Carlos de Bariloche', 15),
-    ('images/ciudades/rio-gallegos.webp', 'Río Gallegos', 19),
-    ('images/ciudades/iruya.jpg', 'Iruya', 16),
-    ('images/ciudades/san-rafael.jpg', 'San Rafael', 12),
-    ('images/ciudades/partido-de-la-costa.jpg', 'Partido de La Costa', 1),
-    ('images/ciudades/rosario.webp', 'Rosario', 20),
-    ('images/ciudades/resistencia.jpg', 'Resistencia', 3),
-    ('images/ciudades/Posadas-Misiones.jpg', 'Posadas', 13),
-    ('images/ciudades/villa-langostura.jpg', 'Villa La Angostura', 14),
-    ('images/ciudades/villa-maria.jpg', 'Villa María', 5),
-    ('images/ciudades/villa-mercedes.JPG', 'Villa Mercedes', 18),
-    ('images/ciudades/puerto-madryn.jpg', 'Puerto Madryn', 4),
-    ('images/ciudades/Rawson.jpg', 'Rawson', 4),
-    ('images/ciudades/san-salvador.jpg', 'San Salvador de Jujuy', 9),
-    ('images/ciudades/tandil.webp', 'Tandil', 1),
-    ('images/ciudades/trelew-chubut.webp', 'Trelew', 4),
-    ('images/ciudades/usuahia.png', 'Ushuaia', 22);
+    ('images/ciudades/Bahía-Blanca.jpg', 'Bahía Blanca', 1,-38.717652,-62.265487),
+    ('images/ciudades/colon.jpg', 'Colón', 7,-31.9775143,-58.3899234),
+    ('images/ciudades/concordia.jpg', 'Concordia', 7,-31.371318,-58.0129935),
+    ('images/ciudades/gualeguaychu.jpg', 'Gualeguaichu', 7,-33.009019,-58.523751),
+    ('images/ciudades/la-falda.jpg', 'La Falda', 5,-31.0946192,-64.4829365),
+    ('images/ciudades/mar-del-plata.jpg', 'Mar del Plata', 1,-37.9977225,-57.5482703),
+    ('images/ciudades/bariloche.jpg', 'San Carlos de Bariloche', 15,-41.1334421,-71.3098425),
+    ('images/ciudades/rio-gallegos.webp', 'Río Gallegos', 19,-51.6460759,-69.2632289),
+    ('images/ciudades/iruya.jpg', 'Iruya', 16,-22.791212,-65.2158295),
+    ('images/ciudades/san-rafael.jpg', 'San Rafael', 12,-34.6126025,-68.330514),
+    ('images/ciudades/partido-de-la-costa.jpg', 'Partido de La Costa', 1,-36.5289662,-56.6964916),
+    ('images/ciudades/rosario.webp', 'Rosario', 20,-32.9593609,-60.6617024),
+    ('images/ciudades/resistencia.jpg', 'Resistencia', 3,-27.4511235,-58.9865196),
+    ('images/ciudades/Posadas-Misiones.jpg', 'Posadas', 13,-27.4035083,-55.9497118),
+    ('images/ciudades/villa-langostura.jpg', 'Villa La Angostura', 14,-40.7620649,-71.6473205),
+    ('images/ciudades/villa-maria.jpg', 'Villa María', 5,-32.4107173,-63.2437955),
+    ('images/ciudades/villa-mercedes.JPG', 'Villa Mercedes', 18,-33.6745795,-65.4617562),
+    ('images/ciudades/puerto-madryn.jpg', 'Puerto Madryn', 4,-42.7729674,-65.0366104),
+    ('images/ciudades/Rawson.jpg', 'Rawson', 4,-43.2991348,-65.1056655),
+    ('images/ciudades/san-salvador.jpg', 'San Salvador de Jujuy', 9,-24.1852569,-65.2994789),
+    ('images/ciudades/tandil.webp', 'Tandil', 1,-37.3282887,-59.1356957),
+    ('images/ciudades/trelew-chubut.webp', 'Trelew', 4,-43.2531242,-65.3094407),
+    ('images/ciudades/usuahia.png', 'Ushuaia', 22,-30.9795557,-64.0798545);
 
-INSERT INTO Viaje ( cantidad, descripcion, fecha, destino_id, origen_id, usuario_id)
+INSERT IGNORE INTO Viaje ( cantidad, descripcion, fecha, destino_id, origen_id, usuario_id)
 VALUES (2,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),3 , 5, 2),
        (5,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate vehicula mauris, ac interdum nunc porttitor vel. In hac habitasse platea dictumst. Aliquam erat volutpat. Vestibulum ornare rutrum interdum. Sed faucibus orci ac rhoncus egestas' ,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),9 , 4, 2),
        (4,null,STR_TO_DATE('15/03/2024', '%d/%m/%Y'),22 , 6, 2),

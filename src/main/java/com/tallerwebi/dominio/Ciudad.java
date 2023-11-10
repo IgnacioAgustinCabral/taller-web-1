@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 public class Ciudad {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,6 +13,9 @@ public class Ciudad {
     @ManyToOne
     private  Provincia provincia;
     private  String background;
+
+    private Double latitud;
+    private Double longitud;
 
     public Ciudad() {
     }
@@ -53,5 +55,19 @@ public class Ciudad {
         return background;
     }
 
+    public Double getLatitud() {
+        return latitud;
+    }
 
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
 }

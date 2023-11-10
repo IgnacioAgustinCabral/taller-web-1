@@ -13,22 +13,24 @@
     <link th:href="@{/plugins/slick/slick-theme.css}" rel="stylesheet">
     <link th:href="@{/plugins/jquery-nice-select/css/nice-select.css}" rel="stylesheet">
 
-    <!-- Use Thymeleaf expressions for JavaScript URLs -->
-    <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
-    <script th:src="@{/plugins/bootstrap/popper.min.js}"></script>
-    <script th:src="@{/plugins/bootstrap/bootstrap.min.js}"></script>
-    <script th:src="@{/plugins/bootstrap/bootstrap-slider.js}"></script>
-    <script th:src="@{/plugins/tether/js/tether.min.js}"></script>
-    <script th:src="@{/plugins/raty/jquery.raty-fa.js}"></script>
-    <script th:src="@{/plugins/slick/slick.min.js}"></script>
-    <script th:src="@{/plugins/jquery-nice-select/js/jquery.nice-select.min.js}"></script>
-    <script th:src="@{/plugins/google-map/map.js}" defer></script>
-    <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
-<!--    <script src="https://www.nerdfonts.com/assets/css/webfont.css" crossorigin="anonymous"></script>-->
+  <!-- Use Thymeleaf expressions for JavaScript URLs -->
+  <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+  <script th:src="@{/plugins/bootstrap/popper.min.js}"></script>
+  <script th:src="@{/plugins/bootstrap/bootstrap.min.js}"></script>
+  <script th:src="@{/plugins/bootstrap/bootstrap-slider.js}"></script>
+  <script th:src="@{/plugins/tether/js/tether.min.js}"></script>
+  <script th:src="@{/plugins/raty/jquery.raty-fa.js}"></script>
+  <script th:src="@{/plugins/slick/slick.min.js}"></script>
+  <script th:src="@{/plugins/jquery-nice-select/js/jquery.nice-select.min.js}"></script>
+  <script th:src="@{/plugins/google-map/map.js}" defer></script>
+  <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
+
+  <script th:src="@{/js/maps.js}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeHh7_S2wkpYRu1DNMwzAZr5bcSd-cpY0&callback=initMap" async defer></script>
     <link href="https://www.nerdfonts.com/assets/css/webfont.css" rel="stylesheet">
-    <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
-    <!--<link th:href="@{/css/style.css}" rel="stylesheet">-->
-    <script th:src="@{/js/script.js}"></script>
+  <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
+  <!--<link th:href="@{/css/style.css}" rel="stylesheet">-->
+  <script th:src="@{/js/script.js}"></script>
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
@@ -96,7 +98,9 @@
                 <h5 class="card-text">Destino</h5>
                 <p class="card-text" th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></p>
                 <h5 class="card-text">Tiempo de viaje</h5>
-                <p class="card-text">6 horas</p>
+                <p class="card-text" id="duracion"></p>
+                <h5 class="card-text">Distancia a Recorrer:</h5>
+                <p class="card-text" id="distancia"></p>
                 <h5 class="card-text">Lugares disponibles</h5>
                 <p class="card-text" th:text="${viaje.cantidad}"></p>
             </div>
@@ -110,8 +114,11 @@
             <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" class="btn  bottomSpace rightSpace"
                th:classappend="${unido ? 'btn-secondary' : 'btn-primary'}" th:text="${unido ? 'Unido' : 'Unirme'}"></a>
         </div>
-    </div>
-</div>
+
+      <div id="mapa" style="height:400px;"
+        th:data-origen="${coordenadaOrigen}"
+        th:data-destino="${coordenadaDestino}"></div>
+  </div>
 </div>
 
 <!--

@@ -1,13 +1,6 @@
 package com.tallerwebi.dominio;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +11,6 @@ public class Viaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
-    /*@NotNull(message = "La descripción no puede estar vacía")*/
     private String descripcion;
     //@NotNull(message = "La cantidad es requerida")
     //@Min(value = 1, message = "La cantidad debe ser al menos 1")
