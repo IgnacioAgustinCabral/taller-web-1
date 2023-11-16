@@ -124,7 +124,7 @@
                                 <div class="card">
                                     <div class="thumb-content">
                                         <a th:href="@{/listar-provincia(provincia = ${item.nombre})}" th:value="${item.nombre.toString()}">
-                                            <img class="card-img-top img-fluid" style="min-width: 100%" th:src="@{'/provincia/imagen/' + ${item.getId()}}" alt="Imagen provincia">
+                                            <img class="card-img-top img-fluid " style="min-width: 100%!important; min-height: max-content!important;" th:src="@{'/provincia/imagen/' + ${item.getId()}}" alt="Imagen provincia">
                                         </a>
                                     </div>
                                     <div class="card-body">
