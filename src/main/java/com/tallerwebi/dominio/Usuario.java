@@ -12,6 +12,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
+    private Boolean emailValidado = false;
     private String password;
     private String avatar;
     private String rol;
@@ -22,6 +23,7 @@ public class Usuario {
     private String fecha_nac;
     private Integer cod_area;
     private Long telefono;
+    private String tokenValidacion;
     @Lob
     private byte[] imagenDePerfil;
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros")
@@ -172,6 +174,22 @@ public class Usuario {
 
     public void setTelefono(Long telefono) {
         this.telefono = telefono;
+    }
+
+    public String getTokenValidacion() {
+        return tokenValidacion;
+    }
+
+    public void setTokenValidacion(String tokenValidacion) {
+        this.tokenValidacion = tokenValidacion;
+    }
+
+    public Boolean isEmailValidado() {
+        return emailValidado;
+    }
+
+    public void setEmailValidado(Boolean emailValidado) {
+        this.emailValidado = emailValidado;
     }
 
 

@@ -10,4 +10,5 @@ public interface ServicioLogin {
     Usuario consultarUsuario(String email, String password);
     void registrar(Usuario usuario, MultipartFile imagenDePerfil) throws UsuarioExistente, IOException;
 
+    void validarCorreo(String token);
 }
