@@ -1,43 +1,43 @@
 package com.tallerwebi.infraestructura;
 
+import com.sendgrid.*;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 import com.tallerwebi.dominio.ServicioEmail;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
+import java.io.IOException;
 
-@Service
+@Service("servicioEmail")
 public class ServicioEmailImpl implements ServicioEmail {
-    @Override
-    public void enviarCorreo(String destinatario, String asunto, String cuerpo) throws MessagingException {
-        // Configuración para el servidor de correo
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
 
-        // Autenticación
-        Authenticator authenticator = new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("travelando.unlam@gmail.com", "Travel1234");
-            }
-        };
 
-        // Crear sesión
-        Session session = Session.getInstance(properties, authenticator);
+    private String FROM_EMAIL_ADDRESS = "travelando.unlam@gmail.com";
 
-        // Crear mensaje de correo
-        Message mensaje = new MimeMessage(session);
-        mensaje.setFrom(new InternetAddress("travelando.unlam@gmail.com"));
-        mensaje.setRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
-        mensaje.setSubject(asunto);
-        mensaje.setText(cuerpo);
+    public void enviarMailRegistro(String toMail, String cuerpoCorreo) throws IOException {
 
-        // Enviar correo
-        Transport.send(mensaje);
+        SendGrid sendGrid = new SendGrid("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");
+        Email from = new Email(FROM_EMAIL_ADDRESS);
+        String subject = "Registro TravelAndo";
+        Email to = new Email(toMail);
+        Content content = new Content("text/plain", cuerpoCorreo);
+        Mail mail = new Mail(from, subject, to, content);
+
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sendGrid.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
+
+
 }

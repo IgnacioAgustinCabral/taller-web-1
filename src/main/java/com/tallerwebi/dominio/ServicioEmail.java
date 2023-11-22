@@ -1,8 +1,9 @@
 package com.tallerwebi.dominio;
 
-import javax.mail.MessagingException;
+import java.io.IOException;
 
 public interface ServicioEmail {
 
-    void enviarCorreo(String destinatario, String Asunto, String cuerpo) throws MessagingException;
+
+    void enviarMailRegistro(String destinatario, String cuerpoCorreo) throws IOException;
 }

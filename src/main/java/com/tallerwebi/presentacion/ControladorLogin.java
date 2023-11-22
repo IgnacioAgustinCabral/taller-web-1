@@ -2,14 +2,12 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.excepcion.TokenInvalidoException;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,14 +71,19 @@ ControladorLogin {
         return new ModelAndView("nuevo-usuario", model);
     }
 
-    /*@RequestMapping(path = "/home", method = RequestMethod.GET)
-    public ModelAndView irAHome() {
-        return new ModelAndView("home");
-    }*/
+    @RequestMapping("/validar-email")
+    public ModelAndView validarEmail(@RequestParam("token") String token) {
+        ModelMap model = new ModelMap();
 
-/*    @RequestMapping(path = "/", method = RequestMethod.GET)
-    public ModelAndView inicio() {
-        return new ModelAndView("redirect:/login");
-    }*/
+        try {
+            servicioLogin.validarCorreo(token);
+            model.put("mensaje", "¡Correo validado con éxito!");
+        } catch (TokenInvalidoException e) {
+            model.put("error", "Token de validación no válido");
+        }
+
+        return new ModelAndView("notificacion", model);
+    }
+
 }
 

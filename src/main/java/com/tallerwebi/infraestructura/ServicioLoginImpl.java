@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -25,10 +24,10 @@ public class ServicioLoginImpl implements ServicioLogin {
     private RepositorioUsuario repositorioUsuario;
 
     @Autowired
-    public ServicioLoginImpl(RepositorioUsuario servicioLoginDao, ServicioEmail servicioEmail){
+    public ServicioLoginImpl(RepositorioUsuario servicioLoginDao, ServicioEmail servicioEmail, RepositorioUsuario repositorioUsuario){
         this.servicioLoginDao = servicioLoginDao;
         this.servicioEmail = servicioEmail;
-
+        this.repositorioUsuario = repositorioUsuario;
     }
 
     @Override
@@ -60,19 +59,13 @@ public class ServicioLoginImpl implements ServicioLogin {
         return Base64.getEncoder().encodeToString(tokenBytes);
     }
 
-    private void enviarCorreoValidacion(String destinatario, String token){
+    private void enviarCorreoValidacion(String destinatario, String token) throws IOException {
 
         String enlaceVerificacion = "http://localhost:8080/spring/validar-email?token=" + token;
 
-        String cuerpoCorreo = "Haz clic en el siguiente enlace para verificar tu correo: " + enlaceVerificacion;
+        String cuerpoCorreo = "Hola! Gracias por Registrarte a TravelAndo. Haz clic en el siguiente enlace para verificar tu correo: " + enlaceVerificacion;
 
-        try {
-            // Utilizar el servicio de correo electrónico
-            servicioEmail.enviarCorreo(destinatario, "Verificación de correo electrónico", cuerpoCorreo);
-        } catch (MessagingException e) {
-            // Manejar errores de envío de correo
-            e.printStackTrace();
-        }
+        servicioEmail.enviarMailRegistro(destinatario, cuerpoCorreo);
     }
 
     @Override
@@ -90,6 +83,8 @@ public class ServicioLoginImpl implements ServicioLogin {
             throw new TokenInvalidoException("Token de validación no válido");
         }
     }
+
+
 }
 
 
