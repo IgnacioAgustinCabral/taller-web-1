@@ -51,4 +51,9 @@ public class ControladorHome {
         return new ModelAndView("home", model);
     }
 
+    @RequestMapping("/quienes-somos")
+    public ModelAndView irANosotros() {
+        ModelMap modelo = new ModelMap();
+        return new ModelAndView("quienes-somos", modelo);
+    }
 }
