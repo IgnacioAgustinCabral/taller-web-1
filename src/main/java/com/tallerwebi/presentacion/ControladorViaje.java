@@ -36,13 +36,25 @@ public class ControladorViaje {
     @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
     public ModelAndView mostrarVistaCrearViaje(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if (session != null && session.getAttribute("isLogged") != null) {
-            ModelMap modelo = cargarOrigenYDestinoAlModel();
-            return new ModelAndView("crear-viaje", modelo);
-        } else {
-            return new ModelAndView("redirect:/login");
+
+        // Caso 1: Usuario no registrado
+        if (session == null || session.getAttribute("isLogged") == null) {
+            return new ModelAndView("redirect:/home");
         }
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+        // Caso 2: Usuario logueado pero email no verificado
+        if (!usuario.isEmailValidado()) {
+            ModelMap model = new ModelMap();
+            model.put("errorCrearViaje", "¡Debes validar tu correo electrónico para crear un viaje!");
+            return new ModelAndView("notificacion", model);
+        }
+
+        // Caso 3: Usuario logueado y email verificado
+        ModelMap modelo = cargarOrigenYDestinoAlModel();
+        return new ModelAndView("crear-viaje", modelo);
     }
+
 
     @RequestMapping(path = "/creacion", method = RequestMethod.POST)
     public ModelAndView crearViaje(@ModelAttribute("viaje") Viaje viaje, HttpSession session) {

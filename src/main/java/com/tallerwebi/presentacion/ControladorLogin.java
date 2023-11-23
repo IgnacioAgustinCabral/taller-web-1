@@ -78,11 +78,11 @@ ControladorLogin {
         try {
             servicioLogin.validarCorreo(token);
             model.put("mensaje", "¡Correo validado con éxito!");
+            return new ModelAndView("notificacion", model);
         } catch (TokenInvalidoException e) {
             model.put("error", "Token de validación no válido");
+            return new ModelAndView("notificacion", model);
         }
-
-        return new ModelAndView("notificacion", model);
     }
 
 }

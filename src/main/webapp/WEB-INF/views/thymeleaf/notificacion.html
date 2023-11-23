@@ -28,35 +28,55 @@
     <script th:src="@{/plugins/slick/slick.min.js}"></script>
     <script th:src="@{/plugins/jquery-nice-select/js/jquery.nice-select.min.js}"></script>
     <script th:src="@{/plugins/google-map/map.js}" defer></script>
-    <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
 
     <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
+<header>
+    <div th:if="${session != null ? session.isLogged : false}">
+        <!-- Fragmento de barra de navegación para usuarios autenticados -->
+        <div th:replace="navbar-user"></div>
+    </div>
+    <div th:unless="${session != null ? session.isLogged : false}">
+        <!-- Fragmento de barra de navegación para invitados -->
+        <div th:replace="navbar-guest"></div>
+    </div>
+</header>
 <div class="container">
     <div class="row">
         <div class="col-md-12 text-center">
+            <!-- Mensaje de éxito -->
             <div th:if="${mensaje != null}" class="alert alert-success" role="alert">
-                <!-- Mensaje de éxito -->
                 <i class="fa-solid fa-thumbs-up mt-3" style="display: block; font-size: 5em;"></i>
                 <h1 th:text="${mensaje}" class="display-4"></h1>
             </div>
+
+            <!-- Mensaje de error general -->
             <div th:if="${error != null}" class="alert alert-danger" role="alert">
-                <!-- Mensaje de error -->
                 <i class="fa-solid fa-exclamation-triangle mt-3" style="display: block; font-size: 5em;"></i>
                 <h1 th:text="${error}" class="display-4"></h1>
             </div>
+
+            <!-- Mensaje de error específico para la creación de viajes -->
+            <div th:if="${errorCrearViaje != null}" class="alert alert-danger" role="alert">
+                <i class="fa-solid fa-exclamation-triangle mt-3" style="display: block; font-size: 5em;"></i>
+                <h1 th:text="${errorCrearViaje}" class="display-4"></h1>
+            </div>
+
+            <!-- Contador de redireccionamiento -->
             <p id="countdown" class="mt-3"></p>
-            <a href="/spring" class="mt-4 btn btn-primary">Volver a Home <i> </i></a>
+
+            <!-- Botón para volver a Home -->
+            <a th:href="@{/home}" class="mt-4 btn btn-primary">Volver a Home <i> </i></a>
         </div>
     </div>
 </div>
 
 <!-- Script para cuenta regresiva y redireccionamiento -->
 <script>
-    var countdown = 5;
-    var redirectUrl = "/spring";
+    var countdown = 7;
+    var redirectUrl = /*[[${redirectUrl}]]*/ "/spring";
 
     function updateCountdown() {
         document.getElementById("countdown").innerHTML = "Redirigiendo en " + countdown + " segundos...";

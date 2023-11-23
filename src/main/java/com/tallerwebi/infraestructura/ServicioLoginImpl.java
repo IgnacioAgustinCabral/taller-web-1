@@ -24,7 +24,7 @@ public class ServicioLoginImpl implements ServicioLogin {
     private RepositorioUsuario repositorioUsuario;
 
     @Autowired
-    public ServicioLoginImpl(RepositorioUsuario servicioLoginDao, ServicioEmail servicioEmail, RepositorioUsuario repositorioUsuario){
+    public ServicioLoginImpl(RepositorioUsuario servicioLoginDao, ServicioEmail servicioEmail, RepositorioUsuario repositorioUsuario) {
         this.servicioLoginDao = servicioLoginDao;
         this.servicioEmail = servicioEmail;
         this.repositorioUsuario = repositorioUsuario;
@@ -45,6 +45,7 @@ public class ServicioLoginImpl implements ServicioLogin {
         String token = generarToken();
 
         usuario.setTokenValidacion(token);
+
         usuario.setImagenDePerfil(Base64.getEncoder().encode(imagenDePerfil.getBytes()));
 
         servicioLoginDao.guardar(usuario);
@@ -52,12 +53,19 @@ public class ServicioLoginImpl implements ServicioLogin {
         enviarCorreoValidacion(usuario.getEmail(), token);
     }
 
-    private String generarToken(){
+    private String generarToken() {
+        String caracteresValidos = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         SecureRandom secureRandom = new SecureRandom();
-        byte[] tokenBytes = new byte[32];
-        secureRandom.nextBytes(tokenBytes);
-        return Base64.getEncoder().encodeToString(tokenBytes);
+        StringBuilder token = new StringBuilder(32);
+
+        for (int i = 0; i < 32; i++) {
+            int indice = secureRandom.nextInt(caracteresValidos.length());
+            token.append(caracteresValidos.charAt(indice));
+        }
+
+        return token.toString();
     }
+
 
     private void enviarCorreoValidacion(String destinatario, String token) throws IOException {
 
@@ -70,19 +78,27 @@ public class ServicioLoginImpl implements ServicioLogin {
 
     @Override
     public void validarCorreo(String token) {
+        verificarYValidarCorreo(token);
+    }
+
+    private void verificarYValidarCorreo(String token) {
 
         Usuario usuario = repositorioUsuario.buscarPorTokenValidacion(token);
 
         if (usuario != null) {
-            usuario.setEmailValidado(true);
-
-            repositorioUsuario.actualizar(usuario);
-
-            //servicioEmail.enviarCorreoConfirmacion(usuario.getEmail(), "¡Correo validado con éxito!");
+            if (!usuario.isEmailValidado()) {
+                usuario.setEmailValidado(true);
+                repositorioUsuario.actualizar(usuario);
+                //servicioEmail.enviarCorreoConfirmacion(usuario.getEmail(), "¡Correo validado con éxito!");
+            } else {
+                throw new TokenInvalidoException("El correo ya ha sido validado anteriormente.");
+            }
         } else {
             throw new TokenInvalidoException("Token de validación no válido");
         }
     }
+
+
 
 
 }

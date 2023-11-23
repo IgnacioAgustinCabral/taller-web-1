@@ -6,6 +6,7 @@ import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import com.tallerwebi.dominio.ServicioEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,10 +16,12 @@ public class ServicioEmailImpl implements ServicioEmail {
 
 
     private String FROM_EMAIL_ADDRESS = "travelando.unlam@gmail.com";
+    @Value("${SENDGRID_API_KEY}")
+    private String API_KEY;
 
     public void enviarMailRegistro(String toMail, String cuerpoCorreo) throws IOException {
 
-        SendGrid sendGrid = new SendGrid("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");
+        SendGrid sendGrid = new SendGrid(API_KEY);
         Email from = new Email(FROM_EMAIL_ADDRESS);
         String subject = "Registro TravelAndo";
         Email to = new Email(toMail);
