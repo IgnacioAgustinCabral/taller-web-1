@@ -29,7 +29,7 @@ public class ServicioEmailImpl implements ServicioEmail {
                 "<p>Gracias por Registrarte en TravelAndo!</p>" +
                 "<p>Por favor, verifica tu dirección de email para poder comenzar a planificar tus próximos viajes por Argentina.</p>" +
                 "<p><strong>Buen Viaje!</strong></p>" +
-                "<a href='http://tu-sitio.com/verificar?token=" + token + "' style='background-color: #bb1524; color: #ffffff; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;'>Verificar tu Email</a>" +
+                "<a href='http://localhost:8080/spring/validar-email?token=" + token + "' style='background-color: #bb1524; color: #ffffff; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;'>Verificar tu Email</a>" +
                 "<p><strong>Una vez verificado:</strong></p>" +
                 "<ol>" +
                 "<li>Puedes empezar a Crear tus viajes para que otros se unan.</li>" +

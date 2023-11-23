@@ -68,12 +68,7 @@ public class ServicioLoginImpl implements ServicioLogin {
 
 
     private void enviarCorreoValidacion(String destinatario, String token) throws IOException {
-
-        String enlaceVerificacion = "http://localhost:8080/spring/validar-email?token=" + token;
-
-        String cuerpoCorreo = "Hola! Gracias por Registrarte a TravelAndo. Haz clic en el siguiente enlace para verificar tu correo: " + enlaceVerificacion;
-
-        servicioEmail.enviarMailRegistro(destinatario, cuerpoCorreo);
+        servicioEmail.enviarMailRegistro(destinatario, token);
     }
 
     @Override
