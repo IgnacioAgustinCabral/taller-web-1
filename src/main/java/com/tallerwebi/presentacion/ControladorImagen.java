@@ -12,6 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Base64;
 
 @Controller
 public class ControladorImagen {
@@ -39,9 +40,9 @@ public class ControladorImagen {
 
         try {
             // Obtener un OutputStream para la respuesta y escribir la imagen
+            byte[] imagenBytes = Base64.getDecoder().decode(user.getImagenDePerfil());
             OutputStream out = response.getOutputStream();
-            InputStream imageInputStream = new ByteArrayInputStream(user.getImagenDePerfil());
-            IOUtils.copy(imageInputStream, out);
+            out.write(imagenBytes);
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
