@@ -135,7 +135,7 @@ public class ControladorViaje {
             return new ModelAndView("crear-viaje", model);
         }
         return new ModelAndView("redirect:/home");
-    }
+    }*/
 
     @RequestMapping(path = "/editar", method = RequestMethod.POST)
     public ModelAndView editarViaje(@ModelAttribute("viaje") Viaje viaje, HttpSession session) {
@@ -152,7 +152,7 @@ public class ControladorViaje {
             return new ModelAndView("crear-viaje", model);
         }
         return new ModelAndView("redirect:/home");
-    }*/
+    }
 
     @RequestMapping(path = "/creacion", method = RequestMethod.POST)
     public ModelAndView crearViaje(@ModelAttribute("viaje") Viaje viaje, HttpSession session) {
