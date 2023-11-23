@@ -31,7 +31,7 @@ function initMap() {
 
     };
 
-    directionsService.route(request, function(result, status) {
+    /*directionsService.route(request, function(result, status) {
         if (status == 'OK') {
             directionsDisplay.setDirections(result);
         }
@@ -54,6 +54,30 @@ function initMap() {
             console.log('Distancia: ' + distancia);
             console.log('Duración: ' + duracion);
 
+        }*/
+
+        calcularRuta(request,directionsService,directionsDisplay);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            initMap();
+        });
+
+}
+
+function calcularRuta(request, directionsService, directionsDisplay) {
+    directionsService.route(request, function (result, status) {
+        if (status == 'OK') {
+            directionsDisplay.setDirections(result);
+
+            // Obtiene y muestra la distancia y la duración
+            var distancia = result.routes[0].legs[0].distance.text;
+            var duracion = result.routes[0].legs[0].duration.text;
+
+            // Actualiza los elementos HTML en tu vista
+            document.getElementById('distancia').textContent = 'Distancia: ' + distancia;
+            document.getElementById('duracion').textContent = 'Duración: ' + duracion;
+        } else {
+            console.error('Error al calcular la ruta:', status);
         }
     });
 }
