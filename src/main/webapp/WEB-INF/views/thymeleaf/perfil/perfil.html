@@ -197,10 +197,49 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregar-gasto">
+                                                    Abrir Modal
+                                                </button>
+                                                <div class="modal fade" id="agregar-gasto" tabindex="-1" role="dialog" aria-labelledby="miModalLabel"
+                                                     aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="miModalLabel">Nuevo Gasto</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!-- Contenido del modal -->
+                                                                <p>Agregue un gasto a su viaje</p>
+
+                                                                <form class="p-3" action="#" th:action="@{/perfil/agregar-gasto(idViaje = ${viaje.getId()})}" th:object="${gasto}" method="POST">
+                                                                    <div class="form-group">
+
+                                                                        <label for="descripcion" class="mb-3"><strong>Descripcion:</strong></label>
+                                                                        <input type="text" id="descripcion" name="descripcion" th:field="${gasto.descripcion}" class="form-control mb-3" />
+
+                                                                        <label  class="mb-3"><strong>Cantidad de pasajeros:</strong></label>
+                                                                        <input type="number" id="monto" name="monto" th:field="*{monto}" class="form-control mb-3" />
+
+                                                                    </div>
+                                                                    <div class="justify-content-center text-center">
+                                                                        <p th:if="${error != null}" class="alert alert-danger m-0" th:text="${error}"></p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="submit" class="btn btn-info" data-dismiss="modal" >Agregar</button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                            </div>
 
 <!--
 

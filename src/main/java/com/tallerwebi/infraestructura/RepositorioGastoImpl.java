@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.Gasto;
 import com.tallerwebi.dominio.RepositorioGasto;
 import com.tallerwebi.dominio.Viaje;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class RepositorioGastoImpl implements RepositorioGasto {
 
     private final SessionFactory sessionFactory;
 
+    @Autowired
     public RepositorioGastoImpl(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
     }
