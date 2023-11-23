@@ -275,12 +275,87 @@
                     <div class="text-center">
                         <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> Load more </a>
                     </div>
+                        <div class="container mt-5">
+                            <h3>Dejanos tu comentario</h3>
+                            <form id="commentForm">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="score">Puntuación:</label>
+                                        <select class="form-control" id="score" required>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="comment">Comentario:</label>
+                                        <textarea class="form-control" id="comment" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="submitForm()">Enviar</button>
+                            </form>
+                        </div>
                 </div>
             </div>
         </div>
     </div>
     </div>
 </div>
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Comentario Agregado con Éxito</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¡Tu comentario ha sido agregado con éxito!
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error al Realizar el Comentario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Por favor, completa todos los campos antes de enviar el formulario.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Agrega los scripts de Bootstrap y jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6pB8aZ5lT+JQjG01jRM2Dx99+q8q5c5Z9bdi" crossorigin="anonymous"></script>
+
+<script>
+    function submitForm() {
+        var score = document.getElementById('score').value;
+        var comment = document.getElementById('comment').value;
+
+        if (score && comment) {
+            // Aquí puedes realizar alguna acción con los datos del formulario
+            // Por ejemplo, enviarlos a un servidor o guardarlos localmente
+
+            // Luego, muestra el modal de éxito
+            $('#successModal').modal('show');
+        } else {
+            // Muestra el modal de error
+            $('#errorModal').modal('show');
+        }
+    }
+</script>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript"></script>
