@@ -12,5 +12,9 @@ public interface RepositorioUsuario {
     List<Usuario> listarUsuarios();
 
     Usuario buscarUsuarioPorId(Long id);
+
+    Usuario buscarPorTokenValidacion(String token);
+
+    void actualizar(Usuario usuario);
 }
 

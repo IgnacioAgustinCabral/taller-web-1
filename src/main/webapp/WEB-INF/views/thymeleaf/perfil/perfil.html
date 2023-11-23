@@ -138,20 +138,56 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="border border-light p-2 mb-3">
-                            <h3 class="header-title mb-3" th:text="'Viajes creados por ' + ${usuario.nombre + ' ' + usuario.apellido}"></h3>
-                                <div th:each="viaje : ${viajes}">
-                                        <div class="card card-margin flex-row">
-                                            <div class="flex-row userInfo text-center">
-                                                <div class="flex-row">
-                                                    <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar" class="rounded-circle img-avatar-size topSpace" style="max-width: 65% !important">
-                                                    <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}" class="card-title"></h4>
-                                                    <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="btn btn-primary bottomSpace">Ver perfil</a>
-                                                    <a href="#" class="btn btn-secondary bottomSpace">Conectar</a>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="border border-light p-2 mb-3">
+                        <h3 class="header-title mb-3" th:text="'Viajes creados por ' + ${usuario.nombre + ' ' + usuario.apellido}"></h3>
+                            <div th:each="viaje : ${viajes}">
+                                    <div class="card card-margin flex-row">
+                                        <div class="flex-row userInfo text-center">
+                                            <div class="flex-row">
+                                                <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar" class="rounded-circle img-avatar-size topSpace" style="max-width: 65% !important">
+                                                <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}" class="card-title"></h4>
+                                                <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="btn btn-primary bottomSpace">Ver perfil</a>
+                                                <a th:href="@{/crear-viaje(viaje = ${viaje.id})}" class="btn btn-primary bottomSpace">Modificar</a>
+                                                <a href="#" class="btn btn-secondary bottomSpace">Conectar</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10 d-block">
+                                            <div class="card-header no-border">
+                                                <div class="col-lg-5 card-body">
+                                                    <div class="widget-49-title-wrapper">
+                                                        <div class="widget-49-meeting-time">
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Origen: </span>
+                                                                <span class="widget-49-pro-title" th:text="${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Destino: </span>
+                                                                <span class="widget-49-pro-title" th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Fecha de salida: </span>
+                                                                <span class="widget-49-pro-title" th:text="${viaje.fecha}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title">Lugares disponibles: </span>
+                                                                <span class="widget-49-pro-title" th:text="${viaje.cantidad}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title">Tiempo de viaje: </span>
+                                                                <span class="widget-49-meeting-time">6 horas</span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title">No se aceptan niños</span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-meeting-time">No se aceptan mascotas</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-10 d-block">
@@ -188,24 +224,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-5 card-body">
-                                                        <div class="widget-49-title-wrapper">
-                                                            <div class="widget-49-meeting-time">
-                                                                <div class="widget-49-date-warning">
-                                                                    <div class="flex-row">
-                                                                        <span class="widget-49-pro-title">Descripción del viaje: </span>
-                                                                        <span class="widget-49-pro-title" th:text="${viaje.descripcion}"></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <button th:attr="onclick='openModal(\'' + ${viaje.id} + '\')'" class="btn btn-primary">Registrar Gasto</button>
+                                                 <button th:attr="onclick='openModal(\'' + ${viaje.id} + '\')'" class="btn btn-primary">Registrar Gasto</button>
 
                                                     <div th:attr="id='myModal-' + ${viaje.id}" class="modal" >
                                                         <div class="modal-content">
-                                                            <span class="close" onclick="closeModal(${viaje.id})">&times;</span>
+                                                            <span class="close" onclick="closeModal()">&times;</span>
                                                             <p>Nuevo Gasto</p>
                                                             <form class="p-3" action="#" th:action="@{/perfil/agregar}" th:object="${gasto}" method="POST">
                                                                 <div class="form-group">
@@ -238,29 +261,31 @@
                 </div>
 
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="border border-light p-2 mb-3">
-                            <h4 class="header-title mb-3">Reseñas</h4>
-                            <div class="d-flex align-items-start post-user-comment-box">
-                                <img class="me-2 avatar-sm rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Generic placeholder image">
-                                <div class="w-100">
-                                    <h5 class>Thelma Fridley <small class="text-muted"> 1 hour ago</small></h5>
-                                    <div class>
-                                        Cras sit amet nibh libero, in
-                                        gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                                        purus odio, vestibulum in vulputate at, tempus viverra turpis. Duis
-                                        sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper
-                                        porta. Mauris massa.
-                                        <br>
-                                        <a href="javascript: void(0);" class="text-muted font-13 d-inline-block mt-2"><i class="mdi mdi-reply"></i> Reply</a>
-                                    </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="border border-light p-2 mb-3">
+                        <h4 class="header-title mb-3">Reseñas</h4>
+                        <div class="d-flex align-items-start post-user-comment-box">
+                            <img class="me-2 avatar-sm rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Generic placeholder image">
+                            <div class="w-100">
+                                <h5 class>Thelma Fridley <small class="text-muted"> 1 hour ago</small></h5>
+                                <div class>
+                                    Cras sit amet nibh libero, in
+                                    gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
+                                    purus odio, vestibulum in vulputate at, tempus viverra turpis. Duis
+                                    sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper
+                                    porta. Mauris massa.
+                                    <br>
+                                    <a href="javascript: void(0);" class="text-muted font-13 d-inline-block mt-2"><i class="mdi mdi-reply"></i> Reply</a>
                                 </div>
                             </div>
                             <div class="text-center">
                                 <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> Load more </a>
                             </div>
                         </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> Load more </a>
                     </div>
                 </div>
             </div>
