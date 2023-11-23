@@ -5,14 +5,18 @@ import javax.persistence.*;
 @Entity
 public class Ciudad {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private  String nombre;
+
+    @Lob
+    private byte[] imagen;
+
     @ManyToOne
     private  Provincia provincia;
-    private  String background;
 
     private Double latitud;
     private Double longitud;
@@ -20,10 +24,10 @@ public class Ciudad {
     public Ciudad() {
     }
 
-    public Ciudad(String nombre, Provincia provincia, String background) {
+    public Ciudad(String nombre, Provincia provincia, byte[] imagen) {
         this.nombre = nombre;
         this.provincia = provincia;
-        this.background = background;
+        this.imagen = imagen;
     }
 
 
@@ -51,8 +55,8 @@ public class Ciudad {
         this.provincia = provincia;
     }
 
-    public String getBackground() {
-        return background;
+    public byte[] getImagen() {
+        return imagen;
     }
 
     public Double getLatitud() {
@@ -69,5 +73,8 @@ public class Ciudad {
 
     public void setLongitud(Double longitud) {
         this.longitud = longitud;
+    }
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
 }

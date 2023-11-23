@@ -20,4 +20,9 @@ public class ServicioCiudadImpl implements ServicioCiudad {
     public List<Ciudad> obtenerListaDeCiudades() {
         return repositorioCiudad.listarCiudades();
     }
+
+    @Override
+    public Ciudad obtenerCiudadPorId(Long id) {
+        return repositorioCiudad.obtenerCiudadPorId(id);
+    }
 }

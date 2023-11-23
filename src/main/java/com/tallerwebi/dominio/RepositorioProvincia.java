@@ -10,4 +10,6 @@ public interface RepositorioProvincia {
     Provincia buscarProvinciaPorNombre(String nombre);
 
     List <Provincia> buscarProvinciasConImagenes();
+
+    Provincia obtenerProvinciaPorId(Long id);
 }

@@ -7,4 +7,6 @@ public interface RepositorioCiudad {
     public void guardar(Ciudad ciudad) ;
 
     List<Ciudad> listarCiudades();
+
+    Ciudad obtenerCiudadPorId(Long id);
 }

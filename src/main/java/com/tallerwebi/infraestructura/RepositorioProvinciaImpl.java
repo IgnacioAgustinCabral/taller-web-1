@@ -42,5 +42,12 @@ public class RepositorioProvinciaImpl implements RepositorioProvincia {
                 .list();
     }
 
+    @Override
+    public Provincia obtenerProvinciaPorId(Long id) {
+        return (Provincia) sessionFactory.getCurrentSession().createQuery("FROM Provincia WHERE id = :id")
+                .setParameter("id",id)
+                .uniqueResult();
+    }
+
 
 }

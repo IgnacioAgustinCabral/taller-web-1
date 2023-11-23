@@ -31,4 +31,9 @@ public class ServicioProvinciaImpl implements ServicioProvincia {
     public List<Provincia> obtenerProvinciasConImagenes() {
         return this.repositorioProvincia.buscarProvinciasConImagenes();
     }
+
+    @Override
+    public Provincia obtenerProvinciaPorId(Long id) {
+        return this.repositorioProvincia.obtenerProvinciaPorId(id);
+    }
 }

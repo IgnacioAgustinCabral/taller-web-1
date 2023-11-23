@@ -11,21 +11,23 @@ public class Provincia {
     private Long id;
     //TODO: declarar nombre como unique
     private String nombre;
-    private String imagen;
+
+    @Lob
+    private byte[] imagen;
 
     public Provincia() {}
 
-    public Provincia(String nombre, String imagen) {
+    public Provincia(String nombre, byte[] imagen) {
         this.nombre = nombre;
         this.imagen = imagen;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -36,11 +38,11 @@ public class Provincia {
         this.nombre = nombre;
     }
 
-    public String getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 }
