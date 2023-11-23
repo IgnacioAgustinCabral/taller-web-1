@@ -128,7 +128,13 @@ public class ControladorViaje {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             viaje.setUsuario(usuario);
             this.servicioViaje.crearViaje(viaje);
-        } catch (Exception e) {
+        } catch(NullPointerException e){
+            model = cargarOrigenYDestinoAlModel();
+            model.put("edito", false);
+            model.put("error", "Error al registrar el viaje, revise los campos");
+            return new ModelAndView("crear-viaje", model);
+        }
+        catch (Exception e) {
             model = cargarOrigenYDestinoAlModel();
             model.put("edito", false);
             model.put("error", e.getMessage());
