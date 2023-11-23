@@ -53,7 +53,7 @@ public class ServicioLoginImpl implements ServicioLogin {
         enviarCorreoValidacion(usuario.getEmail(), token);
     }
 
-    private String generarToken() {
+    public String generarToken() {
         String caracteresValidos = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         SecureRandom secureRandom = new SecureRandom();
         StringBuilder token = new StringBuilder(32);
@@ -64,6 +64,14 @@ public class ServicioLoginImpl implements ServicioLogin {
         }
 
         return token.toString();
+    }
+
+    @Override
+    public void actualizarToken(Usuario usuario) throws IOException {
+        String nuevoToken = generarToken();
+        usuario.setTokenValidacion(nuevoToken);
+        servicioLoginDao.actualizar(usuario);
+        enviarCorreoValidacion(usuario.getEmail(), nuevoToken);
     }
 
 

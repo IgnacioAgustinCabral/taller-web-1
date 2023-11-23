@@ -12,4 +12,7 @@ public interface ServicioLogin {
 
     void validarCorreo(String token);
 
+    String generarToken();
+
+    void actualizarToken(Usuario usuario) throws IOException;
 }

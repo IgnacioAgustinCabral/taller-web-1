@@ -67,8 +67,11 @@
             <!-- Contador de redireccionamiento -->
             <p id="countdown" class="mt-3"></p>
 
-            <!-- Botón para volver a Home -->
-            <a th:href="@{/home}" class="mt-4 btn btn-primary">Volver a Home <i> </i></a>
+            <!-- Botón para volver a Home si el correo está verificado -->
+            <a th:if="${session != null && session.emailVerificado != null && session.emailVerificado}" th:href="@{/home}" class="mt-4 btn btn-primary">Volver a Home <i></i></a>
+
+            <!-- Botón para reenviar el token si el correo no está verificado -->
+            <a th:if="${session != null && session.emailVerificado != null && !session.emailVerificado}" th:href="@{/reenviar-token}" class="mt-4 btn btn-secondary">Reenviar Token <i></i></a>
         </div>
     </div>
 </div>
@@ -89,7 +92,11 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(updateCountdown, 1000);
+        // Solo iniciar la cuenta regresiva si el correo está verificado
+        var emailVerificado = /*[[${session != null ? session.emailVerificado : false}]]*/ false;
+        if (emailVerificado) {
+            setTimeout(updateCountdown, 1000);
+        }
     });
 </script>
 
