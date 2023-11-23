@@ -41,7 +41,8 @@ public class Viaje {
 
 
 
-    public Viaje() {}
+    public Viaje() {
+    }
     public Viaje(Ciudad origen, Ciudad destino, String fecha, Boolean noFumar, Boolean noNinios, Boolean noMascotas, Integer cantidad, String descripcion, Usuario creador) {
 
         this.origen = origen;
@@ -105,6 +106,9 @@ public class Viaje {
 
     public Long getId() {
         return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Ciudad getOrigen() {

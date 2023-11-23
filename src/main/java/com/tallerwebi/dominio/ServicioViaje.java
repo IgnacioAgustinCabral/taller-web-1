@@ -16,7 +16,7 @@ public interface ServicioViaje {
 
     Set<Viaje> obtenerViajesPorFiltroMultiple(FiltroViaje filtro);
 
-    void crearViaje(Viaje viaje);
+    void crearViaje(Viaje viaje) throws Exception;
 
     Viaje obtenerViajePorId(Long id);
 
@@ -29,4 +29,8 @@ public interface ServicioViaje {
     Boolean UnirAViaje(Usuario usuario, Long viaje);
 
     Boolean UsuarioUnido(Viaje viajeBuscado, Usuario usuario);
+
+    Boolean ModificarViaje(Usuario usuario,Viaje viaje, Long id) throws Exception;
+
+    Boolean ModificarViaje(Viaje viaje,Usuario usuario) throws Exception;
 }
