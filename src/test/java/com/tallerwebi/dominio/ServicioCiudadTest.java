@@ -46,7 +46,8 @@ public class ServicioCiudadTest {
 
     private Ciudad crearCiudad() {
         Provincia provincia = new Provincia();
-        return new  Ciudad("Colon",provincia,"");
+        byte[] imagen = new byte[]{0x12, 0x34, 0x56, 0x78}; // imagen falsa
+        return new  Ciudad("Colon",provincia,imagen);
     }
 
 

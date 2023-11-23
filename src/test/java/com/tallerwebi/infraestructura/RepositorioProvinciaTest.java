@@ -20,16 +20,16 @@ import static org.hamcrest.Matchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes={SpringWebTestConfig.class, HibernateTestConfig.class})
+@ContextConfiguration(classes = {SpringWebTestConfig.class, HibernateTestConfig.class})
 public class RepositorioProvinciaTest {
-    
+
     @Autowired
     RepositorioProvincia repositorio;
-    
+
     @Transactional
     @Rollback
     @Test
-    public void queSeListenTodasLasProvincias(){
+    public void queSeListenTodasLasProvincias() {
         dadoQueTengo3Pronvincias();
         List<Provincia> busqueda = cuandoListoLasProvincias();
         entoncesSeListan3(busqueda);
@@ -38,15 +38,15 @@ public class RepositorioProvinciaTest {
     @Transactional
     @Rollback
     @Test
-    public void queSePuedaBuscarUnaProvinciaPorNombreSalta(){
+    public void queSePuedaBuscarUnaProvinciaPorNombreSalta() {
         dadoQueTengo3Pronvincias();
-        Provincia buscada =  cuandoBuscoUnaProvinciaPorNombre("Salta");
+        Provincia buscada = cuandoBuscoUnaProvinciaPorNombre("Salta");
         entoncesObtengo1Provincia(buscada);
 
     }
 
     private void entoncesObtengo1Provincia(Provincia buscada) {
-        assertThat(buscada,is(notNullValue()));
+        assertThat(buscada, is(notNullValue()));
     }
 
     private Provincia cuandoBuscoUnaProvinciaPorNombre(String nombre) {
@@ -54,8 +54,8 @@ public class RepositorioProvinciaTest {
     }
 
     private void entoncesSeListan3(List<Provincia> busqueda) {
-        assertThat(busqueda,hasSize(3));
-        assertThat(busqueda,is(notNullValue()));
+        assertThat(busqueda, hasSize(3));
+        assertThat(busqueda, is(notNullValue()));
     }
 
     private List<Provincia> cuandoListoLasProvincias() {
@@ -63,9 +63,11 @@ public class RepositorioProvinciaTest {
     }
 
     private void dadoQueTengo3Pronvincias() {
-        Provincia cordoba = new Provincia("Cordoba","");
-        Provincia buenosAires = new Provincia("Buenos Aires", "");
-        Provincia salta = new Provincia("Salta","");
+        byte[] imagen = new byte[]{0x12, 0x34, 0x56, 0x78}; // imagen falsa
+
+        Provincia cordoba = new Provincia("Cordoba", imagen);
+        Provincia buenosAires = new Provincia("Buenos Aires", imagen);
+        Provincia salta = new Provincia("Salta", imagen);
 
         repositorio.guardar(cordoba);
         repositorio.guardar(buenosAires);

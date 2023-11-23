@@ -25,4 +25,11 @@ public class RepositorioCiudadImpl implements RepositorioCiudad {
         return sessionFactory.getCurrentSession().createQuery("FROM Ciudad", Ciudad.class)
                 .list();
     }
+
+    @Override
+    public Ciudad obtenerCiudadPorId(Long id) {
+        return (Ciudad) sessionFactory.getCurrentSession().createQuery("FROM Ciudad WHERE id = :id")
+                .setParameter("id",id)
+                .uniqueResult();
+    }
 }
