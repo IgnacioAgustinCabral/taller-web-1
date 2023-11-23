@@ -33,7 +33,9 @@ public class RepositorioUsuarioTest {
     @Test
     public void queSePuedaCrearUnUsuarioYseGuarde(){
         //preparacion
-        Usuario creador = new Usuario("Carolina", "Rojas",12345678L,"2000/01/01", 011,12345678L,"carolinarojas@unlam.edu.ar", "contraseña1", "images/avatars/av-1.jpg", "admin", true);
+        byte[] imagen = new byte[]{0x12, 0x34, 0x56, 0x78}; // imagen falsa
+
+        Usuario creador = new Usuario("Carolina", "Rojas",12345678L,"2000/01/01", 011,12345678L,"carolinarojas@unlam.edu.ar", "contraseña1", "admin", true,imagen);
         //TODO: sacar el id de los tests, lo maneja hibernate
 
         //ejecucion
@@ -51,8 +53,10 @@ public class RepositorioUsuarioTest {
 
         //TODO: sacar el id de los tests, lo maneja hibernate
         //preparacion
+        byte[] imagen = new byte[]{0x12, 0x34, 0x56, 0x78}; // imagen falsa
+
         String expected = "albertosamudio@unlam.edu.ar";
-        Usuario creador = new Usuario("Alberto", "Samudio",12345678L,"2000/01/01", 011,12345678L,"albertosamudio@unlam.edu.ar", "contraseña1", "images/avatars/av-1.jpg", "admin", true);
+        Usuario creador = new Usuario("Alberto", "Samudio",12345678L,"2000/01/01", 011,12345678L,"albertosamudio@unlam.edu.ar", "contraseña1","admin", true,imagen);
 
         //ejecucion
         repositorio.guardar(creador);
