@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioCiudad;
-import com.tallerwebi.dominio.ServicioViaje;
-import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.dominio.Viaje;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +33,7 @@ public class ControladorViajeTest {
     private Viaje viajeMock;
     private ServicioCiudad servicioCiudadMock;
     private HttpSession sessionMockUsuario;
+    private ServicioGasto servicioGastoMock;
 
     @BeforeEach
     public void init(){
@@ -46,7 +44,8 @@ public class ControladorViajeTest {
         sessionMock = mock(HttpSession.class);
         servicioViajeMock = mock(ServicioViaje.class);
         servicioCiudadMock = mock(ServicioCiudad.class);
-        controladorViaje = new ControladorViaje(servicioViajeMock,servicioCiudadMock);
+        servicioGastoMock = mock(ServicioGasto.class);
+        controladorViaje = new ControladorViaje(servicioViajeMock,servicioCiudadMock,servicioGastoMock);
         sessionMockUsuario = mock(HttpSession.class);
     }
 

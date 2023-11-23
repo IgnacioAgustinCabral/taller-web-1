@@ -3,7 +3,6 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@Transactional
 @RequestMapping("/perfil")
 public class ControladorPerfil {
 
@@ -44,6 +42,7 @@ public class ControladorPerfil {
         modelo.put("session", session);
         modelo.put("usuario",usuarioBuscado);
         modelo.put("viajes",viajes);
+        modelo.put("gasto", new Gasto());
         return new ModelAndView("perfil/perfil",modelo);
     }
 
@@ -53,6 +52,15 @@ public class ControladorPerfil {
             ModelMap model = new ModelMap();
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
+
+
+            for (Viaje viajeBuscado: viajes
+                 ) {
+                String coordenadaOrigen = viajeBuscado.getOrigen().getLatitud().toString() + ',' + viajeBuscado.getOrigen().getLongitud().toString();
+                String coordenadaDestino = viajeBuscado.getDestino().getLatitud().toString() + ',' + viajeBuscado.getDestino().getLongitud().toString();
+                model.put("coordenadaOrigen",coordenadaOrigen);
+                model.put("coordenadaDestino", coordenadaDestino);
+            }
             //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
             model.put("usuario", usuario);
             model.put("viajes", viajes);
@@ -63,21 +71,20 @@ public class ControladorPerfil {
         }
     }
 
-    @RequestMapping(value="/agregar-gasto", method = RequestMethod.POST)
-    public ModelAndView agregarGasto(@ModelAttribute("gasto")Gasto gasto, @RequestParam Long idViaje){
+    @RequestMapping(path="/agregar", method = RequestMethod.POST)
+    public ModelAndView agregarGasto(@ModelAttribute Gasto gasto, @RequestParam Long idViaje){
         ModelMap model = new ModelMap();
         try {
-
             Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
             gasto.setViaje(viaje);
             this.servicioGasto.guardarGasto(gasto);
-            model.put("exito", true);
+            model.put("exito", "Gasto Agregado exitosamente");
         }
         catch (Exception e){
-            model.put("error", "Error al registrar el viaje");
+            model.put("error", "Error al registrar el gasto");
             return new ModelAndView("perfil/perfil", model);
         }
-        return new ModelAndView("redirect:perfil/perfil");
+        return new ModelAndView("redirect:mi-perfil");
     }
 
 

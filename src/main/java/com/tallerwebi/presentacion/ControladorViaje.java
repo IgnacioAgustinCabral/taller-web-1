@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -20,17 +19,18 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-@Transactional
 public class ControladorViaje {
 
     private ServicioViaje servicioViaje;
     private ServicioCiudad servicioCiudad;
+    private ServicioGasto servicioGasto;
 
     @Autowired
-    public ControladorViaje(ServicioViaje servicioViaje, ServicioCiudad servicioCiudad) {
+    public ControladorViaje(ServicioViaje servicioViaje, ServicioCiudad servicioCiudad, ServicioGasto servicioGasto) {
 
         this.servicioViaje = servicioViaje;
         this.servicioCiudad = servicioCiudad;
+        this.servicioGasto = servicioGasto;
     }
 
     @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
@@ -38,6 +38,7 @@ public class ControladorViaje {
         HttpSession session = request.getSession();
         if (session != null && session.getAttribute("isLogged") != null) {
             ModelMap modelo = cargarOrigenYDestinoAlModel();
+            modelo.put("gasto", new Gasto());
             return new ModelAndView("crear-viaje", modelo);
         } else {
             return new ModelAndView("redirect:/login");
@@ -95,6 +96,7 @@ public class ControladorViaje {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             viaje.setUsuario(usuario);
             this.servicioViaje.crearViaje(viaje);
+            model.put("idViaje", viaje.getId());
         } catch (Exception e) {
             e.printStackTrace();
             model.put("error", "Error al registrar el viaje, revise los campos");
@@ -167,6 +169,36 @@ public class ControladorViaje {
         return new ModelAndView("redirect:/home");
     }
 
+    @RequestMapping(path="/agregar", method = RequestMethod.POST)
+    public ModelAndView agregarGasto(@ModelAttribute Gasto gasto, @RequestParam Long idViaje){
+        ModelMap model = new ModelMap();
+        try {
+            Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
+            gasto.setViaje(viaje);
+            this.servicioGasto.guardarGasto(gasto);
+            model.put("exito", "Gasto Agregado exitosamente");
+        }
+        catch (Exception e){
+            model.put("viaje", new Viaje());
+            model.put("error", "Error al registrar el gasto");
+            return new ModelAndView("crear-viaje", model);
+        }
+        return new ModelAndView("redirect:crear-viaje");
+    }
+
+    @RequestMapping(value = "/mostrar-gastos", method = RequestMethod.GET)
+    public ModelAndView mostrarGastos(@RequestParam("idViaje") Long idViaje) {
+        ModelMap model = new ModelMap();
+        try {
+            Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
+            List<Gasto> gastos = servicioGasto.obtenerGastosPorViaje(viaje);
+            model.put("viaje", viaje);
+            model.put("gastos", gastos);
+        } catch (Exception e) {
+            model.put("error", "Error al obtener los gastos del viaje");
+        }
+        return new ModelAndView("mostrar-gastos", model);
+    }
     private ModelMap cargarOrigenYDestinoAlModel() {
         List<Ciudad> ciudades = servicioCiudad.obtenerListaDeCiudades();
         ModelMap modelo = new ModelMap();

@@ -56,7 +56,6 @@
 <div class="container spaceToHeaderFixed">
     <div class="card mb-3">
         <img class="card-img-top bottomSpace" th:src="@{'/destino/imagen/' + ${viajes.destino.getId()}}" height="380px" alt="Imagen descriptiva del destino del viaje">
-             alt="Imagen descriptiva del destino del viaje">
         <h1 class="card-title text-center"
             th:text="'Viaje creado por ' + ${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"></h1>
         <!--<h5 class="card-text">Descripción</h5>-->
@@ -114,6 +113,27 @@
             <a href="#" class="btn btn-secondary bottomSpace rightSpace">Conectar</a>
             <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" class="btn  bottomSpace rightSpace"
                th:classappend="${unido ? 'btn-secondary' : 'btn-primary'}" th:text="${unido ? 'Unido' : 'Unirme'}"></a>
+            <button th:attr="onclick='openModalViaje(\'' + ${viaje.id} + '\')'" type="button" class="btn btn-primary">Mostrar Gastos</button>
+        </div>
+        <div th:fragment="modal-gastos" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 th:text="${viaje.origen.nombre + ' '+ viaje.destino.nombre+' - Gastos'}"></h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Monto</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="gasto : ${gastos}">
+                        <td th:text="${gasto.descripcion}"></td>
+                        <td th:text="${gasto.monto}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
       <div id="mapa" style="height:400px;"

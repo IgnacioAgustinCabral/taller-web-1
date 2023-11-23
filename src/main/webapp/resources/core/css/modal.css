@@ -1,0 +1,39 @@
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+.p{
+    text-align: center;
+    font-size: 30px;
+    margin-top: 5px;
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Ajusta el ancho según tus necesidades */
+    max-width: 400px; /* Ajusta el ancho máximo según tus necesidades */
+    margin-top: 10%; /* Ajusta el margen superior según tus necesidades para centrar verticalmente */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
