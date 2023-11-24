@@ -12,8 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -39,12 +37,6 @@ public class ControladorViaje {
             HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        if (session != null && session.getAttribute("isLogged") != null) {
-            ModelMap modelo = cargarOrigenYDestinoAlModel();
-            modelo.put("gasto", new Gasto());
-            return new ModelAndView("crear-viaje", modelo);
-        } else {
-            return new ModelAndView("redirect:/login");
 
         // Caso 1: Usuario no registrado
         if (session == null || session.getAttribute("isLogged") == null) {
