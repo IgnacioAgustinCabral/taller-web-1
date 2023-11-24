@@ -87,7 +87,7 @@ public class ControladorPerfil {
         }
         catch (Exception e){
             model.put("error", "Error al registrar el gasto");
-            return new ModelAndView("perfil/perfil", model);
+            return new ModelAndView("perfil", model);
         }
         return new ModelAndView("redirect:mi-perfil");
     }

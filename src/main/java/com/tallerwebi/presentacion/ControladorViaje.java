@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -238,7 +237,7 @@ public class ControladorViaje {
         return new ModelAndView("redirect:/home");
     }
 
-    @RequestMapping(path="/agregar", method = RequestMethod.POST)
+    @RequestMapping(path="/agregar-gasto", method = RequestMethod.POST)
     public ModelAndView agregarGasto(@ModelAttribute Gasto gasto, @RequestParam Long idViaje){
         ModelMap model = new ModelMap();
         try {
