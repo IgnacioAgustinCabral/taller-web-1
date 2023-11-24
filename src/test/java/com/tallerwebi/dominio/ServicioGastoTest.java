@@ -49,7 +49,7 @@ public class ServicioGastoTest {
         this.servicioGasto.guardarGasto(gasto2);
 
 
-        verify(repositorioGasto, times(2));
+        verify(repositorioGasto, times(2)).agregarGasto(any());
     }
 
     private List<Gasto> generarGastos(int cantidad) {
