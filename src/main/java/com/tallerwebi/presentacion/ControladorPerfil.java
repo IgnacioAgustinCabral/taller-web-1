@@ -23,12 +23,15 @@ public class ControladorPerfil {
 
     private ServicioUsuario servicioUsuario;
     private ServicioViaje servicioViaje;
+    private ServicioComentario servicioComentario;
 
 
     @Autowired
-    public ControladorPerfil(ServicioViaje servicioViaje,ServicioUsuario servicioUsuario){
+    public ControladorPerfil(ServicioViaje servicioViaje,ServicioUsuario servicioUsuario, ServicioComentario servicioComentario){
         this.servicioViaje = servicioViaje;
-        this.servicioUsuario = servicioUsuario;}
+        this.servicioUsuario = servicioUsuario;
+        this.servicioComentario = servicioComentario;
+    }
 
     @RequestMapping(value="/usuario", method = RequestMethod.GET )
     public ModelAndView irAPerfil(@RequestParam(required = false) Long idUsuario, HttpServletRequest request){
@@ -37,11 +40,13 @@ public class ControladorPerfil {
 
         //TODO: completar con try catch - manejar excepciones - revisar porque trae un mv
         Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(idUsuario);
+        List<Comentario> comentarios = servicioComentario.obtenerComentariosPorUsuario(usuarioBuscado);
 
         List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuarioBuscado);
         modelo.put("session", session);
         modelo.put("usuario",usuarioBuscado);
         modelo.put("viajes",viajes);
+        modelo.put("comentarios", comentarios);
         return new ModelAndView("perfil/perfil",modelo);
     }
 
@@ -50,10 +55,12 @@ public class ControladorPerfil {
         if(session.getAttribute("usuario") != null){
             ModelMap model = new ModelMap();
             Usuario usuario = (Usuario) session.getAttribute("usuario");
+            List<Comentario> comentarios =servicioComentario.obtenerComentariosPorUsuario(usuario);
             List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
             //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
             model.put("usuario", usuario);
             model.put("viajes", viajes);
+            model.put("comentarios", comentarios);
             return new ModelAndView("perfil/perfil", model);
         }else{
             return new ModelAndView("redirect:/login");

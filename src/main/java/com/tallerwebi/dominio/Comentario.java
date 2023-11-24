@@ -9,18 +9,21 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double calificacion;
     private String descripcion;
 
-    @ManyToMany(mappedBy = "comentarios")
-    private Set<Usuario> usuarios;
+    @ManyToOne
+    @JoinColumn(name = "usuario_origen_id")
+    private Usuario usuarioOrigen;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_destino_id")
+    private Usuario usuarioDestino;
 
     public Comentario () {
 
     }
 
-    public Comentario (Double calificacion, String descripcion) {
-        this.calificacion = calificacion;
+    public Comentario (String descripcion) {
         this.descripcion = descripcion;
     }
 
@@ -30,14 +33,6 @@ public class Comentario {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(Double calificacion) {
-        this.calificacion = calificacion;
     }
 
     public String getDescripcion() {

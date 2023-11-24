@@ -28,13 +28,8 @@ public class Usuario {
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros")
     private List<Viaje> viajes;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "usuario_comentario",
-            joinColumns = @JoinColumn(name = "id_usuario"),
-            inverseJoinColumns = @JoinColumn(name = "id_comentario")
-    )
-    private Set<Comentario> comentarios;
+    @OneToMany(mappedBy = "usuarioDestino", cascade = CascadeType.ALL)
+    private List<Comentario> comentariosRecibidos;
 
 
     //TODO: constructor de pruebas.
