@@ -74,8 +74,8 @@ function calcularRuta(request, directionsService, directionsDisplay) {
             var duracion = result.routes[0].legs[0].duration.text;
 
             // Actualiza los elementos HTML en tu vista
-            document.getElementById('distancia').textContent = 'Distancia: ' + distancia;
-            document.getElementById('duracion').textContent = 'Duración: ' + duracion;
+            document.getElementById('distancia').textContent = distancia;
+            document.getElementById('duracion').textContent =  duracion;
         } else {
             console.error('Error al calcular la ruta:', status);
         }

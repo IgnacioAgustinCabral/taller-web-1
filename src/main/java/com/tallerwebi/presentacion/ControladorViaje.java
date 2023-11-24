@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -121,7 +122,6 @@ public class ControladorViaje {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             viaje.setUsuario(usuario);
             this.servicioViaje.crearViaje(viaje);
-            model.put("idViaje", viaje.getId());
         } catch (Exception e) {
             e.printStackTrace();
             model.put("error", "Error al registrar el viaje, revise los campos");
@@ -197,7 +197,7 @@ public class ControladorViaje {
             Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado, usuario);
             model.put("viaje", viajeBuscado);
             model.put("unido", unido);
-            return new ModelAndView("viaje/viaje", model);
+            return new ModelAndView("viaje", model);
 
         } catch (Exception e) {
             ModelMap model = new ModelMap();
