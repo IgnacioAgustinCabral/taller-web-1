@@ -54,12 +54,12 @@
         <div class="col bg-shadow bg-light bg-gradient p-4" th:each="viaje : ${viajesFiltrados}">
             <div class="card" style="width: 100%;">
                 <div class="container p-0" style="height: 200px;">
-                    <img th:src="${viaje.destino.background}" class=" m-0 p-0 w-100 h-100">
+                    <img th:src="@{'/destino/imagen/' + ${viaje.destino.getId()}}" class=" m-0 p-0 w-100 h-100">
                 </div>
                 <!--<div th:style="'background-image: url('+ ${viaje.destino.background} + '); height: 200px;' "></div>-->
                 <div class="card-body">
                     <div class="header-card">
-                        <img th:src="${viaje.usuario.avatar}" alt="avatar" width="55px" height="55px"
+                        <img th:src="@{'/usuario/imagen/' + ${viaje.usuario.getId()}}" alt="avatar" width="55px" height="55px"
                              class="rounded-circle">
                     </div>
                     <div><h5 class="card-title" th:text="${viaje.usuario.nombre}"></h5></div>

@@ -147,9 +147,8 @@
                                             <div class="flex-row">
                                                 <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar" class="rounded-circle img-avatar-size topSpace" style="max-width: 65% !important">
                                                 <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}" class="card-title"></h4>
-                                                <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="btn btn-primary bottomSpace">Ver perfil</a>
+                                                <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}" class="btn btn-primary bottomSpace">Ver perfil</a>
                                                 <a th:href="@{/crear-viaje(viaje = ${viaje.id})}" class="btn btn-primary bottomSpace">Modificar</a>
-                                                <a href="#" class="btn btn-secondary bottomSpace">Conectar</a>
                                             </div>
                                         </div>
                                         <div class="col-lg-10 d-block">

@@ -1,11 +1,12 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.*;
-import org.dom4j.rule.Mode;
+import com.tallerwebi.dominio.ServicioUsuario;
+import com.tallerwebi.dominio.ServicioViaje;
+import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.Viaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +19,6 @@ import java.util.List;
 
 @Controller
 @Transactional
-@RequestMapping("/perfil")
 public class ControladorPerfil {
 
     private ServicioUsuario servicioUsuario;
@@ -42,7 +42,7 @@ public class ControladorPerfil {
         modelo.put("session", session);
         modelo.put("usuario",usuarioBuscado);
         modelo.put("viajes",viajes);
-        return new ModelAndView("perfil/perfil",modelo);
+        return new ModelAndView("perfil",modelo);
     }
 
     @RequestMapping(path = "/mi-perfil", method = RequestMethod.GET )
@@ -54,7 +54,7 @@ public class ControladorPerfil {
             //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
             model.put("usuario", usuario);
             model.put("viajes", viajes);
-            return new ModelAndView("perfil/perfil", model);
+            return new ModelAndView("perfil", model);
         }else{
             return new ModelAndView("redirect:/login");
         }
@@ -66,7 +66,7 @@ public class ControladorPerfil {
         Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(id);
         ModelMap model = new ModelMap();
         model.put("usuario", usuarioBuscado);
-        return new ModelAndView("perfil/perfil", model);
+        return new ModelAndView("perfil", model);
 
     }*/
 
