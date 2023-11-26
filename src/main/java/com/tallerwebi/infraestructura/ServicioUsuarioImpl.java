@@ -40,7 +40,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
     public Boolean validarEmailUsuario(Usuario usuario) throws Exception{
 
         if (usuario.isEmailValidado() == null)
-            throw new NullEmailValidoException("¡Debes validar tu correo electrónico para crear un viaje!");
+            throw new NullEmailValidoException("No se conoce estado de validacion de email.");
 
         return usuario.isEmailValidado();
     }

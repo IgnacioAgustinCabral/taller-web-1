@@ -45,7 +45,19 @@ public class ControladorViaje {
 
             this.servicioUsuario.validarEmailUsuario(usuario);
 
+            // Caso 1: Usuario no registrado
+            if (session == null || session.getAttribute("isLogged") == null) {
+                return new ModelAndView("redirect:/home");
+            }
+
             // Caso 2: Usuario logueado pero email no verificado
+            if (!usuario.isEmailValidado()) {
+                System.out.println(usuario.isEmailValidado()+ "email validado?");
+                ModelMap model = new ModelMap();
+                model.put("errorCrearViaje", "¡Debes validar tu correo electrónico para crear un viaje!");
+                return new ModelAndView("notificacion", model);
+            }
+
             if (viajeId != null) {
                 modelo.put("edito", true);
                 Viaje viajeAModificar = servicioViaje.obtenerViajePorId(viajeId);
@@ -58,9 +70,10 @@ public class ControladorViaje {
             }
             return new ModelAndView("crear-viaje", modelo);
         }catch(NullEmailValidoException e){
+
             ModelMap modelo = new ModelMap();
-            modelo.put("errorCrearViaje", e.getMessage());
-            return new ModelAndView("notificacion", modelo);
+            modelo.put("mensaje", e.getMessage());
+            return new ModelAndView("error/error", modelo);
         }
         catch(Exception e){
             ModelMap modelo = new ModelMap();
