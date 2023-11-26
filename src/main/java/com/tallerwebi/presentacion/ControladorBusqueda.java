@@ -9,7 +9,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class ControladorBusqueda{
@@ -66,6 +69,12 @@ public class ControladorBusqueda{
         Set<Viaje> viajesFiltrados = servicioViaje.obtenerViajesPorFiltroMultiple(viajeBuscado);
 
         HttpSession session = request.getSession();
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+        if(usuario != null)
+            viajesFiltrados = viajesFiltrados.stream()
+                    .filter(elemento -> !elemento.getUsuario().getEmail().equals(usuario.getEmail()))
+                    .collect(Collectors.toSet());
 
         model.addAttribute("filtroBuscado",viajeBuscado);
         model.addAttribute("viajesFiltrados",viajesFiltrados);

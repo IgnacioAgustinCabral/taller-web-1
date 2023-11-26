@@ -1,6 +1,9 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.ServicioCiudad;
+import com.tallerwebi.dominio.ServicioViaje;
+import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.Viaje;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +35,7 @@ public class ControladorViajeTest {
     private ServicioViaje servicioViajeMock;
     private Viaje viajeMock;
     private ServicioCiudad servicioCiudadMock;
+    private ServicioUsuario servicioUsuarioMock;
     private HttpSession sessionMockUsuario;
     private ServicioGasto servicioGastoMock;
 
@@ -43,9 +47,10 @@ public class ControladorViajeTest {
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
         servicioViajeMock = mock(ServicioViaje.class);
+        servicioUsuarioMock = mock(ServicioUsuario.class);
         servicioCiudadMock = mock(ServicioCiudad.class);
         servicioGastoMock = mock(ServicioGasto.class);
-        controladorViaje = new ControladorViaje(servicioViajeMock,servicioCiudadMock,servicioGastoMock);
+        controladorViaje = new ControladorViaje(servicioGastoMock,servicioUsuarioMock,servicioViajeMock,servicioCiudadMock);
         sessionMockUsuario = mock(HttpSession.class);
     }
 

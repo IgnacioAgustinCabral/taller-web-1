@@ -11,7 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ControladorHome {
@@ -33,8 +35,16 @@ public class ControladorHome {
 
         FiltroViaje viajeBuscado = new FiltroViaje();
         HttpSession session = request.getSession();
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        List<Viaje> datos = new ArrayList<>();
 
-        List<Viaje> datos = servicioViaje.obtenerViajes();
+        if(usuario != null)
+            datos = servicioViaje.obtenerViajes().stream()
+                .filter(elemento -> !elemento.getUsuario().getEmail().equals(usuario.getEmail()))
+                .collect(Collectors.toList());
+        else
+            datos = servicioViaje.obtenerViajes();
+
         List<Provincia> provincia = servicioProvincia.obtenerProvinciasConImagenes();
         List<Ciudad> ciudades = servicioCiudad.obtenerListaDeCiudades();
         ModelMap model = new ModelMap();

@@ -12,61 +12,60 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.SystemException;
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
+@Transactional
 public class ControladorViaje {
 
     private ServicioViaje servicioViaje;
+    private ServicioUsuario servicioUsuario;
     private ServicioCiudad servicioCiudad;
     private ServicioGasto servicioGasto;
 
     @Autowired
-    public ControladorViaje(ServicioViaje servicioViaje, ServicioCiudad servicioCiudad, ServicioGasto servicioGasto) {
+    public ControladorViaje(ServicioGasto servicioGasto, ServicioUsuario servicioUsuario, ServicioViaje servicioViaje, ServicioCiudad servicioCiudad) {
 
+        this.servicioUsuario = servicioUsuario;
         this.servicioViaje = servicioViaje;
         this.servicioCiudad = servicioCiudad;
         this.servicioGasto = servicioGasto;
     }
 
     @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
-    public ModelAndView mostrarVistaCrearViaje(
-            @RequestParam(value = "viaje", required = false) Long viajeId,
-            HttpServletRequest request) {
+    public ModelAndView mostrarVistaCrearViaje(@RequestParam(value = "viaje", required = false) Long viajeId, HttpSession session) {
+        try{
+            ModelMap modelo = new ModelMap();
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-        HttpSession session = request.getSession();
+            this.servicioUsuario.validarEmailUsuario(usuario);
 
-        // Caso 1: Usuario no registrado
-        if (session == null || session.getAttribute("isLogged") == null) {
-            return new ModelAndView("redirect:/home");
+            // Caso 2: Usuario logueado pero email no verificado
+            if (viajeId != null) {
+                modelo.put("edito", true);
+                Viaje viajeAModificar = servicioViaje.obtenerViajePorId(viajeId);
+                List<Ciudad> ciudades = servicioCiudad.obtenerListaDeCiudades();
+                modelo.put("viaje", viajeAModificar);
+                modelo.put("ciudades", ciudades);
+            } else {
+                modelo = cargarOrigenYDestinoAlModel();
+                modelo.put("edito", false);
+            }
+            return new ModelAndView("crear-viaje", modelo);
+        }catch(NullEmailValidoException e){
+            ModelMap modelo = new ModelMap();
+            modelo.put("errorCrearViaje", e.getMessage());
+            return new ModelAndView("notificacion", modelo);
         }
-
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-
-        // Caso 2: Usuario logueado pero email no verificado
-        if (!usuario.isEmailValidado()) {
-            ModelMap model = new ModelMap();
-            model.put("errorCrearViaje", "¡Debes validar tu correo electrónico para crear un viaje!");
-            return new ModelAndView("notificacion", model);
+        catch(Exception e){
+            ModelMap modelo = new ModelMap();
+            modelo.put("mensaje", e.getMessage());
+            return new ModelAndView("error/error",modelo);
         }
-
-        // Caso 3: Usuario logueado y email verificado
-        ModelMap modelo = new ModelMap();
-
-        if (viajeId != null) {
-            modelo.put("edito", true);
-            Viaje viajeAModificar = servicioViaje.obtenerViajePorId(viajeId);
-            List<Ciudad> ciudades = servicioCiudad.obtenerListaDeCiudades();
-            modelo.put("viaje", viajeAModificar);
-            modelo.put("ciudades", ciudades);
-        } else {
-            modelo = cargarOrigenYDestinoAlModel();
-            modelo.put("edito", false);
-        }
-
-        return new ModelAndView("crear-viaje", modelo);
     }
 
 
