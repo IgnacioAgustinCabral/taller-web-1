@@ -2,18 +2,16 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.config.GoogleMapsConfig;
 import com.tallerwebi.dominio.*;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,7 +28,7 @@ public class ServicioViajeImpl implements ServicioViaje {
 
     @Override
     public List<Viaje> obtenerViajes() {
-        return repositorioViaje.listarViajes();
+        return this.repositorioViaje.listarViajes();
     }
 
     @Override
@@ -98,17 +96,16 @@ public class ServicioViajeImpl implements ServicioViaje {
         boolean agregadoExito = false;
 
         if(viaje != null){
-            Integer cantidadActual = viaje.getCantidad();
+            Integer cantidadActual = viaje.getCantidad() - viaje.getListaPasajeros().size();
             Set<Usuario> pasajeros = viaje.getListaPasajeros();
-            agregadoExito = pasajeros.add(nuevoPasajero);
+            Boolean pasajeroExistente = pasajeros.contains(nuevoPasajero);
 
-            if(agregadoExito && cantidadActual > 0){
-                viaje.setListaPasajeros(pasajeros);
-                viaje.setCantidad(cantidadActual - 1);
+            if(!pasajeroExistente && pasajeros.size() < viaje.getCantidad()){
+                pasajeros.add(nuevoPasajero);
                 repositorioViaje.guardar(viaje);
+                agregadoExito = true;
             }
         }
-
         return agregadoExito;
     }
 
