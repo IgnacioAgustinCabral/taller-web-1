@@ -62,7 +62,7 @@ public class ControladorPerfilTest {
 
         // validacion
         assertThat(modelAndView, notNullValue());
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("perfil/perfil"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("perfil"));
     }
 
     @Test
