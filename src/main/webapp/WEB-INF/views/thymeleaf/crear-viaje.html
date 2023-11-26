@@ -94,7 +94,6 @@
                                 <p th:if="${error != null}" class="alert alert-danger m-0" th:text="${error}"></p>
                             </div>
                             <div class="justify-content-center text-center">
-                                <button class="p-3 btn btn-primary mt-2" type="submit">Crear Viaje</button>
 <!--                                <button th:attr="onclick='openModal(\'' + ${idViaje} + '\')'" type="button" class="btn btn-primary">Registrar Gasto</button>-->
                                 <button class="p-3 btn btn-primary mt-2" type="submit" th:text="${edito? 'Editar' : 'Crear'}"></button>
                             </div>

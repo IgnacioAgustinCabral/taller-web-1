@@ -224,6 +224,7 @@
                                                         </div>
                                                     </div>
                                                  <button th:attr="onclick='openModal(\'' + ${viaje.id} + '\')'" class="btn btn-primary">Registrar Gasto</button>
+                                                    <button th:attr="onclick='openModalViaje(\'' + ${viaje.id} + '\')'" type="button" class="btn btn-primary">Mostrar Gastos</button>
 
                                                     <div th:attr="id='myModal-' + ${viaje.id}" class="modal" >
                                                         <div class="modal-content">
