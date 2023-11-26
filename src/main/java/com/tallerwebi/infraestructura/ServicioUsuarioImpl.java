@@ -3,8 +3,10 @@ package com.tallerwebi.infraestructura;
 import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.ServicioUsuario;
 import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.excepcion.NullEmailValidoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -32,5 +34,14 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
     @Override
     public Usuario obtenerUsuarioPorId(Long id) {
         return repositorioUsuario.buscarUsuarioPorId(id);
+    }
+
+    @Override
+    public Boolean validarEmailUsuario(Usuario usuario) throws Exception{
+
+        if (usuario.isEmailValidado() == null)
+            throw new NullEmailValidoException("¡Debes validar tu correo electrónico para crear un viaje!");
+
+        return usuario.isEmailValidado();
     }
 }

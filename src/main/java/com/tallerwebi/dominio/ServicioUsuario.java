@@ -7,4 +7,5 @@ public interface ServicioUsuario {
     Usuario obtenerUsuarioPorEmail(String email);
 
     Usuario obtenerUsuarioPorId(Long id);
+    Boolean validarEmailUsuario(Usuario usuario) throws Exception;
 }
