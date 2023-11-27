@@ -105,7 +105,7 @@
                 <h5 class="card-text">Distancia a Recorrer:</h5>
                 <p class="card-text" id="distancia"></p>
                 <h5 class="card-text">Lugares disponibles</h5>
-                <p class="card-text" th:text="${viaje.cantidad}"></p>
+                <p class="card-text" th:text="${viaje.cantidad - viaje.getListaPasajeros().size()}"></p>
             </div>
         </div>
         <p class="card-text text-center topSpace"><small class="text-muted">Última actualización: hace 2 días</small>
