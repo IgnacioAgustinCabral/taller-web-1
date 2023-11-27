@@ -2,17 +2,18 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -193,9 +194,9 @@ public class ControladorViaje {
             model.put("coordenadaOrigen", coordenadaOrigen);
             model.put("coordenadaDestino", coordenadaDestino);
 
-            Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado, usuario);
+            //Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado, usuario);
             model.put("viaje", viajeBuscado);
-            model.put("unido", unido);
+            //model.put("unido", unido);
             return new ModelAndView("viaje", model);
 
         } catch (Exception e) {
@@ -255,18 +256,26 @@ public class ControladorViaje {
     }
 
     @RequestMapping(value = "/mostrar-gastos", method = RequestMethod.GET)
-    public ModelAndView mostrarGastos(@RequestParam("idViaje") Long idViaje) {
-        ModelMap model = new ModelMap();
+    @ResponseBody
+    public ResponseEntity<?> mostrarGastos(@RequestParam("idViaje") Long idViaje) {
         try {
             Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
             List<Gasto> gastos = servicioGasto.obtenerGastosPorViaje(viaje);
-            model.put("viaje", viaje);
-            model.put("gastos", gastos);
+
+            // Calcular la suma total de los montos de los gastos
+            double montoTotal = gastos.stream().mapToDouble(Gasto::getMonto).sum();
+
+            // Crear un mapa con la estructura deseada
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("gastos", gastos);
+            respuesta.put("montoTotal", montoTotal);
+
+            return ResponseEntity.ok().body(respuesta);
         } catch (Exception e) {
-            model.put("error", "Error al obtener los gastos del viaje");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error al obtener los gastos del viaje"));
         }
-        return new ModelAndView("mostrar-gastos", model);
     }
+
     @RequestMapping(value = "/modificar-viaje", method = RequestMethod.GET)
     public ModelAndView ModificarViaje(@ModelAttribute("viaje") Viaje viaje, @RequestParam("viaje") Long id, HttpSession session) {
         try {

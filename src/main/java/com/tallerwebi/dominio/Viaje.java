@@ -32,7 +32,7 @@ public class Viaje {
     private Ciudad origen;
     @ManyToOne
     private Usuario usuario;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL} ,fetch = FetchType.EAGER)
     @JoinTable(
             name = "Viaje_Pasajero",
             joinColumns = @JoinColumn(name="viaje_id"),

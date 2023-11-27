@@ -9,6 +9,9 @@
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
 }
+.gastos-section {
+    display: none;
+}
 .p{
     text-align: center;
     font-size: 30px;

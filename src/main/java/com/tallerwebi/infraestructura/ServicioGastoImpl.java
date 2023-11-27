@@ -22,7 +22,8 @@ public class ServicioGastoImpl implements ServicioGasto {
     }
     @Override
     public List<Gasto> obtenerGastosPorViaje(Viaje viaje) {
-        return repositorioGasto.listarGastosPorViaje(viaje);
+         List<Gasto> gastos = repositorioGasto.listarGastosPorViaje(viaje);
+         return gastos;
     }
 
     @Override
