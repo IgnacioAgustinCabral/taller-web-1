@@ -7,6 +7,7 @@ import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.TokenInvalidoException;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,22 +23,30 @@ public class ServicioLoginImpl implements ServicioLogin {
     private RepositorioUsuario servicioLoginDao;
     private ServicioEmail servicioEmail;
     private RepositorioUsuario repositorioUsuario;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public ServicioLoginImpl(RepositorioUsuario servicioLoginDao, ServicioEmail servicioEmail, RepositorioUsuario repositorioUsuario) {
+    public ServicioLoginImpl(RepositorioUsuario servicioLoginDao, ServicioEmail servicioEmail, RepositorioUsuario repositorioUsuario, BCryptPasswordEncoder passwordEncoder) {
         this.servicioLoginDao = servicioLoginDao;
         this.servicioEmail = servicioEmail;
         this.repositorioUsuario = repositorioUsuario;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public Usuario consultarUsuario (String email, String password) {
-        return servicioLoginDao.buscarUsuario(email, password);
+    public Usuario consultarUsuario (String email, String passwordIngresada) {
+        Usuario usuarioBuscado = servicioLoginDao.buscarUsuario(email);
+
+        if (usuarioBuscado != null && passwordEncoder.matches(passwordIngresada, usuarioBuscado.getPassword())) {
+            return usuarioBuscado;
+        }
+
+        return null;
     }
 
     @Override
     public void registrar(Usuario usuario, MultipartFile imagenDePerfil) throws UsuarioExistente, IOException {
-        Usuario usuarioEncontrado = servicioLoginDao.buscarUsuario(usuario.getEmail(), usuario.getPassword());
+        Usuario usuarioEncontrado = servicioLoginDao.buscarUsuario(usuario.getEmail());
         if(usuarioEncontrado != null){
             throw new UsuarioExistente();
         }
@@ -47,6 +56,8 @@ public class ServicioLoginImpl implements ServicioLogin {
         usuario.setTokenValidacion(token);
 
         usuario.setImagenDePerfil(Base64.getEncoder().encode(imagenDePerfil.getBytes()));
+
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
         servicioLoginDao.guardar(usuario);
 
