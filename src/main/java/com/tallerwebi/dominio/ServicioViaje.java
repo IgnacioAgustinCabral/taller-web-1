@@ -33,4 +33,6 @@ public interface ServicioViaje {
     Boolean ModificarViaje(Usuario usuario,Viaje viaje, Long id) throws Exception;
 
     Boolean ModificarViaje(Viaje viaje,Usuario usuario) throws Exception;
+
+    Set<Viaje> obtenerViajesDePasajero(Usuario usuario);
 }

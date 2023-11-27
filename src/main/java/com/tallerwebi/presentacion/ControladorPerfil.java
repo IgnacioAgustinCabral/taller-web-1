@@ -46,17 +46,23 @@ public class ControladorPerfil {
     }
 
     @RequestMapping(path = "/mi-perfil", method = RequestMethod.GET )
-    public ModelAndView verMisViajes(HttpSession session) {
-        if(session.getAttribute("usuario") != null){
+    public ModelAndView verMiPerfil(HttpSession session) {
+        try{
+            if(session.getAttribute("usuario") != null){
+                ModelMap model = new ModelMap();
+                Usuario usuario = (Usuario) session.getAttribute("usuario");
+                List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
+                //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
+                model.put("usuario", usuario);
+                model.put("viajes", viajes);
+                return new ModelAndView("perfil", model);
+            }else{
+                return new ModelAndView("redirect:/login");
+            }
+        }catch(Exception e){
             ModelMap model = new ModelMap();
-            Usuario usuario = (Usuario) session.getAttribute("usuario");
-            List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
-            //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
-            model.put("usuario", usuario);
-            model.put("viajes", viajes);
-            return new ModelAndView("perfil", model);
-        }else{
-            return new ModelAndView("redirect:/login");
+            model.put("mensaje", e.getMessage());
+            return new ModelAndView("error/error",model);
         }
     }
 

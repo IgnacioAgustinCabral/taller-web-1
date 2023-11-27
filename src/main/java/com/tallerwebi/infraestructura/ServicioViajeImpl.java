@@ -24,6 +24,7 @@ public class ServicioViajeImpl implements ServicioViaje {
     @Autowired
     public ServicioViajeImpl(RepositorioViaje repositorioViaje, RepositorioUsuario repositorioUsuario) {
         this.repositorioViaje = repositorioViaje;
+        this.repositorioUsuario = repositorioUsuario;
     }
 
     @Override
@@ -176,6 +177,14 @@ public class ServicioViajeImpl implements ServicioViaje {
         this.repositorioViaje.guardar(viajeAModificar);
 
         return true;
+    }
+
+    @Override
+    public Set<Viaje> obtenerViajesDePasajero(Usuario usuario) {
+
+        Usuario buscado  = repositorioUsuario.buscarUsuarioPorId(usuario.getId());
+
+        return buscado.getListaViajes();
     }
 
     @Override

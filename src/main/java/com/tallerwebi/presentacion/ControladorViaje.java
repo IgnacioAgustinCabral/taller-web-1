@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.SystemException;
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -265,6 +267,30 @@ public class ControladorViaje {
         modelo.put("viaje", new Viaje());
         modelo.put("ciudades", ciudades);
         return modelo;
+    }
+
+    @RequestMapping(path = "/mis-viajes", method = RequestMethod.GET )
+    public ModelAndView verMisViajes(HttpSession session) {
+        try{
+            if(session.getAttribute("usuario") != null){
+                ModelMap model = new ModelMap();
+                Usuario usuario = (Usuario) session.getAttribute("usuario");
+                Set<Viaje> viajes = servicioViaje.obtenerViajesDePasajero(usuario);
+
+                if(viajes == null)
+                    viajes = new HashSet<>();
+                //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
+                model.put("usuario", usuario);
+                model.put("viajes", viajes);
+                return new ModelAndView("misviajes", model);
+            }else{
+                return new ModelAndView("redirect:/login");
+            }
+        }catch(Exception e){
+            ModelMap model = new ModelMap();
+            model.put("mensaje", e.getMessage());
+            return new ModelAndView("error/error",model);
+        }
     }
 
 }
