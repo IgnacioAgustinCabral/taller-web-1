@@ -103,5 +103,17 @@ public class RepositorioViajeImpl implements RepositorioViaje {
                 .list();
     }
 
+    @Override
+    public void eliminarViaje(Long viajeId) {
+        Viaje viaje = buscarPorId(viajeId);
+
+        if (viaje != null) {
+            eliminar(viaje);
+        }
+    }
+
+
+
+
 }
 

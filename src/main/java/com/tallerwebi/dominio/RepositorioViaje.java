@@ -25,5 +25,6 @@ public interface RepositorioViaje {
 
     List<Viaje> listarPorProvincia(String provincia);
 
+    void eliminarViaje(Long viajeId);
 }
 

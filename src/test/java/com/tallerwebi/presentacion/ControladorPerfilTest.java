@@ -60,7 +60,7 @@ public class ControladorPerfilTest {
         session.setAttribute("usuario", usuarioMock);
 
         // ejecucion
-        ModelAndView modelAndView = controladorPerfil.verMisViajes(session);
+        ModelAndView modelAndView = controladorPerfil.verMiPerfil(session);
 
         // validacion
         assertThat(modelAndView, notNullValue());
@@ -72,7 +72,7 @@ public class ControladorPerfilTest {
         // preparacion
 
         // ejecucion
-        ModelAndView modelAndView = controladorPerfil.verMisViajes(sessionMockUsuario);
+        ModelAndView modelAndView = controladorPerfil.verMiPerfil(sessionMockUsuario);
 
         // validacion
         assertThat(modelAndView, notNullValue());

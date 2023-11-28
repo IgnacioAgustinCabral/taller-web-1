@@ -1,7 +1,5 @@
 package com.tallerwebi.dominio;
 
-import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -33,4 +31,8 @@ public interface ServicioViaje {
     Boolean ModificarViaje(Usuario usuario,Viaje viaje, Long id) throws Exception;
 
     Boolean ModificarViaje(Viaje viaje,Usuario usuario) throws Exception;
+
+    Set<Viaje> obtenerViajesDePasajero(Usuario usuario);
+
+    Boolean eliminarViaje(Long viajeId, Usuario usuario) throws Exception;
 }
