@@ -84,9 +84,4 @@ public class SpringWebConfig implements WebMvcConfigurer {
         configurer.setLocation(new ClassPathResource("app.env"));
         return configurer;
     }
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

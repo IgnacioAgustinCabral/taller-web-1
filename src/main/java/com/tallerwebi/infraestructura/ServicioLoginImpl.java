@@ -26,11 +26,11 @@ public class ServicioLoginImpl implements ServicioLogin {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public ServicioLoginImpl(RepositorioUsuario servicioLoginDao, ServicioEmail servicioEmail, RepositorioUsuario repositorioUsuario, BCryptPasswordEncoder passwordEncoder) {
+    public ServicioLoginImpl(RepositorioUsuario servicioLoginDao, ServicioEmail servicioEmail, RepositorioUsuario repositorioUsuario) {
         this.servicioLoginDao = servicioLoginDao;
         this.servicioEmail = servicioEmail;
         this.repositorioUsuario = repositorioUsuario;
-        this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
