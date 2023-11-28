@@ -4,7 +4,6 @@ import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.*;
 import com.tallerwebi.dominio.ServicioEmail;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +55,36 @@ public class ServicioEmailImpl implements ServicioEmail {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @Override
+    public void enviarMailInstruccion(String email, String token) throws IOException {
+        SendGrid sendGrid = new SendGrid(API_KEY);
+        Email from = new Email(FROM_EMAIL_ADDRESS);
+        String subject = "TravelAndo - Restablecer Contraseña";
+        Email to = new Email(email);
+
+        String cuerpoCorreo = "<html><body>" +
+                "<h1><strong>Restablecer Contraseña</strong></h1>" +
+                "<a href='http://localhost:8080/spring/verificar-token-password?token=" + token + "' style='background-color: #bb1524; color: #ffffff; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;'>Restablecer contraseña</a>" +
+                "<p>Se ha solicitado un cambio de contraseña para tu cuenta, si fuiste vos porfavor entrá al link para modificar tu contraseña sino ignora este e-mail</p>" +
+                "<p>Necesitas Ayuda? Nuestro Equipo de Asesores siempre está dispuesto a darte una mano!</p>" +
+                "<a href='mailto:travelando.unlam@gmail.com' style='background-color: #004376; color: #ffffff; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;'>Contactar Soporte</a>" +
+                "</body></html>";
+
+        Content content = new Content("text/html", cuerpoCorreo);
+        Mail mail = new Mail(from, subject, to, content);
+
+        Request request = new Request();
+
+        try{
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sendGrid.api(request);
+        } catch (IOException ex){
+            throw new IOException();
+        }
+
     }
 }

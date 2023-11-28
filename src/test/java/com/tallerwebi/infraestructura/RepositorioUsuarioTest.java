@@ -41,7 +41,7 @@ public class RepositorioUsuarioTest {
         //ejecucion
         repositorio.guardar(creador);
 
-        Usuario busqueda = repositorio.buscarUsuario(creador.getEmail(), creador.getPassword());
+        Usuario busqueda = repositorio.buscarUsuario(creador.getEmail());
         //validacion
         assertThat(busqueda , is(notNullValue()));
     }
