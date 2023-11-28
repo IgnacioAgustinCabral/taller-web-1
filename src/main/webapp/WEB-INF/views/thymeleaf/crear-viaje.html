@@ -93,7 +93,7 @@
                                 <p th:if="${error != null}" class="alert alert-danger m-0" th:text="${error}"></p>
                             </div>
                             <div class="justify-content-center text-center">
-                                <button class="p-3 btn btn-primary mt-2" type="submit" th:text="${edito? 'Editar' : 'Crear'}"></button>
+                                <button class="p-3 btn btn-primary mt-2" type="submit" th:text="${edito? 'Editar viaje' : 'Crear viaje'}"></button>
                                 <a th:if="${edito}" class="p-3 btn btn-danger mt-2" th:href="@{'/eliminar/' + ${viaje.id}}">Eliminar viaje</a>
                             </div>
                         </div>
