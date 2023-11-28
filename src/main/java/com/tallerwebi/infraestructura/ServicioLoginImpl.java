@@ -34,7 +34,7 @@ public class ServicioLoginImpl implements ServicioLogin {
     }
 
     @Override
-    public Usuario consultarUsuario (String email, String passwordIngresada) {
+    public Usuario consultarUsuario(String email, String passwordIngresada) {
         Usuario usuarioBuscado = servicioLoginDao.buscarUsuario(email);
 
         if (usuarioBuscado != null && passwordEncoder.matches(passwordIngresada, usuarioBuscado.getPassword())) {
@@ -47,7 +47,7 @@ public class ServicioLoginImpl implements ServicioLogin {
     @Override
     public void registrar(Usuario usuario, MultipartFile imagenDePerfil) throws UsuarioExistente, IOException {
         Usuario usuarioEncontrado = servicioLoginDao.buscarUsuario(usuario.getEmail());
-        if(usuarioEncontrado != null){
+        if (usuarioEncontrado != null) {
             throw new UsuarioExistente();
         }
 
@@ -85,6 +85,37 @@ public class ServicioLoginImpl implements ServicioLogin {
         enviarCorreoValidacion(usuario.getEmail(), nuevoToken);
     }
 
+    @Override
+    public void enviarMailConInstruccion(String email) throws IOException {
+        String token = generarToken();
+        Usuario usuario = repositorioUsuario.buscarUsuario(email);
+
+        if (usuario != null) {
+            usuario.setTokenResetPassword(token);
+        }
+
+        servicioEmail.enviarMailInstruccion(email, token);
+    }
+
+    @Override
+    public Boolean verificarTokenPassword(String tokenPassword) {
+        Usuario usuario = repositorioUsuario.buscarPorTokenPassword(tokenPassword);
+
+        if (usuario != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void modificarPassword(String password, String token) {
+        Usuario usuario = repositorioUsuario.buscarPorTokenPassword(token);
+        usuario.setPassword(passwordEncoder.encode(password));
+        usuario.setTokenResetPassword(null);
+        repositorioUsuario.guardar(usuario);
+    }
+
 
     private void enviarCorreoValidacion(String destinatario, String token) throws IOException {
         servicioEmail.enviarMailRegistro(destinatario, token);
@@ -111,8 +142,6 @@ public class ServicioLoginImpl implements ServicioLogin {
             throw new TokenInvalidoException("Token de validación no válido");
         }
     }
-
-
 
 
 }

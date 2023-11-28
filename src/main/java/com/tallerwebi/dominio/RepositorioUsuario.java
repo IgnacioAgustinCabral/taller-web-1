@@ -15,5 +15,7 @@ public interface RepositorioUsuario {
     Usuario buscarPorTokenValidacion(String token);
 
     void actualizar(Usuario usuario);
+
+    Usuario buscarPorTokenPassword(String tokenPassword);
 }
 

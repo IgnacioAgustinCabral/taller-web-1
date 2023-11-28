@@ -68,4 +68,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
         sessionFactory.getCurrentSession().update(usuario);
     }
 
+    @Override
+    public Usuario buscarPorTokenPassword(String tokenPassword) {
+        return (Usuario) sessionFactory.getCurrentSession().createQuery("FROM Usuario WHERE tokenResetPassword = :tokenPassword")
+                .setParameter("tokenPassword",tokenPassword)
+                .uniqueResult();
+    }
+
 }

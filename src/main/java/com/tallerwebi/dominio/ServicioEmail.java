@@ -6,4 +6,6 @@ public interface ServicioEmail {
 
 
     void enviarMailRegistro(String destinatario, String cuerpoCorreo) throws IOException;
+
+    void enviarMailInstruccion(String email, String token) throws IOException;
 }

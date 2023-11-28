@@ -16,13 +16,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
-public class
-ControladorLogin {
+public class ControladorLogin {
 
     private ServicioLogin servicioLogin;
 
     @Autowired
-    public ControladorLogin(ServicioLogin servicioLogin){
+    public ControladorLogin(ServicioLogin servicioLogin) {
         this.servicioLogin = servicioLogin;
     }
 
@@ -52,7 +51,7 @@ ControladorLogin {
         return new ModelAndView("login2", model);
     }
 
-    @RequestMapping(path = "/registrarme", method = RequestMethod.POST,consumes = {"multipart/form-data"})
+    @RequestMapping(path = "/registrarme", method = RequestMethod.POST, consumes = {"multipart/form-data"})
     public ModelAndView registrarme(@ModelAttribute("usuario") Usuario usuario, @RequestPart("imagenDePerfil") MultipartFile imagenDePerfil) {
         ModelMap model = new ModelMap();
         try {
@@ -107,6 +106,45 @@ ControladorLogin {
         }
 
         return new ModelAndView("notificacion", model);
+    }
+
+    @RequestMapping(value = "/restablecer-password", method = RequestMethod.GET)
+    public ModelAndView restablecerPassword() {
+
+        return new ModelAndView("formulario-envio-mail-reseteo");
+    }
+
+    @RequestMapping(value = "/restablecer-password", method = RequestMethod.POST)
+    public ModelAndView enviarMailRestablecerPassword(@RequestParam("email") String email) throws IOException {
+        servicioLogin.enviarMailConInstruccion(email);
+
+        ModelMap modelo = new ModelMap();
+        modelo.put("datosLogin", new DatosLogin());
+        modelo.put("envioMail", "Revisa tu casilla de correo para restablecer tu contraseña");
+        return new ModelAndView("login2", modelo);
+    }
+
+    @RequestMapping(value = "/verificar-token-password", method = RequestMethod.GET)
+    public ModelAndView verificarTokenPassword(@RequestParam("token") String tokenPassword) {
+        ModelMap modelo = new ModelMap();
+
+        if (servicioLogin.verificarTokenPassword(tokenPassword)) {
+            modelo.put("token", tokenPassword);
+            return new ModelAndView("modificar-password", modelo);
+        } else {
+            modelo.put("error", "Link inválido o ya usado, volvé a solicitar el cambio de contraseña");
+            return new ModelAndView("formulario-envio-mail-reseteo", modelo);
+        }
+
+    }
+
+    @RequestMapping(value = "/modificar-password", method = RequestMethod.POST)
+    public ModelAndView modificarPassword(@RequestParam("password") String password,@RequestParam("token") String token) {
+        servicioLogin.modificarPassword(password,token);
+        ModelMap modelo = new ModelMap();
+        modelo.put("datosLogin", new DatosLogin());
+        modelo.put("exito","Contraseña restablecida con éxito, iniciá sesión porfavor");
+        return new ModelAndView("login2",modelo);
     }
 }
 
