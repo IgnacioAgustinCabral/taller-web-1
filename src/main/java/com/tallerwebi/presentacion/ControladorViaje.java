@@ -26,13 +26,15 @@ public class ControladorViaje {
     private ServicioViaje servicioViaje;
     private ServicioUsuario servicioUsuario;
     private ServicioCiudad servicioCiudad;
+    private ServicioEmail servicioEmail;
 
     @Autowired
-    public ControladorViaje(ServicioUsuario servicioUsuario, ServicioViaje servicioViaje, ServicioCiudad servicioCiudad) {
+    public ControladorViaje(ServicioUsuario servicioUsuario, ServicioViaje servicioViaje, ServicioCiudad servicioCiudad, ServicioEmail servicioEmail) {
 
         this.servicioUsuario = servicioUsuario;
         this.servicioViaje = servicioViaje;
         this.servicioCiudad = servicioCiudad;
+        this.servicioEmail = servicioEmail;
     }
 
     @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
@@ -237,7 +239,7 @@ public class ControladorViaje {
         return new ModelAndView("provinciaDetalle", modelo);
     }
 
-    @RequestMapping(value = "/unir-a-viaje", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/unir-a-viaje", method = RequestMethod.GET)
     public ModelAndView unirseAUnViaje(@RequestParam("viaje") Long viaje, HttpSession session) {
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
@@ -248,7 +250,44 @@ public class ControladorViaje {
             return new ModelAndView("redirect:/home");
         }
         return new ModelAndView("redirect:/home");
+    }*/ //BORRAR SI EL NUEVO unirseaViajeFunciona
+
+    @RequestMapping(value = "/unir-a-viaje", method = RequestMethod.GET)
+    public ModelAndView unirseAUnViaje(@RequestParam("viaje") Long viajeId, HttpSession session) {
+        try {
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            if (usuario == null) {
+                return new ModelAndView("redirect:/login");
+            }
+
+            Viaje viaje = servicioViaje.obtenerViajePorId(viajeId);
+            Usuario creadorViaje = viaje.getUsuario();
+
+
+            // Enviar solicitud al creador del viaje
+            String linkAceptar = "http://localhost:8080/spring/aceptar-solicitud?viaje=" + viajeId +
+                    "&emailUsuario=" + usuario.getEmail() +
+                    "&creadorViaje=" + creadorViaje.getNombre();
+            ;
+                String linkRechazar = "http://localhost:8080/spring/formulario-rechazo?nombreCreador=" + creadorViaje.getNombre() +
+                        "&emailUsuario=" + usuario.getEmail();
+
+                String emailCreadorViaje = creadorViaje.getEmail();
+
+                String usuarioInteresado = usuario.getNombre();
+
+                servicioEmail.enviarSolicitudUnirseViaje(emailCreadorViaje, usuarioInteresado, linkAceptar, linkRechazar);
+
+
+            // Redirigir al usuario de vuelta a la página principal
+            return new ModelAndView("redirect:/home");
+        } catch (Exception e) {
+            // Manejar cualquier excepción que pueda ocurrir
+            e.printStackTrace();
+            return new ModelAndView("redirect:/home");
+        }
     }
+
 
     @RequestMapping(value = "/modificar-viaje", method = RequestMethod.GET)
     public ModelAndView ModificarViaje(@ModelAttribute("viaje") Viaje viaje, @RequestParam("viaje") Long id, HttpSession session) {
@@ -269,4 +308,22 @@ public class ControladorViaje {
         return modelo;
     }
 
+    @RequestMapping(value = "/aceptar-solicitud", method = RequestMethod.GET)
+    public ModelAndView aceptarSolicitud(@RequestParam("viaje") Long viajeId,
+                                         @RequestParam("emailUsuario") String emailUsuario,
+                                         @RequestParam("creadorViaje") String creadorViaje ) {
+        try {
+            Usuario usuarioSolicitante = servicioUsuario.obtenerUsuarioPorEmail(emailUsuario);
+            servicioViaje.UnirAViaje(usuarioSolicitante, viajeId);
+            servicioEmail.enviarRespuestaAceptada(emailUsuario, creadorViaje);
+
+            return new ModelAndView("redirect:/home");
+        } catch (Exception e) {
+            // Manejar cualquier excepción que pueda ocurrir
+            e.printStackTrace();
+            return new ModelAndView("redirect:/home");
+        }
+    }
+
 }
+

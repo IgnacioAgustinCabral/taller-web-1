@@ -77,7 +77,18 @@ public class ServicioEmailImpl implements ServicioEmail {
         Content content = new Content("text/html", cuerpoCorreo);
         Mail mail = new Mail(from, subject, to, content);
 
-        // Resto del código para enviar el correo
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sendGrid.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void enviarRespuestaRechazada(String toMail, String respuesta, String motivo) throws IOException {
@@ -102,9 +113,11 @@ public class ServicioEmailImpl implements ServicioEmail {
         Content content = new Content("text/html", cuerpoCorreo);
         Mail mail = new Mail(from, subject, to, content);
 
+
+
     }
 
-    public void enviarRespuestaAceptada(String toMail, String respuesta, String motivo) throws IOException{
+    public void enviarRespuestaAceptada(String toMail, String creadorViaje) throws IOException{
 
     }
 

@@ -77,7 +77,7 @@ public class ServicioViajeImpl implements ServicioViaje {
             throw new Exception(resultado);
 
         /*String token = generarTokenValidacion();
-        viaje.setTokenValidacionViaje(token);*/
+        viaje.setTokenValidacionViaje(token);*/ //IMPLEMENTAR
 
         this.repositorioViaje.guardar(viaje);
     }
