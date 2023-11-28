@@ -40,7 +40,7 @@ public class ControladorViaje {
             ModelMap modelo = new ModelMap();
             Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-            this.servicioUsuario.validarEmailUsuario(usuario);
+            Boolean emailValidado = this.servicioUsuario.validarEmailUsuario(usuario);
 
             // Caso 1: Usuario no registrado
             if (session == null || session.getAttribute("isLogged") == null) {
@@ -48,7 +48,7 @@ public class ControladorViaje {
             }
 
             // Caso 2: Usuario logueado pero email no verificado
-            if (!usuario.isEmailValidado()) {
+            if (!emailValidado) {
                 System.out.println(usuario.isEmailValidado()+ "email validado?");
                 ModelMap model = new ModelMap();
                 model.put("errorCrearViaje", "¡Debes validar tu correo electrónico para crear un viaje!");
