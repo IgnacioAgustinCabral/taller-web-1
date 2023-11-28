@@ -1,5 +1,7 @@
 package com.tallerwebi.dominio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -33,6 +35,7 @@ public class Viaje {
     private Ciudad origen;
     @ManyToOne
     private Usuario usuario;
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "Viaje_Pasajero",

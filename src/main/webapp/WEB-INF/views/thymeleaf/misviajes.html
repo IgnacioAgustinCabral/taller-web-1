@@ -125,14 +125,15 @@
                                             <div class="widget-49-title-wrapper">
                                                 <div class="widget-49-meeting-time">
                                                     <div class="widget-49-date-warning">
+                                                        <span class="widget-49-pro-title dateInfo">Cupo del viaje </span>
+                                                        <span class="widget-49-meeting-time" th:number="${viaje.cantidad}"></span>
+                                                    </div>
+                                                    <div class="widget-49-date-warning">
                                                         <span class="widget-49-pro-title dateInfo">Lugares disponibles: </span>
                                                         <span class="widget-49-pro-title"
                                                               th:text="${viaje.cantidad - viaje.listaPasajeros.size()}"></span>
                                                     </div>
-                                                    <div class="widget-49-date-warning">
-                                                        <span class="widget-49-pro-title dateInfo">Tiempo de viaje: </span>
-                                                        <span class="widget-49-meeting-time">6 horas</span>
-                                                    </div>
+
                                                     <div class="widget-49-date-warning">
                                                         <div class="flex-row">
                                                             <span class="widget-49-pro-title dateInfo">Descripción del viaje: </span>

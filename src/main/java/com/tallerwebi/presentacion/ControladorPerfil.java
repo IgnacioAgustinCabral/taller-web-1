@@ -1,9 +1,5 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioUsuario;
-import com.tallerwebi.dominio.ServicioViaje;
-import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.dominio.Viaje;
 import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,7 +69,7 @@ public class ControladorPerfil {
         }
     }
 
-    @RequestMapping(path="/agregar", method = RequestMethod.POST)
+    @RequestMapping(path="/agregar-gasto", method = RequestMethod.POST)
     public ModelAndView agregarGasto(@ModelAttribute Gasto gasto, @RequestParam Long idViaje){
         ModelMap model = new ModelMap();
         try {

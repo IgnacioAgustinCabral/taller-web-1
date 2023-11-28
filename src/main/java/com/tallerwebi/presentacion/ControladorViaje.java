@@ -12,9 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -265,23 +263,6 @@ public class ControladorViaje {
             return new ModelAndView("redirect:/home");
         }
         return new ModelAndView("redirect:/home");
-    }
-
-    @RequestMapping(path="/agregar-gasto", method = RequestMethod.POST)
-    public ModelAndView agregarGasto(@ModelAttribute Gasto gasto, @RequestParam Long idViaje){
-        ModelMap model = new ModelMap();
-        try {
-            Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
-            gasto.setViaje(viaje);
-            this.servicioGasto.guardarGasto(gasto);
-            model.put("exito", "Gasto Agregado exitosamente");
-        }
-        catch (Exception e){
-            model.put("viaje", new Viaje());
-            model.put("error", "Error al registrar el gasto");
-            return new ModelAndView("crear-viaje", model);
-        }
-        return new ModelAndView("redirect:crear-viaje");
     }
 
     @RequestMapping(value = "/mostrar-gastos", method = RequestMethod.GET)

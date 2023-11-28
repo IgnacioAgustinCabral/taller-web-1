@@ -232,7 +232,7 @@
                                                         <div class="modal-content">
                                                             <span class="close" onclick="closeModal()">&times;</span>
                                                             <p class="text-center mt-5 " style="font-size: 30px;margin-top: 2rem;text-align: center;font-weight: 900;">Nuevo Gasto</p>
-                                                            <form class="p-3" action="#" th:action="@{/agregar}" th:object="${gasto}" method="POST">
+                                                            <form class="p-3" action="#" th:action="@{/agregar-gasto}" th:object="${gasto}" method="POST">
                                                                 <div class="form-group">
                                                                     <input type="hidden" id="idViaje" name="idViaje" th:value="${viaje.id}">
                                                                     <label for="descripcion" class="mb-3"><strong>Detalle del Gasto:</strong></label>

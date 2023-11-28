@@ -113,9 +113,10 @@
         <div class="d-flex justify-content-center">
             <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
                class="btn btn-primary bottomSpace rightSpace">Ver perfil</a>
-            <a href="#" class="btn btn-secondary bottomSpace rightSpace">Conectar</a>
+
             <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" class="btn btn-active  bottomSpace rightSpace"
                th:classappend="${unido ? 'btn-secondary' : 'btn-primary'}" th:text="${unido ? 'Unido' : 'Unirme'}">Unirme</a>
+
             <button type="button" class="btn btn-calcular-gasto bottomSpace rightSpace" th:onclick="'mostrarGastos(\'' + ${viaje.id} + '\')'">
                 Ver Gastos
             </button>
@@ -255,7 +256,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
 </script>
-
 <script th:src="@{/js/modal.js}"></script>
 </body>
 <!--
