@@ -1,10 +1,13 @@
 package com.tallerwebi.infraestructura;
 
-import com.sendgrid.*;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.*;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 import com.tallerwebi.dominio.ServicioEmail;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -91,22 +94,20 @@ public class ServicioEmailImpl implements ServicioEmail {
         }
     }
 
-    public void enviarRespuestaRechazada(String toMail, String respuesta, String motivo) throws IOException {
+
+    @Override
+    public void enviarRespuestaRechazada(String toMail,String motivo, String nombreCreador) throws IOException {
         SendGrid sendGrid = new SendGrid(API_KEY);
         Email from = new Email(FROM_EMAIL_ADDRESS);
         String subject = "Respuesta a tu solicitud";
         Email to = new Email(toMail);
 
         // Construye el contenido del correo en función de la respuesta
-        String cuerpoCorreo;
-        if ("Aceptada".equals(respuesta)) {
-            cuerpoCorreo = "<p>Tu solicitud ha sido aceptada. ¡Esperamos verte pronto en el viaje!</p>";
-        } else {
-            cuerpoCorreo = "<p>Tu solicitud ha sido rechazada.</p>";
-            if (motivo != null && !motivo.isEmpty()) {
+        String cuerpoCorreo = "<p>Tu solicitud ha sido rechazada por: </p>"+"<p>"+ nombreCreador + "</p>";
+
+        if (motivo != null && !motivo.isEmpty()) {
                 cuerpoCorreo += "<p>Motivo: " + motivo + "</p>";
             }
-        }
 
         cuerpoCorreo = "<html><body>" + cuerpoCorreo + "</body></html>";
 

@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.transaction.SystemException;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -39,7 +38,7 @@ public class ControladorViaje {
 
     @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
     public ModelAndView mostrarVistaCrearViaje(@RequestParam(value = "viaje", required = false) Long viajeId, HttpSession session) {
-        try{
+        try {
             ModelMap modelo = new ModelMap();
             Usuario usuario = (Usuario) session.getAttribute("usuario");
 
@@ -52,7 +51,7 @@ public class ControladorViaje {
 
             // Caso 2: Usuario logueado pero email no verificado
             if (!usuario.isEmailValidado()) {
-                System.out.println(usuario.isEmailValidado()+ "email validado?");
+                System.out.println(usuario.isEmailValidado() + "email validado?");
                 ModelMap model = new ModelMap();
                 model.put("errorCrearViaje", "¡Debes validar tu correo electrónico para crear un viaje!");
                 return new ModelAndView("notificacion", model);
@@ -69,16 +68,15 @@ public class ControladorViaje {
                 modelo.put("edito", false);
             }
             return new ModelAndView("crear-viaje", modelo);
-        }catch(NullEmailValidoException e){
+        } catch (NullEmailValidoException e) {
 
             ModelMap modelo = new ModelMap();
             modelo.put("mensaje", e.getMessage());
             return new ModelAndView("error/error", modelo);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             ModelMap modelo = new ModelMap();
             modelo.put("mensaje", e.getMessage());
-            return new ModelAndView("error/error",modelo);
+            return new ModelAndView("error/error", modelo);
         }
     }
 
@@ -154,7 +152,7 @@ public class ControladorViaje {
 
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
-            this.servicioViaje.ModificarViaje(viaje,usuario);
+            this.servicioViaje.ModificarViaje(viaje, usuario);
         } catch (Exception e) {
             model = cargarOrigenYDestinoAlModel();
             model.put("viaje", viaje);
@@ -173,13 +171,12 @@ public class ControladorViaje {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             viaje.setUsuario(usuario);
             this.servicioViaje.crearViaje(viaje);
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             model = cargarOrigenYDestinoAlModel();
             model.put("edito", false);
             model.put("error", "Error al registrar el viaje, revise los campos");
             return new ModelAndView("crear-viaje", model);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             model = cargarOrigenYDestinoAlModel();
             model.put("edito", false);
             model.put("error", e.getMessage());
@@ -213,8 +210,8 @@ public class ControladorViaje {
 
         } catch (Exception e) {
             ModelMap model = new ModelMap();
-            model.put("mensaje","Debes estar registrado para poder acceder.");
-            return new ModelAndView("error/error",model);
+            model.put("mensaje", "Debes estar registrado para poder acceder.");
+            return new ModelAndView("error/error", model);
         }
     }
 
@@ -225,12 +222,11 @@ public class ControladorViaje {
 
         if (listadoDeViaje != null) {
             modelo.put("viajes", listadoDeViaje);
-        }else {
+        } else {
             modelo.put("mensaje", "No hay viajes disponibles para la provincia seleccionada");
             try {
                 modelo.put("viajes", listadoDeViaje);
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -269,14 +265,14 @@ public class ControladorViaje {
                     "&emailUsuario=" + usuario.getEmail() +
                     "&creadorViaje=" + creadorViaje.getNombre();
             ;
-                String linkRechazar = "http://localhost:8080/spring/formulario-rechazo?nombreCreador=" + creadorViaje.getNombre() +
-                        "&emailUsuario=" + usuario.getEmail();
+            String linkRechazar = "http://localhost:8080/spring/formulario-rechazo?nombreCreador=" + creadorViaje.getNombre() +
+                    "&emailUsuario=" + usuario.getEmail();
 
-                String emailCreadorViaje = creadorViaje.getEmail();
+            String emailCreadorViaje = creadorViaje.getEmail();
 
-                String usuarioInteresado = usuario.getNombre();
+            String usuarioInteresado = usuario.getNombre();
 
-                servicioEmail.enviarSolicitudUnirseViaje(emailCreadorViaje, usuarioInteresado, linkAceptar, linkRechazar);
+            servicioEmail.enviarSolicitudUnirseViaje(emailCreadorViaje, usuarioInteresado, linkAceptar, linkRechazar);
 
 
             // Redirigir al usuario de vuelta a la página principal
@@ -288,12 +284,11 @@ public class ControladorViaje {
         }
     }
 
-
     @RequestMapping(value = "/modificar-viaje", method = RequestMethod.GET)
     public ModelAndView ModificarViaje(@ModelAttribute("viaje") Viaje viaje, @RequestParam("viaje") Long id, HttpSession session) {
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
-            Boolean modificado = servicioViaje.ModificarViaje(usuario,viaje, id);
+            Boolean modificado = servicioViaje.ModificarViaje(usuario, viaje, id);
         } catch (Exception e) {
             return new ModelAndView("redirect:/home");
         }
@@ -308,10 +303,31 @@ public class ControladorViaje {
         return modelo;
     }
 
+    @RequestMapping(path = "/formulario-rechazo", method = RequestMethod.GET)
+    private ModelAndView mostrarFormularioRechazo(@RequestParam String nombreCreador, @RequestParam String destinatario, HttpSession session) {
+        ModelMap model = new ModelMap();
+        session.setAttribute("destinatario", destinatario);
+        session.setAttribute("nombreCreador", nombreCreador);
+        model.put("motivo", "");
+        model.put("session", session);
+        return new ModelAndView("formulario-rechazo", model);
+    }
+
+    @RequestMapping(path = "/rechazado", method = RequestMethod.POST)
+    private ModelAndView rechazarSolicitud(@RequestParam String motivo, @RequestParam String nombreCreador, @RequestParam String destinatario) throws IOException {
+
+        servicioEmail.enviarRespuestaRechazada(destinatario, motivo, nombreCreador);
+
+        return new ModelAndView("/home");
+
+
+    }
+
+
     @RequestMapping(value = "/aceptar-solicitud", method = RequestMethod.GET)
     public ModelAndView aceptarSolicitud(@RequestParam("viaje") Long viajeId,
                                          @RequestParam("emailUsuario") String emailUsuario,
-                                         @RequestParam("creadorViaje") String creadorViaje ) {
+                                         @RequestParam("creadorViaje") String creadorViaje) {
         try {
             Usuario usuarioSolicitante = servicioUsuario.obtenerUsuarioPorEmail(emailUsuario);
             servicioViaje.UnirAViaje(usuarioSolicitante, viajeId);
@@ -324,6 +340,4 @@ public class ControladorViaje {
             return new ModelAndView("redirect:/home");
         }
     }
-
 }
-
