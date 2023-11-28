@@ -119,13 +119,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="trending-ads-slide">
-
                         <div class="col-sm-12 col-lg-4" th:each="item : ${provincias}">
                             <div class="product-item bg-light">
                                 <div class="card">
                                     <div class="thumb-content">
                                         <a th:href="@{/listar-provincia(provincia = ${item.nombre})}" th:value="${item.nombre.toString()}">
-                                            <img class="card-img-top img-fluid " style="min-width: 100%!important; min-height: max-content!important;" th:src="@{'/provincia/imagen/' + ${item.getId()}}" alt="Imagen provincia">
+                                            <img class="card-img-top img-fluid custom-image-size" style="min-width: 100%!important; min-height: max-content!important; object-fit: cover;" th:src="@{'/provincia/imagen/' + ${item.getId()}}" alt="Imagen provincia">
                                         </a>
                                     </div>
                                     <div class="card-body">
