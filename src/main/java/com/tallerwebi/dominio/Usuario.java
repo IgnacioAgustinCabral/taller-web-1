@@ -30,7 +30,7 @@ public class Usuario {
     private Set<Viaje> viajes = new HashSet<>();
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_comentario",
             joinColumns = @JoinColumn(name = "id_usuario"),
