@@ -57,4 +57,55 @@ public class ServicioEmailImpl implements ServicioEmail {
             System.out.println(ex.getMessage());
         }
     }
+
+    public void enviarSolicitudUnirseViaje(String toMail, String usuarioInteresado, String linkAceptar, String linkRechazar) throws IOException {
+        SendGrid sendGrid = new SendGrid(API_KEY);
+        Email from = new Email(FROM_EMAIL_ADDRESS);
+        String subject = "Solicitud para unirse a tu viaje";
+        Email to = new Email(toMail);
+
+        // Contenido del correo en formato HTML
+        String cuerpoCorreo = "<html><body>" +
+                "<p>Hola,</p>" +
+                "<p>El usuario " + usuarioInteresado + " está interesado en unirse a tu viaje. Haz clic en los enlaces a continuación para responder:</p>" +
+                "<p><a href='" + linkAceptar/*Unir a viaje*/ + "'>Aceptar Solicitud</a></p>" +
+                "<p><a href='" + linkRechazar + "'>Rechazar Solicitud</a></p>" +
+                "<p>Gracias,</p>" +
+                "<p>TravelAndo</p>" +
+                "</body></html>";
+
+        Content content = new Content("text/html", cuerpoCorreo);
+        Mail mail = new Mail(from, subject, to, content);
+
+        // Resto del código para enviar el correo
+    }
+
+    public void enviarRespuestaRechazada(String toMail, String respuesta, String motivo) throws IOException {
+        SendGrid sendGrid = new SendGrid(API_KEY);
+        Email from = new Email(FROM_EMAIL_ADDRESS);
+        String subject = "Respuesta a tu solicitud";
+        Email to = new Email(toMail);
+
+        // Construye el contenido del correo en función de la respuesta
+        String cuerpoCorreo;
+        if ("Aceptada".equals(respuesta)) {
+            cuerpoCorreo = "<p>Tu solicitud ha sido aceptada. ¡Esperamos verte pronto en el viaje!</p>";
+        } else {
+            cuerpoCorreo = "<p>Tu solicitud ha sido rechazada.</p>";
+            if (motivo != null && !motivo.isEmpty()) {
+                cuerpoCorreo += "<p>Motivo: " + motivo + "</p>";
+            }
+        }
+
+        cuerpoCorreo = "<html><body>" + cuerpoCorreo + "</body></html>";
+
+        Content content = new Content("text/html", cuerpoCorreo);
+        Mail mail = new Mail(from, subject, to, content);
+
+    }
+
+    public void enviarRespuestaAceptada(String toMail, String respuesta, String motivo) throws IOException{
+
+    }
+
 }

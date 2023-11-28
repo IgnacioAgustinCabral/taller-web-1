@@ -32,6 +32,10 @@ public class Viaje {
     private Ciudad origen;
     @ManyToOne
     private Usuario usuario;
+    private String tokenValidacionViaje;
+
+
+
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "Viaje_Pasajero",
@@ -156,6 +160,14 @@ public class Viaje {
 
     public void setNoMascotas(Boolean noMascotas) {
         this.noMascotas = noMascotas;
+    }
+
+    public String getTokenValidacionViaje() {
+        return tokenValidacionViaje;
+    }
+
+    public void setTokenValidacionViaje(String tokenValidacionViaje) {
+        this.tokenValidacionViaje = tokenValidacionViaje;
     }
 
     public Boolean agregarPasajero(Usuario pasajero) {

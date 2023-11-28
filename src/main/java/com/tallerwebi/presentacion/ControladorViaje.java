@@ -241,6 +241,8 @@ public class ControladorViaje {
     public ModelAndView unirseAUnViaje(@RequestParam("viaje") Long viaje, HttpSession session) {
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
+            //enviarSolicitudDeViaje metodo
+            //if:true poner estado del viaje en pendiente
             Boolean unido = servicioViaje.UnirAViaje(usuario, viaje);
         } catch (Exception e) {
             return new ModelAndView("redirect:/home");

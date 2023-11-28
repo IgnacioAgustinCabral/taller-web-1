@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.HashSet;
@@ -75,8 +76,18 @@ public class ServicioViajeImpl implements ServicioViaje {
         if(!resultado.isEmpty())
             throw new Exception(resultado);
 
+        /*String token = generarTokenValidacion();
+        viaje.setTokenValidacionViaje(token);*/
+
         this.repositorioViaje.guardar(viaje);
     }
+
+   /* private String generarTokenValidacion() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[16];
+        random.nextBytes(bytes);
+        return bytesToHex(bytes);
+    }*/
 
     @Override
     public Viaje obtenerViajePorId(Long id) {
