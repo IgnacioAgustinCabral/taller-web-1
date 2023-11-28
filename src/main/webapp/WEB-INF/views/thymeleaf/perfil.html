@@ -24,7 +24,7 @@
     <script th:src="@{/plugins/jquery-nice-select/js/jquery.nice-select.min.js}"></script>
     <script th:src="@{/plugins/google-map/map.js}" defer></script>
     <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
-
+    <link href="https://www.nerdfonts.com/assets/css/webfont.css" rel="stylesheet">
     <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <script th:src="@{/js/script.js}"></script>
@@ -137,71 +137,115 @@
 
     <div class="row">
         <div class="col-xl-12">
-            <div class="card">
+            <div  class="card">
                 <div class="card-body">
-                    <div class="border border-light p-2 mb-3">
-                        <h3 class="header-title mb-3" th:text="'Viajes creados por ' + ${usuario.nombre + ' ' + usuario.apellido}"></h3>
-                            <div th:each="viaje : ${viajes}">
-                                    <div class="card card-margin flex-row">
-                                        <div class="flex-row userInfo text-center">
-                                            <div class="flex-row">
-                                                <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar" class="rounded-circle img-avatar-size topSpace" style="max-width: 65% !important">
-                                                <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}" class="card-title"></h4>
-                                                <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}" class="btn btn-primary bottomSpace">Ver perfil</a>
-                                                <a th:href="@{/crear-viaje(viaje = ${viaje.id})}" class="btn btn-primary bottomSpace">Modificar</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-10 d-block">
-                                            <div class="card-header no-border">
-                                                <div class="col-lg-5 card-body">
-                                                    <div class="widget-49-title-wrapper">
-                                                        <div class="widget-49-meeting-time">
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title dateInfo">Origen: </span>
-                                                                <span class="widget-49-pro-title" th:text="${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title dateInfo">Destino: </span>
-                                                                <span class="widget-49-pro-title" th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title dateInfo">Fecha de salida: </span>
-                                                                <span class="widget-49-pro-title" th:text="${viaje.fecha}"></span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title">Lugares disponibles: </span>
-                                                                <span class="widget-49-pro-title" th:text="${viaje.cantidad}"></span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title">Tiempo de viaje: </span>
-                                                                <span class="widget-49-meeting-time">6 horas</span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title">No se aceptan niños</span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-meeting-time">No se aceptan mascotas</span>
-                                                            </div>
-                                                        </div>
+                    <div class="card-header">
+                        <h2 class="header-title mb-3 text-center" th:text="${usuario.nombre} + ' estos son tus proximos viajes:'"></h2>
+                    </div>
+                    <div class="border border-light p-2 mb-3" th:if="${viajes != null && viajes.size() > 0}">
+                        <div th:each="viaje : ${viajes}">
+                            <div class="card card-margin flex-row">
+                                <div class="flex-row userInfo text-center">
+                                    <div class="flex-row">
+                                        <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar"
+                                             class="rounded-circle img-avatar-size topSpace"
+                                             style="max-width: 65% !important">
+                                        <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"
+                                            class="card-title"></h4>
+                                        <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
+                                           class="btn btn-primary bottomSpace">Ver perfil</a>
+                                        <a th:href="@{/crear-viaje(viaje = ${viaje.id})}"
+                                           class="btn btn-primary bottomSpace">Modificar</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-10 d-block">
+                                    <div class="card-header no-border">
+                                        <div class="col-lg-5 card-body">
+                                            <div class="widget-49-title-wrapper">
+                                                <div class="widget-49-meeting-time">
+                                                    <div class="widget-49-date-warning">
+                                                        <span class="widget-49-pro-title dateInfo">Origen: </span>
+                                                        <span class="widget-49-pro-title"
+                                                              th:text="${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></span>
+                                                    </div>
+                                                    <div class="widget-49-date-warning">
+                                                        <span class="widget-49-pro-title dateInfo">Destino: </span>
+                                                        <span class="widget-49-pro-title"
+                                                              th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></span>
+                                                    </div>
+                                                    <div class="widget-49-date-warning">
+                                                        <span class="widget-49-pro-title dateInfo">Fecha de salida: </span>
+                                                        <span class="widget-49-pro-title"
+                                                              th:text="${viaje.fecha}"></span>
+                                                    </div>
+                                                    <div class="widget-49-date-warning">
+                                                        <span class="widget-49-pro-title dateInfo">Condiciones:</span>
+                                                        <li class="list-group-item" style="font-size: 1.5em !important;">
+                                                        <span th:if="${viaje.noFumar}">
+                                                            <!-- Mostrar el icono de NO permitido fumar si noFumar es true -->
+                                                            <i class="nf nf-md-smoking"></i>
+                                                        </span>
+                                                            <span th:unless="${viaje.noFumar}">
+                                                            <!-- Mostrar el icono de permitido fumar si noFumar es false -->
+                                                            <i class="nf nf-md-smoking_off"></i>
+                                                        </span>
+                                                            <span th:if="${viaje.noNinios}">
+                                                            <!-- Mostrar el icono de NO permitido niños si noNinios es true -->
+                                                            <i class="nf nf-md-baby_carriage"></i>
+                                                        </span>
+                                                            <span th:unless="${viaje.noNinios}">
+                                                            <!-- Mostrar el icono de permitido niños si noNinios es false -->
+                                                            <i class="nf nf-md-baby_carriage_off"></i>
+                                                        </span>
+                                                            <span th:unless="${viaje.noMascotas}">
+                                                            <!-- Mostrar el icono de permitido mascotas si noMascotas es false -->
+                                                            <i class="nf nf-md-paw_off"></i>
+                                                        </span>
+                                                            <span th:if="${viaje.noMascotas}">
+                                                            <!-- Mostrar el icono de mascotas tachado si noMascotas es true -->
+                                                            <i class="nf nf-md-paw"></i>
+                                                        </span>
+                                                        </li>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-5 card-body">
-                                                    <div class="widget-49-title-wrapper">
-                                                        <div class="widget-49-meeting-time">
-                                                            <div class="widget-49-date-warning">
-                                                                <div class="flex-row">
-                                                                    <span class="widget-49-pro-title">Descripción del viaje: </span>
-                                                                    <span class="widget-49-pro-title" th:text="${viaje.descripcion}"></span>
-                                                                </div>
-                                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5 card-body">
+                                            <div class="widget-49-title-wrapper">
+                                                <div class="widget-49-meeting-time">
+                                                    <div class="widget-49-date-warning">
+                                                        <span class="widget-49-pro-title dateInfo">Lugares disponibles: </span>
+                                                        <span class="widget-49-pro-title" th:text="${viaje.cantidad}"></span>
+                                                    </div>
+                                                    <div class="widget-49-date-warning">
+                                                        <span class="widget-49-pro-title dateInfo">Tiempo de viaje: </span>
+                                                        <span class="widget-49-meeting-time">6 horas</span>
+                                                    </div>
+                                                    <div class="widget-49-date-warning">
+                                                        <div class="flex-row">
+                                                            <span class="widget-49-pro-title dateInfo">Descripción del viaje: </span>
+                                                            <span class="widget-49-pro-title"
+                                                                  th:text="${viaje.descripcion}"></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div th:unless="${viajes != null && viajes.size() > 0}">
+                        <div style="display: flex; flex-direction: column;" class="text-center topSpace">
+                            <i class="fa-solid fa-exclamation-triangle mt-3 topSpace" style="font-size: 1.5em;"></i>
+                            <h4>¡Todavia no creaste ningún viaje!</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- RESEÑAS -->
             <div class="card">
                 <div class="card-body">
                     <div class="border border-light p-2 mb-3">
@@ -227,9 +271,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    </div>
 </div>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
