@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de rechazo</title>
+</head>
+<body>
+
+<div class="container">
+    <form class="form-group" th:action="@{/rechazado}">
+
+        <input type="hidden" id="destinatario" name="destinatario" th:value="${session.destinatario}">
+        <input type="hidden" id="nombreCreador" name="nombreCreador" th:value="${session.nombreCreador}">
+
+        <label for="motivo" class="mb-3"><strong>Motivo del rechazo</strong></label>
+        <textarea class="form-control bg-gray mb-3" id="motivo" name="motivo" th:field="${motivo}"></textarea>
+
+        <button type="submit" class="btn btn-info">Enviar</button>
+
+    </form>
+</div>
+
+</body>
+</html>

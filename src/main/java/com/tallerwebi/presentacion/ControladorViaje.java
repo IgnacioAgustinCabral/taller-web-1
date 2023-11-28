@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.transaction.SystemException;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -23,16 +22,18 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @Transactional
 public class ControladorViaje {
 
+    private final ServicioEmail servicioEmail;
     private ServicioViaje servicioViaje;
     private ServicioUsuario servicioUsuario;
     private ServicioCiudad servicioCiudad;
 
     @Autowired
-    public ControladorViaje(ServicioUsuario servicioUsuario, ServicioViaje servicioViaje, ServicioCiudad servicioCiudad) {
+    public ControladorViaje(ServicioUsuario servicioUsuario, ServicioViaje servicioViaje, ServicioCiudad servicioCiudad, ServicioEmail servicioEmail) {
 
         this.servicioUsuario = servicioUsuario;
         this.servicioViaje = servicioViaje;
         this.servicioCiudad = servicioCiudad;
+        this.servicioEmail = servicioEmail;
     }
 
     @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
@@ -267,6 +268,26 @@ public class ControladorViaje {
         modelo.put("viaje", new Viaje());
         modelo.put("ciudades", ciudades);
         return modelo;
+    }
+
+    @RequestMapping(path = "/formulario-rechazo", method = RequestMethod.GET)
+    private ModelAndView mostrarFormularioRechazo(@RequestParam String nombreCreador, @RequestParam String destinatario, HttpSession session ){
+        ModelMap model = new ModelMap();
+        session.setAttribute("destinatario",destinatario);
+        session.setAttribute("nombreCreador", nombreCreador);
+        model.put("motivo", "");
+        model.put("session",session);
+        return new ModelAndView("formulario-rechazo",model);
+    }
+
+    @RequestMapping(path="/rechazado", method = RequestMethod.POST)
+    private ModelAndView rechazarSolicitud (@RequestParam String motivo,@RequestParam String nombreCreador, @RequestParam String destinatario ) throws IOException {
+
+        servicioEmail.enviarRespuestaRechazada(destinatario,motivo, nombreCreador);
+
+        return new ModelAndView("/home");
+
+
     }
 
 }
