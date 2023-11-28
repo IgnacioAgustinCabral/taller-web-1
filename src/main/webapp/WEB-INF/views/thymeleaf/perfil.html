@@ -24,6 +24,7 @@
     <script th:src="@{/plugins/jquery-nice-select/js/jquery.nice-select.min.js}"></script>
     <script th:src="@{/plugins/google-map/map.js}" defer></script>
     <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
+    <link href="https://www.nerdfonts.com/assets/css/webfont.css" rel="stylesheet">
 
     <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
@@ -152,8 +153,6 @@
                                              style="max-width: 65% !important">
                                         <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"
                                             class="card-title"></h4>
-                                        <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
-                                           class="btn btn-primary bottomSpace">Ver perfil</a>
                                         <a th:href="@{/crear-viaje(viaje = ${viaje.id})}"  th:if="${stalker == null}" class="btn btn-primary bottomSpace">Modificar</a>
                                     </div>
                                 </div>
@@ -214,11 +213,7 @@
                                                 <div class="widget-49-meeting-time">
                                                     <div class="widget-49-date-warning">
                                                         <span class="widget-49-pro-title dateInfo">Lugares disponibles: </span>
-                                                        <span class="widget-49-pro-title" th:text="${viaje.cantidad}"></span>
-                                                    </div>
-                                                    <div class="widget-49-date-warning">
-                                                        <span class="widget-49-pro-title dateInfo">Tiempo de viaje: </span>
-                                                        <span class="widget-49-meeting-time">6 horas</span>
+                                                        <span class="widget-49-pro-title" th:text="${viaje.cantidad - viaje.getListaPasajeros().size()}"></span>
                                                     </div>
                                                     <div class="widget-49-date-warning">
                                                         <div class="flex-row">
