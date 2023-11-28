@@ -5,10 +5,7 @@ import com.tallerwebi.dominio.excepcion.NullEmailValidoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -164,6 +161,22 @@ public class ControladorViaje {
         }
         return new ModelAndView("redirect:/home");
     }
+    @RequestMapping(path = "/eliminar/{viajeId}", method = RequestMethod.GET)
+    public ModelAndView eliminarViaje(@PathVariable Long viajeId, HttpSession session) {
+        ModelMap model = new ModelMap();
+
+        try {
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            this.servicioViaje.eliminarViaje(viajeId, usuario);
+        } catch (Exception e) {
+            model.put("mensaje", "Error al eliminar el viaje: " + e.getMessage());
+            return new ModelAndView("error/error", model);
+        }
+
+
+        return new ModelAndView("redirect:/mi-perfil");
+    }
+
 
     @RequestMapping(path = "/creacion", method = RequestMethod.POST)
     public ModelAndView crearViaje(@ModelAttribute("viaje") Viaje viaje, HttpSession session) {
