@@ -31,7 +31,7 @@ public class Usuario {
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros", fetch = FetchType.EAGER)
     private Set<Viaje> viajes = new HashSet<>();;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_comentario",
             joinColumns = @JoinColumn(name = "id_usuario"),

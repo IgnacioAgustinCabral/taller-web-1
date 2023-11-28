@@ -34,13 +34,13 @@ public class ControladorPerfil {
     public ModelAndView irAPerfil(@RequestParam(required = false) Long idUsuario, HttpServletRequest request){
         ModelMap modelo = new ModelMap();
         HttpSession session = request.getSession();
-
-        //TODO: completar con try catch - manejar excepciones - revisar porque trae un mv
+        Usuario stalker = (Usuario) session.getAttribute("usuario");
         Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(idUsuario);
 
         List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuarioBuscado);
         modelo.put("session", session);
         modelo.put("usuario",usuarioBuscado);
+        modelo.put("stalker",stalker);
         modelo.put("viajes",viajes);
         return new ModelAndView("perfil",modelo);
     }
