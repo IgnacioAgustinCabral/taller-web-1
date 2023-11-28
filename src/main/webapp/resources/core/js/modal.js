@@ -35,7 +35,7 @@ window.onclick = function(event) {
         modal.style.display = 'none';
     }
 }
-
+var gastosResponse;
 function mostrarGastos(idViaje) {
 
     $.ajax({
@@ -44,14 +44,16 @@ function mostrarGastos(idViaje) {
         data: { idViaje: idViaje },
         dataStyle: {JSON},
         success: function(response) {
+
+            gastosResponse = response;
             // Limpiar la tabla de gastos existente
             $('#tablaGastos').empty();
 
             // Verificar si la respuesta es un objeto y tiene la propiedad 'gastos'
-            if (response && response.gastos) {
+            if (response && response.gastos !== undefined && response.montoTotal !== undefined && response.cantidadUnidos !== undefined) {
                 // Agregar los nuevos gastos a la tabla
                 $.each(response.gastos, function(index, gasto) {
-                    var row = '<tr><td>' + gasto.descripcion + '</td><td>' + gasto.monto + '</td></tr>';
+                    var row = '<tr><td>' + gasto.descripcion + '</td><td>' + '$'+ gasto.monto + '</td></tr>';
                     $('#tablaGastos').append(row);
                 });
 
@@ -59,8 +61,7 @@ function mostrarGastos(idViaje) {
                 $('.gastos-section').show();
 
                 // Acceder al montoTotal y mostrarlo donde desees
-                var montoTotal = response.montoTotal;
-                $('#montoTotal').text(montoTotal);
+                $('#montoTotal').text('$'+response.montoTotal.toFixed(2));
             } else {
                 console.error('La respuesta del servidor no tiene la estructura esperada.');
             }
@@ -73,21 +74,14 @@ function mostrarGastos(idViaje) {
 
 
 function calcularMontoPorPersona() {
-    var montoTotal = parseFloat($('#montoTotal').text());
-    var cantidadPersonasEnViaje = parseInt('${viaje.cantidad}'); // Obtener la cantidad de personas desde Thymeleaf
 
-    if (!isNaN(montoTotal) && !isNaN(cantidadPersonasEnViaje) && cantidadPersonasEnViaje > 0) {
-        var montoPorPersona = montoTotal / cantidadPersonasEnViaje;
-        $('#montoPorPersona').text(montoPorPersona.toFixed(2));
+    if (gastosResponse && gastosResponse.cantidadUnidos !== undefined) {
+        // Calcular y mostrar el monto por persona
+        var montoPorPersona = gastosResponse.montoTotal / gastosResponse.cantidadUnidos;
+        $('#montoPorPersona').text('$'+montoPorPersona.toFixed(2));
+        $('#calcular-gasto').show();
     } else {
-        console.error('Error al calcular el monto por persona. Asegúrate de tener un monto total y una cantidad de personas válidos.');
+        console.error('No hay datos disponibles para calcular el monto por persona.');
     }
 }
 
-// Actualizar la cantidad de personas en el viaje cuando alguien se une o se va
-function actualizarCantidadPersonasEnViaje(cantidadActualizada) {
-    // Actualizar la cantidad de personas en el objeto viaje (por ejemplo, desde una respuesta AJAX)
-    '${viaje.cantidad}' = cantidadActualizada;
-    // Volver a calcular el monto por persona con la nueva cantidad
-    calcularMontoPorPersona();
-}

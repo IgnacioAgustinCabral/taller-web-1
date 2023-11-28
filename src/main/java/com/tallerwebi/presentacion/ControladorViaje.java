@@ -10,11 +10,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import javax.transaction.SystemException;
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -207,9 +205,9 @@ public class ControladorViaje {
             model.put("coordenadaOrigen", coordenadaOrigen);
             model.put("coordenadaDestino", coordenadaDestino);
 
-            //Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado, usuario);
+            Boolean unido = servicioViaje.UsuarioUnido(viajeBuscado, usuario);
             model.put("viaje", viajeBuscado);
-            //model.put("unido", unido);
+            model.put("unido", unido);
             return new ModelAndView("viaje", model);
 
         } catch (Exception e) {
@@ -245,6 +243,8 @@ public class ControladorViaje {
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             Boolean unido = servicioViaje.UnirAViaje(usuario, viaje);
+
+
         } catch (Exception e) {
             return new ModelAndView("redirect:/home");
         }
@@ -274,6 +274,7 @@ public class ControladorViaje {
         try {
             Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
             List<Gasto> gastos = servicioGasto.obtenerGastosPorViaje(viaje);
+            Integer usuariosUnidos = viaje.getListaPasajeros().size() + 1;
 
             // Calcular la suma total de los montos de los gastos
             double montoTotal = gastos.stream().mapToDouble(Gasto::getMonto).sum();
@@ -282,6 +283,7 @@ public class ControladorViaje {
             Map<String, Object> respuesta = new HashMap<>();
             respuesta.put("gastos", gastos);
             respuesta.put("montoTotal", montoTotal);
+            respuesta.put("cantidadUnidos", usuariosUnidos);
 
             return ResponseEntity.ok().body(respuesta);
         } catch (Exception e) {

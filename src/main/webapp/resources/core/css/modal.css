@@ -18,12 +18,12 @@
     margin-top: 5px;
 }
 .modal-content {
-    background-color: #fefefe;
+    background-color: #f5f5f5;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 50%; /* Ajusta el ancho según tus necesidades */
-    max-width: 400px; /* Ajusta el ancho máximo según tus necesidades */
+    max-width: 700px; /* Ajusta el ancho máximo según tus necesidades */
     margin-top: 10%; /* Ajusta el margen superior según tus necesidades para centrar verticalmente */
 }
 
@@ -39,4 +39,47 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+/* Estilo para la tabla de gastos */
+.table {
+    width: 100%;
+    margin-bottom: 0;
+    background-color: #fff;
+}
+
+.table th, .table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para las filas impares de la tabla */
+.table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+/* Estilo para las filas al pasar el ratón */
+.table tbody tr:hover {
+    background-color: #e0f7fa;
+}
+
+.calcular-gasto {
+    text-align: center;
+    padding: 15px;
+}
+
+/* Estilo para el botón de calcular gasto por persona */
+.btn-calcular-gasto {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Estilo para el botón al pasar el ratón */
+.btn-calcular-gasto:hover {
+    background-color: #218838;
 }

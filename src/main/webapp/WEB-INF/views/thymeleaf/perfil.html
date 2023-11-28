@@ -141,8 +141,8 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-body">
-                    <div class="border border-light p-2 mb-3">
+                <div class="card-body mt-3 mb-3 p-5">
+                    <div class="border border-light  ">
                         <h3 class="header-title mb-3" th:text="'Viajes creados por ' + ${usuario.nombre + ' ' + usuario.apellido}"></h3>
                             <div th:each="viaje : ${viajes}">
                                     <div class="card card-margin flex-row">
@@ -154,41 +154,7 @@
                                                 <a th:href="@{/crear-viaje(viaje = ${viaje.id})}" class="btn btn-primary bottomSpace">Modificar</a>
                                             </div>
                                         </div>
-                                        <div class="col-lg-10 d-block">
-                                            <div class="card-header no-border">
-                                                <div class="col-lg-5 card-body">
-                                                    <div class="widget-49-title-wrapper">
-                                                        <div class="widget-49-meeting-time">
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title dateInfo">Origen: </span>
-                                                                <span class="widget-49-pro-title" th:text="${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title dateInfo">Destino: </span>
-                                                                <span class="widget-49-pro-title" th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title dateInfo">Fecha de salida: </span>
-                                                                <span class="widget-49-pro-title" th:text="${viaje.fecha}"></span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title">Lugares disponibles: </span>
-                                                                <span class="widget-49-pro-title" th:text="${viaje.cantidad}"></span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title">Tiempo de viaje: </span>
-                                                                <span class="widget-49-meeting-time">6 horas</span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-pro-title">No se aceptan niños</span>
-                                                            </div>
-                                                            <div class="widget-49-date-warning">
-                                                                <span class="widget-49-meeting-time">No se aceptan mascotas</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                             <div class="col-lg-10 d-block">
                                                 <div class="card-header no-border">
                                                     <div class="col-lg-5 card-body">
@@ -223,13 +189,25 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                 <button th:attr="onclick='openModal(\'' + ${viaje.id} + '\')'" class="btn btn-primary">Registrar Gasto</button>
-                                                    <button th:attr="onclick='openModalViaje(\'' + ${viaje.id} + '\')'" type="button" class="btn btn-primary">Mostrar Gastos</button>
+                                                    <div class="col-lg-5 card-body">
+                                                        <div class="widget-49-title-wrapper">
+                                                            <div class="widget-49-meeting-time">
+                                                                <div class="widget-49-date-warning">
+                                                                    <div class="flex-row">
+                                                                        <span class="widget-49-pro-title">Descripción del viaje: </span>
+                                                                        <span class="widget-49-pro-title" th:text="${viaje.descripcion}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <button th:if="${session.usuario} eq ${viaje.usuario}" th:attr="onclick='openModal(\'' + ${viaje.id} + '\')'" class="btn btn-info p-2 ms-2">Registrar Gasto</button>
 
                                                     <div th:attr="id='myModal-' + ${viaje.id}" class="modal" >
                                                         <div class="modal-content">
                                                             <span class="close" onclick="closeModal()">&times;</span>
-                                                            <p>Nuevo Gasto</p>
+                                                            <p class="text-center mt-5 " style="font-size: 30px;margin-top: 2rem;text-align: center;font-weight: 900;">Nuevo Gasto</p>
                                                             <form class="p-3" action="#" th:action="@{/agregar}" th:object="${gasto}" method="POST">
                                                                 <div class="form-group">
                                                                     <input type="hidden" id="idViaje" name="idViaje" th:value="${viaje.id}">
@@ -254,7 +232,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                </div>
+                                    </div>
                             <div>
                         <div>
                     <div>
