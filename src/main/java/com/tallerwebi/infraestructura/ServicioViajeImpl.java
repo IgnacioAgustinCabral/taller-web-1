@@ -11,7 +11,6 @@ import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -115,6 +114,26 @@ public class ServicioViajeImpl implements ServicioViaje {
         Set<Usuario> pasajeros = viajeBuscado.getListaPasajeros();
         return pasajeros.contains(usuario);
     }
+
+    @Override
+    public Boolean eliminarViaje(Long viajeId, Usuario usuario) throws Exception {
+        Viaje viaje = repositorioViaje.buscarPorId(viajeId);
+
+        if (viaje == null) {
+            throw new Exception("El viaje a eliminar no existe.");
+        }
+
+        Usuario creador = viaje.getUsuario();
+
+        if (!creador.getId().equals(usuario.getId())) {
+            throw new Exception("Solo el usuario creador puede eliminar el viaje.");
+        }
+
+        repositorioViaje.eliminar(viaje);
+
+        return true;
+    }
+
 
     @Override
     public Boolean ModificarViaje(Usuario usuario,Viaje viaje, Long id) throws Exception {
