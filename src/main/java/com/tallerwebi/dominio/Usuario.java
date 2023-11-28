@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.io.ByteArrayInputStream;
@@ -14,6 +15,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
+    private Boolean emailValidado = false;
     private String password;
     private String rol;
     private Boolean activo = false;
@@ -23,10 +25,11 @@ public class Usuario {
     private String fecha_nac;
     private Integer cod_area;
     private Long telefono;
+    private String tokenValidacion;
     @Lob
     private byte[] imagenDePerfil;
-    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros")
-    private List<Viaje> viajes;
+    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros", fetch = FetchType.EAGER)
+    private Set<Viaje> viajes = new HashSet<>();;
 
     @OneToMany(mappedBy = "usuarioDestino", cascade = CascadeType.ALL)
     private List<Comentario> comentariosRecibidos;
@@ -134,14 +137,28 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-
-  /*  public List<Viaje> getViajes() {
-        return viajes;
+    public String getTokenValidacion() {
+        return tokenValidacion;
     }
 
-    public void setViajes(List<Viaje> viajes) {
-        this.viajes = viajes;
-    }*/
+    public void setTokenValidacion(String tokenValidacion) {
+        this.tokenValidacion = tokenValidacion;
+    }
+
+    public Boolean isEmailValidado() {
+        return emailValidado;
+    }
+
+    public void setEmailValidado(Boolean emailValidado) {
+        this.emailValidado = emailValidado;
+    }
+
+    public Set<Viaje> getListaViajes() {
+        return viajes;
+    }
+    public void setListaViajes(Set<Viaje> listaViajes) {
+        this.viajes = listaViajes;
+    }
 
     public byte[] getImagenDePerfil() {
         return imagenDePerfil;

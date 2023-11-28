@@ -1,11 +1,9 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +16,6 @@ import java.util.List;
 
 @Controller
 @Transactional
-@RequestMapping("/perfil")
 public class ControladorPerfil {
 
     private ServicioUsuario servicioUsuario;
@@ -47,24 +44,38 @@ public class ControladorPerfil {
         modelo.put("usuario",usuarioBuscado);
         modelo.put("viajes",viajes);
         modelo.put("comentarios", comentarios);
-        return new ModelAndView("perfil/perfil",modelo);
+        return new ModelAndView("perfil",modelo);
     }
 
     @RequestMapping(path = "/mi-perfil", method = RequestMethod.GET )
-    public ModelAndView verMisViajes(HttpSession session) {
-        if(session.getAttribute("usuario") != null){
+    public ModelAndView verMiPerfil(HttpSession session) {
+        try{
+            if(session.getAttribute("usuario") != null){
+                ModelMap model = new ModelMap();
+                Usuario usuario = (Usuario) session.getAttribute("usuario");
+                List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
+                List<Comentario> comentarios =servicioComentario.obtenerComentariosPorUsuario(usuario);
+                //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
+                model.put("usuario", usuario);
+                model.put("viajes", viajes);
+                model.put("comentarios", comentarios);
+                return new ModelAndView("perfil", model);
+            }else{
+                return new ModelAndView("redirect:/login");
+            }
+        }catch(Exception e){
             ModelMap model = new ModelMap();
             Usuario usuario = (Usuario) session.getAttribute("usuario");
-            List<Comentario> comentarios =servicioComentario.obtenerComentariosPorUsuario(usuario);
             List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
             //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
             model.put("usuario", usuario);
             model.put("viajes", viajes);
-            model.put("comentarios", comentarios);
             return new ModelAndView("perfil/perfil", model);
-        }else{
+        }/*else{
             return new ModelAndView("redirect:/login");
-        }
+            model.put("mensaje", e.getMessage());
+            return new ModelAndView("error/error",model);
+        }*/
     }
 
 /*  @RequestMapping(value="/usuario", method = RequestMethod.GET )
@@ -73,7 +84,7 @@ public class ControladorPerfil {
         Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(id);
         ModelMap model = new ModelMap();
         model.put("usuario", usuarioBuscado);
-        return new ModelAndView("perfil/perfil", model);
+        return new ModelAndView("perfil", model);
 
     }*/
 

@@ -2,7 +2,6 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.RepositorioUsuario;
 import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.dominio.Viaje;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -65,6 +64,18 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
         return (Usuario) sessionFactory.getCurrentSession().createQuery("FROM Usuario WHERE id = :id")
                 .setParameter("id", id)
                 .uniqueResult();
+    }
+
+    @Override
+    public Usuario buscarPorTokenValidacion(String token) {
+        return (Usuario) sessionFactory.getCurrentSession().createQuery("FROM Usuario WHERE tokenValidacion = :token")
+                .setParameter("token", token)
+                .uniqueResult();
+    }
+
+    @Override
+    public void actualizar(Usuario usuario) {
+        sessionFactory.getCurrentSession().update(usuario);
     }
 
 }

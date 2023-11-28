@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -21,11 +24,12 @@ public class ServicioViajeImpl implements ServicioViaje {
     @Autowired
     public ServicioViajeImpl(RepositorioViaje repositorioViaje, RepositorioUsuario repositorioUsuario) {
         this.repositorioViaje = repositorioViaje;
+        this.repositorioUsuario = repositorioUsuario;
     }
 
     @Override
     public List<Viaje> obtenerViajes() {
-        return repositorioViaje.listarViajes();
+        return this.repositorioViaje.listarViajes();
     }
 
     @Override
@@ -62,32 +66,16 @@ public class ServicioViajeImpl implements ServicioViaje {
 
 
         return viajesFiltrados;
-
-       /* if (filtro.getOrigen().getId() != null && filtro.getDestino().getId() != null && filtro.getFecha() != null) {
-            return repositorioViaje.buscarPorOrigenDestinoYfecha(filtro.getOrigen(),filtro.getDestino(),filtro.getFecha().toString());
-        }
-        else if (filtro.getOrigen().getId() != null && filtro.getDestino().getId() == null && filtro.getFecha() != null) {
-            return repositorioViaje.buscarPorOrigenDestinoYfecha(filtro.getOrigen(), null,filtro.getFecha().toString());
-
-        } else if (filtro.getOrigen().getId() == null && filtro.getDestino().getId() != null && filtro.getFecha() != null) {
-            return  repositorioViaje.buscarPorOrigenDestinoYfecha(null, filtro.getDestino(),filtro.getFecha().toString());
-        }
-
-        else if (filtro.getOrigen().getId() == null && filtro.getDestino() == null && filtro.getFecha() != null) {
-            return repositorioViaje.buscarPorFecha(filtro.getFecha().toString());
-        } else if(filtro.getOrigen().getId() != null && filtro.getDestino() == null) {
-            return repositorioViaje.buscarPorOrigen(filtro.getOrigen());
-        }
-        else if(filtro.getOrigen().getId() == null && filtro.getDestino() != null){
-            return repositorioViaje.buscarPorDestino(filtro.getDestino());
-        }
-        else {
-            return repositorioViaje.listarViajes();
-        }*/
     }
 
     @Override
-    public void crearViaje(Viaje viaje) {
+    public void crearViaje(Viaje viaje) throws Exception {
+
+        String resultado = validarCampos(viaje);
+
+        if(!resultado.isEmpty())
+            throw new Exception(resultado);
+
         this.repositorioViaje.guardar(viaje);
     }
 
@@ -106,34 +94,97 @@ public class ServicioViajeImpl implements ServicioViaje {
 
         Viaje viaje = repositorioViaje.buscarPorId(id);
 
-        boolean result = false;
+        boolean agregadoExito = false;
 
         if(viaje != null){
-            System.out.println("VIAJEEEEE///////////////////////" + viaje.getDestino());
-
+            Integer cantidadActual = viaje.getCantidad() - viaje.getListaPasajeros().size();
             Set<Usuario> pasajeros = viaje.getListaPasajeros();
-            result = pasajeros.add(nuevoPasajero);
+            Boolean pasajeroExistente = pasajeros.contains(nuevoPasajero);
 
-            if(result){
-                System.out.println("Se guarda el viaje///////////////////////" + pasajeros);
-                viaje.setListaPasajeros(pasajeros);
+            if(!pasajeroExistente && pasajeros.size() < viaje.getCantidad()){
+                pasajeros.add(nuevoPasajero);
                 repositorioViaje.guardar(viaje);
+                agregadoExito = true;
             }
         }
-
-        return result;
+        return agregadoExito;
     }
 
     @Override
     public Boolean UsuarioUnido(Viaje viajeBuscado, Usuario usuario) {
         Set<Usuario> pasajeros = viajeBuscado.getListaPasajeros();
-
-        for (Usuario pasajero: pasajeros
-             ) {
-            System.out.println("pasajero: " + pasajero.getNombre() + " id: " + pasajero.getId());
-        }
-        System.out.println("usuario a consultar: " + usuario.getNombre() + " id: " + usuario.getId());
         return pasajeros.contains(usuario);
+    }
+
+    @Override
+    public Boolean ModificarViaje(Usuario usuario,Viaje viaje, Long id) throws Exception {
+
+        Viaje viajeBuscado = repositorioViaje.buscarPorId(id);
+
+        if(viajeBuscado == null)
+            throw new Exception("el viaje a modificar no existe");
+
+        Usuario creador = viajeBuscado.getUsuario();
+
+        if(!creador.getPassword().equals(usuario.getPassword()) && !creador.getEmail().equals(usuario.getEmail()))
+            throw new Exception("solo el usuario creador puede modificar el viaje");
+
+        boolean agregadoExito = false;
+
+        /*Integer cantidadActual = viaje.getCantidad();
+        Set<Usuario> pasajeros = viaje.getListaPasajeros();
+        agregadoExito = pasajeros.add(nuevoPasajero);
+
+            if(agregadoExito && cantidadActual > 0){
+                viaje.setListaPasajeros(pasajeros);
+                viaje.setCantidad(cantidadActual - 1);
+                repositorioViaje.guardar(viaje);
+            }
+        }*/
+
+        return agregadoExito;
+    }
+
+    @Override
+    public Boolean ModificarViaje(Viaje viaje, Usuario usuario) throws Exception {
+
+        Viaje viajeAModificar = this.repositorioViaje.buscarPorId(viaje.getId());
+
+        if(viajeAModificar == null)
+            throw new Exception("el viaje a modificar no existe.");
+
+        Usuario creador = viajeAModificar.getUsuario();
+
+        if(!creador.getId().equals(usuario.getId())) {
+            throw new Exception("solo el usuario creador puede modificar los parametros del viaje");
+        }
+
+        String resultado = validarCampos(viaje);
+
+        if(!resultado.isEmpty())
+            throw new Exception(resultado);
+
+        viajeAModificar.setCantidad(viaje.getCantidad());
+        viajeAModificar.setFecha(viaje.getFecha());
+        viajeAModificar.setDescripcion(viaje.getDescripcion());
+        viajeAModificar.setListaPasajeros(viaje.getListaPasajeros());
+        viajeAModificar.setOrigen(viaje.getOrigen());
+        viajeAModificar.setDestino(viaje.getDestino());
+        viajeAModificar.setNoNinios(viaje.getNoNinios());
+        viajeAModificar.setNoMascotas(viaje.getNoMascotas());
+        viajeAModificar.setNoFumar(viaje.getNoFumar());
+
+        this.repositorioViaje.guardar(viajeAModificar);
+
+        return true;
+    }
+
+    @Override
+    public Set<Viaje> obtenerViajesDePasajero(Usuario usuario) {
+
+        Usuario buscado  = repositorioUsuario.buscarUsuarioPorId(usuario.getId());
+
+        return buscado.getListaViajes();
     }
 
     @Override
@@ -144,6 +195,40 @@ public class ServicioViajeImpl implements ServicioViaje {
     @Override
     public String obtenerClaveApiGoogleMaps() {
         return GoogleMapsConfig.GOOGLE_MAPS_API_KEY;
+    }
+
+    public String validarCampos(Viaje viaje){
+
+        LocalDate fechaHoy = LocalDate.now();
+        LocalDate fechaViaje = null;
+
+        try {
+            fechaViaje = LocalDate.parse(viaje.getFecha().toString());
+
+        } catch (DateTimeParseException ex) {
+            return "El formato de fecha es inválido";
+        }
+
+        if (fechaViaje.isBefore(fechaHoy)) {
+            return "La fecha del viaje no es válida o es una fecha pasada";
+        }
+
+        if (viaje.getNoFumar() == null) {
+            return "Debe especificar si se puede fumar";
+        }
+        if (viaje.getNoNinios() == null) {
+            return "Debe especificar si se puede viajar con niños";
+        }
+        if (viaje.getNoMascotas() == null) {
+            return "Debe especificar si se puede viajar con mascotas";
+        }
+        if (viaje.getCantidad() == null || viaje.getCantidad() <= 0) {
+            return "La cantidad de pasajeros debe ser al menos 1";
+        }
+        if (viaje.getDescripcion() == null || viaje.getDescripcion().isEmpty()) {
+            return "La descripción no puede estar vacía";
+        }
+        return "";
     }
 
 

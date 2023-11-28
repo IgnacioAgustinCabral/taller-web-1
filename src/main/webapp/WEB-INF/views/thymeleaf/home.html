@@ -29,7 +29,7 @@
     <script th:src="@{/plugins/slick/slick.min.js}"></script>
     <script th:src="@{/plugins/jquery-nice-select/js/jquery.nice-select.min.js}"></script>
     <script th:src="@{/plugins/google-map/map.js}" defer></script>
-    <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
+    <script th:src="@{js/carrousel.js}"></script>
 
     <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
@@ -119,6 +119,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="trending-ads-slide">
+
                         <div class="col-sm-12 col-lg-4" th:each="item : ${provincias}">
                             <div class="product-item bg-light">
                                 <div class="card">
@@ -138,6 +139,8 @@
             </div>
         </div>
     </section>
+
+
 
     <section class="popular-deals section bg-gray mt-0" style="padding-top: 0">
         <div class="container">
@@ -248,6 +251,7 @@
         </div>
     </footer>
 
+    <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
     <script src="plugins/jquery/jquery.min.js"></script>
     <script src="plugins/bootstrap/popper.min.js"></script>
     <script src="plugins/bootstrap/bootstrap.min.js"></script>
@@ -260,6 +264,7 @@
     <script src="plugins/google-map/map.js" defer></script>
 
     <script th:src="@{js/script.js}"></script>
+
 
 </body>
 

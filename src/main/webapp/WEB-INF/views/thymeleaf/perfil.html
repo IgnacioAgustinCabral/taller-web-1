@@ -148,8 +148,8 @@
                                             <div class="flex-row">
                                                 <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar" class="rounded-circle img-avatar-size topSpace" style="max-width: 65% !important">
                                                 <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}" class="card-title"></h4>
-                                                <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="btn btn-primary bottomSpace">Ver perfil</a>
-                                                <a href="#" class="btn btn-secondary bottomSpace">Conectar</a>
+                                                <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}" class="btn btn-primary bottomSpace">Ver perfil</a>
+                                                <a th:href="@{/crear-viaje(viaje = ${viaje.id})}" class="btn btn-primary bottomSpace">Modificar</a>
                                             </div>
                                         </div>
                                         <div class="col-lg-10 d-block">
@@ -203,57 +203,6 @@
                                     </div>
                             </div>
 
-<!--
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="trending-ads-slide">
-                                    <div class="col-sm-12 col-lg-4" th:each="viaje : ${viajes}">
-                                        <div class="col-sm-12 col-lg-4">
-                                            <div class="card" style="width: 20rem;">
-                                                <div class="container p-0" style="height: 200px;">
-                                                    <img th:src="@{'/destino/imagen/' + ${viaje.destino.getId()}}" class=" m-0 p-0 w-100 h-100">
-                                                </div>
-                                                &lt;!&ndash;<div th:style="'background-image: url(' + ${viaje.destino.background} + '); height: 200px;'"></div>&ndash;&gt;
-                                                <div class="card-body">
-                                                    <div class="header-card">
-                                                        <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar" width="55px" height="55px"
-                                                             class="rounded-circle">
-                                                    </div>
-
-                                                    <div><h5 class="card-title" th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"></h5></div>
-                                                    <div><p class="card-text" th:text="'Fecha de Salida: ' + ${viaje.fecha}"></p>
-                                                    </div>
-
-                                                </div>
-                                                <ul class="list-group list-group-flush">
-                                                    <li class="list-group-item"><i class="fa-solid fa-signs-post fa-xl"></i> Origen: <span
-                                                            th:text="${viaje.origen.nombre + ', ' + viaje.origen.provincia.nombre}"></span></li>
-                                                    <li class="list-group-item"><i class="fa-solid fa-flag-checkered fa-xl"></i> Destino:
-                                                        <span th:text="${viaje.destino.nombre + ', ' + viaje.destino.provincia.nombre}"></span></li>
-                                                    <li class="list-group-item">
-                                                        <i class="fa-solid fa-paw fa-lg"></i>
-                                                        <i class="fa-solid fa-ban-smoking fa-lg"></i>
-                                                        <i class="fa-solid fa-guitar fa-lg"></i>
-                                                        <i class="fa-solid fa-baby-carriage fa-lg"></i>
-                                                    </li>
-                                                </ul>
-                                                <div class="card-body">
-                                                    <a th:href="@{/ver-viaje(id=${viaje.id})}" class="card-link">Mas Info</a>
-                                                    <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}" class="card-link">Ver Perfil</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
--->
-
-
             <div class="card">
                 <div class="card-body">
                     <div class="border border-light p-2 mb-3">
@@ -290,17 +239,7 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="text-center">
-                        <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> Load more </a>
                     </div>
-                        <div class="container mt-5">
-                            <form id="commentForm">
-                                <div class="form-group col-md-6">
-                                    <textarea class="form-control" id="comment" rows="3" placeholder="Dejanos tu comentario..." required></textarea>
-                                </div>
-                                <button type="button" class="btn btn-primary" onclick="submitForm()"><i class="bi bi-send"></i></button>
-                            </form>
-                        </div>
                 </div>
             </div>
         </div>
