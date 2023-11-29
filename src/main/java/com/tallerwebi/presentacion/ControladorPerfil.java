@@ -63,15 +63,19 @@ public class ControladorPerfil {
                 }
 
                 //Obtener viajes creados por el usuario
-                List<Viaje> viajesCreados = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
-                if(viajesCreados == null){
-                    viajesCreados = new ArrayList<>();
+                Set<Viaje> viajesCreados = new HashSet<>(servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario));
+                if (viajesCreados == null) {
+                    viajesCreados = new HashSet<>();
                 }
+                int cantidadViajesCreados = viajesCreados.size();
+                int cantidadViajesUnidos = viajesUnidos.size();
 
                 model.put("usuario", usuario);
                 model.put("viajesUnidos", viajesUnidos);
                 model.put("viajesCreados", viajesCreados);
                 model.put("gasto", new Gasto());
+                model.put("cantidadViajesCreados", cantidadViajesCreados);
+                model.put("cantidadViajesUnidos", cantidadViajesUnidos);
                 return new ModelAndView("perfil", model);
             }else{
                 return new ModelAndView("redirect:/login");
