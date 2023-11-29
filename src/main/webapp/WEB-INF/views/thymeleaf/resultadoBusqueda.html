@@ -48,18 +48,18 @@
 </header>
 
 
-<div class="container-fluid">
-    <h2 class="mt-4 tab-title p-5 bg-light text-center m-0 mb-2 mt-2" >Resultados de Búsqueda</h2>
-    <div class="row row-cols-4 gx-4 gy-4 " th:if="${viajesFiltrados != null}">
+<div class="container-fluid p-5">
+    <h1 class="mt-4 tab-title p-5 bg-light text-center m-0 mb-2 mt-2" >Resultados de Búsqueda</h1>
+    <div class="row row-cols-3 position-relative align-content-center gx-4 gy-4 " th:if="${viajesFiltrados != null}">
         <div class="col bg-shadow bg-light bg-gradient p-4" th:each="viaje : ${viajesFiltrados}">
             <div class="card" style="width: 100%;">
                 <div class="container p-0" style="height: 200px;">
-                    <img th:src="@{'/destino/imagen/' + ${viaje.destino.getId()}}" class=" m-0 p-0 w-100 h-100">
+                    <img th:src="@{'/destino/imagen/' + ${viaje.destino.id}}" class=" m-0 p-0 w-100 h-100">
                 </div>
                 <!--<div th:style="'background-image: url('+ ${viaje.destino.background} + '); height: 200px;' "></div>-->
                 <div class="card-body">
                     <div class="header-card">
-                        <img th:src="@{'/usuario/imagen/' + ${viaje.usuario.getId()}}" alt="avatar" width="55px" height="55px"
+                        <img th:src="@{'/usuario/imagen/' + ${viaje.usuario.id}}" alt="avatar" width="55px" height="55px"
                              class="rounded-circle">
                     </div>
                     <div><h5 class="card-title" th:text="${viaje.usuario.nombre}"></h5></div>

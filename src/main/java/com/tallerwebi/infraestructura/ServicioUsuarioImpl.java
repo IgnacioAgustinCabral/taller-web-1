@@ -39,9 +39,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
     @Override
     public Boolean validarEmailUsuario(Usuario usuario) throws Exception{
 
-        if (usuario.isEmailValidado() == null)
+        Usuario nuevo = this.repositorioUsuario.buscarUsuarioPorId(usuario.getId());
+
+        if (nuevo.isEmailValidado() == null)
             throw new NullEmailValidoException("No se conoce estado de validacion de email.");
 
-        return usuario.isEmailValidado();
+        return nuevo.isEmailValidado();
     }
 }

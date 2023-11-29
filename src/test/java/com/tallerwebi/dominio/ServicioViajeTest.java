@@ -140,7 +140,6 @@ public class ServicioViajeTest {
 
     private Viaje crearViaje() {
         Usuario usuario = new Usuario();
-
         byte[] imagen = new byte[]{0x12, 0x34, 0x56, 0x78}; // imagen falsa
         Provincia buenosAires = new Provincia("Buenos Aires", imagen);
         Ciudad junin = new Ciudad("Junin", buenosAires, imagen);

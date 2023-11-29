@@ -3,16 +3,15 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.NullEmailValidoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -22,24 +21,26 @@ public class ControladorViaje {
     private ServicioViaje servicioViaje;
     private ServicioUsuario servicioUsuario;
     private ServicioCiudad servicioCiudad;
+    private ServicioGasto servicioGasto;
     private ServicioEmail servicioEmail;
 
     @Autowired
-    public ControladorViaje(ServicioUsuario servicioUsuario, ServicioViaje servicioViaje, ServicioCiudad servicioCiudad, ServicioEmail servicioEmail) {
+    public ControladorViaje(ServicioGasto servicioGasto, ServicioUsuario servicioUsuario, ServicioViaje servicioViaje, ServicioCiudad servicioCiudad, ServicioEmail servicioEmail) {
 
         this.servicioUsuario = servicioUsuario;
         this.servicioViaje = servicioViaje;
         this.servicioCiudad = servicioCiudad;
         this.servicioEmail = servicioEmail;
+        this.servicioGasto = servicioGasto;
     }
 
     @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
     public ModelAndView mostrarVistaCrearViaje(@RequestParam(value = "viaje", required = false) Long viajeId, HttpSession session) {
-        try {
+        try{
             ModelMap modelo = new ModelMap();
             Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-            this.servicioUsuario.validarEmailUsuario(usuario);
+            Boolean emailValidado = this.servicioUsuario.validarEmailUsuario(usuario);
 
             // Caso 1: Usuario no registrado
             if (session == null || session.getAttribute("isLogged") == null) {
@@ -47,8 +48,8 @@ public class ControladorViaje {
             }
 
             // Caso 2: Usuario logueado pero email no verificado
-            if (!usuario.isEmailValidado()) {
-                System.out.println(usuario.isEmailValidado() + "email validado?");
+            if (!emailValidado) {
+                System.out.println(usuario.isEmailValidado()+ "email validado?");
                 ModelMap model = new ModelMap();
                 model.put("errorCrearViaje", "¡Debes validar tu correo electrónico para crear un viaje!");
                 return new ModelAndView("notificacion", model);
@@ -65,15 +66,16 @@ public class ControladorViaje {
                 modelo.put("edito", false);
             }
             return new ModelAndView("crear-viaje", modelo);
-        } catch (NullEmailValidoException e) {
+        }catch(NullEmailValidoException e){
 
             ModelMap modelo = new ModelMap();
             modelo.put("mensaje", e.getMessage());
             return new ModelAndView("error/error", modelo);
-        } catch (Exception e) {
+        }
+        catch(Exception e){
             ModelMap modelo = new ModelMap();
             modelo.put("mensaje", e.getMessage());
-            return new ModelAndView("error/error", modelo);
+            return new ModelAndView("error/error",modelo);
         }
     }
 
@@ -84,7 +86,7 @@ public class ControladorViaje {
 
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
-            this.servicioViaje.ModificarViaje(viaje, usuario);
+            this.servicioViaje.ModificarViaje(viaje,usuario);
         } catch (Exception e) {
             model = cargarOrigenYDestinoAlModel();
             model.put("viaje", viaje);
@@ -119,12 +121,13 @@ public class ControladorViaje {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             viaje.setUsuario(usuario);
             this.servicioViaje.crearViaje(viaje);
-        } catch (NullPointerException e) {
+        } catch(NullPointerException e){
             model = cargarOrigenYDestinoAlModel();
             model.put("edito", false);
             model.put("error", "Error al registrar el viaje, revise los campos");
             return new ModelAndView("crear-viaje", model);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             model = cargarOrigenYDestinoAlModel();
             model.put("edito", false);
             model.put("error", e.getMessage());
@@ -158,8 +161,8 @@ public class ControladorViaje {
 
         } catch (Exception e) {
             ModelMap model = new ModelMap();
-            model.put("mensaje", "Debes estar registrado para poder acceder.");
-            return new ModelAndView("error/error", model);
+            model.put("mensaje","Debes estar registrado para poder acceder.");
+            return new ModelAndView("error/error",model);
         }
     }
 
@@ -170,11 +173,12 @@ public class ControladorViaje {
 
         if (listadoDeViaje != null) {
             modelo.put("viajes", listadoDeViaje);
-        } else {
+        }else {
             modelo.put("mensaje", "No hay viajes disponibles para la provincia seleccionada");
             try {
                 modelo.put("viajes", listadoDeViaje);
-            } catch (Exception e) {
+            }
+            catch (Exception e){
                 e.printStackTrace();
             }
         }
@@ -215,6 +219,7 @@ public class ControladorViaje {
 
             // Redirigir al usuario de vuelta a la página principal
             return new ModelAndView("redirect:/home");
+
         } catch (Exception e) {
             // Manejar cualquier excepción que pueda ocurrir
             e.printStackTrace();
@@ -222,11 +227,34 @@ public class ControladorViaje {
         }
     }
 
+    @RequestMapping(value = "/mostrar-gastos", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> mostrarGastos(@RequestParam("idViaje") Long idViaje) {
+        try {
+            Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
+            List<Gasto> gastos = servicioGasto.obtenerGastosPorViaje(viaje);
+            Integer usuariosUnidos = viaje.getListaPasajeros().size() + 1;
+
+            // Calcular la suma total de los montos de los gastos
+            double montoTotal = gastos.stream().mapToDouble(Gasto::getMonto).sum();
+
+            // Crear un mapa con la estructura deseada
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("gastos", gastos);
+            respuesta.put("montoTotal", montoTotal);
+            respuesta.put("cantidadUnidos", usuariosUnidos);
+
+            return ResponseEntity.ok().body(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error al obtener los gastos del viaje"));
+        }
+    }
+
     @RequestMapping(value = "/modificar-viaje", method = RequestMethod.GET)
     public ModelAndView ModificarViaje(@ModelAttribute("viaje") Viaje viaje, @RequestParam("viaje") Long id, HttpSession session) {
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
-            Boolean modificado = servicioViaje.ModificarViaje(usuario, viaje, id);
+            Boolean modificado = servicioViaje.ModificarViaje(usuario,viaje, id);
         } catch (Exception e) {
             return new ModelAndView("redirect:/home");
         }
@@ -285,13 +313,24 @@ public class ControladorViaje {
             if(session.getAttribute("usuario") != null){
                 ModelMap model = new ModelMap();
                 Usuario usuario = (Usuario) session.getAttribute("usuario");
-                Set<Viaje> viajes = servicioViaje.obtenerViajesDePasajero(usuario);
 
-                if(viajes == null)
-                    viajes = new HashSet<>();
-                //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
+                //Obtener viajes a los que se unió el usuario
+                Set<Viaje> viajesUnidos = servicioViaje.obtenerViajesDePasajero(usuario);
+                if(viajesUnidos == null){
+                    viajesUnidos = new HashSet<>();
+                }
+
+                //Obtener viajes creados por el usuario
+                List<Viaje> viajesCreados = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
+                if(viajesCreados == null){
+                    viajesCreados = new ArrayList<>();
+                }
+
                 model.put("usuario", usuario);
-                model.put("viajes", viajes);
+                model.put("viajesUnidos", viajesUnidos);
+                model.put("viajesCreados", viajesCreados);
+                model.put("gasto", new Gasto());
+
                 return new ModelAndView("misviajes", model);
             }else{
                 return new ModelAndView("redirect:/login");
@@ -303,4 +342,20 @@ public class ControladorViaje {
         }
     }
 
+
+    @RequestMapping(path="/add-gasto", method = RequestMethod.POST)
+    public ModelAndView addGasto(@ModelAttribute Gasto gasto, @RequestParam Long idViaje){
+        ModelMap model = new ModelMap();
+        try {
+            Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
+            gasto.setViaje(viaje);
+            this.servicioGasto.guardarGasto(gasto);
+            model.put("exito", "Gasto Agregado exitosamente");
+        }
+        catch (Exception e){
+            model.put("error", "Error al registrar el gasto");
+            return new ModelAndView("mis-viajes", model);
+        }
+        return new ModelAndView("redirect:mis-viajes");
+    }
 }

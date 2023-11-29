@@ -1,5 +1,7 @@
 package com.tallerwebi.dominio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -33,11 +35,7 @@ public class Viaje {
     private Ciudad origen;
     @ManyToOne
     private Usuario usuario;
-    private String tokenValidacionViaje;
-
-
-
-
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "Viaje_Pasajero",
@@ -162,14 +160,6 @@ public class Viaje {
 
     public void setNoMascotas(Boolean noMascotas) {
         this.noMascotas = noMascotas;
-    }
-
-    public String getTokenValidacionViaje() {
-        return tokenValidacionViaje;
-    }
-
-    public void setTokenValidacionViaje(String tokenValidacionViaje) {
-        this.tokenValidacionViaje = tokenValidacionViaje;
     }
 
     public Boolean agregarPasajero(Usuario pasajero) {

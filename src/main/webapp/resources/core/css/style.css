@@ -39,8 +39,6 @@ p {
   height: 200px;
 }
 
-
-
 /*.avatar-image {
   width: 50px;
   height: 50px;
@@ -661,6 +659,12 @@ ul.pagination .active a {
   background: url(../images/home/bg-5.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
+}
+.bg-6 {
+  background: url(../images/home/mis-viajes.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
 }
 
 .navigation {
