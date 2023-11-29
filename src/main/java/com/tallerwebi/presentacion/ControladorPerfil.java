@@ -22,16 +22,18 @@ import java.util.Set;
 @Transactional
 public class ControladorPerfil {
 
+    private ServicioGasto servicioGasto;
     private ServicioUsuario servicioUsuario;
     private ServicioViaje servicioViaje;
-    private ServicioGasto servicioGasto;
+    private ServicioComentario servicioComentario;
 
 
     @Autowired
-    public ControladorPerfil(ServicioViaje servicioViaje,ServicioUsuario servicioUsuario, ServicioGasto servicioGasto){
+    public ControladorPerfil(ServicioViaje servicioViaje,ServicioUsuario servicioUsuario, ServicioGasto servicioGasto, ServicioComentario servicioComentario){
         this.servicioViaje = servicioViaje;
         this.servicioUsuario = servicioUsuario;
         this.servicioGasto = servicioGasto;
+        this.servicioComentario = servicioComentario;
     }
 
     @RequestMapping(value="/usuario", method = RequestMethod.GET )
@@ -40,6 +42,7 @@ public class ControladorPerfil {
         HttpSession session = request.getSession();
         Usuario stalker = (Usuario) session.getAttribute("usuario");
         Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(idUsuario);
+        List<Comentario> comentarios = servicioComentario.obtenerComentariosPorUsuario(usuarioBuscado);
 
         //Obtener viajes a los que se unió el usuario
         Set<Viaje> viajesUnidos = servicioViaje.obtenerViajesDePasajero(usuarioBuscado);
@@ -59,6 +62,8 @@ public class ControladorPerfil {
         modelo.put("usuario",usuarioBuscado);
         modelo.put("stalker",stalker);
         modelo.put("viajesCreados", viajesCreados);
+        modelo.put("comentarios", comentarios);
+        modelo.put("comentario", new Comentario());
         modelo.put("gasto", new Gasto());
         modelo.put("cantidadViajesCreados", cantidadViajesCreados);
         modelo.put("cantidadViajesUnidos", cantidadViajesUnidos);
@@ -85,20 +90,56 @@ public class ControladorPerfil {
                 int cantidadViajesCreados = viajesCreados.size();
                 int cantidadViajesUnidos = viajesUnidos.size();
 
+
+                List<Comentario> comentarios =servicioComentario.obtenerComentariosPorUsuario(usuario);
                 model.put("usuario", usuario);
                 model.put("viajesUnidos", viajesUnidos);
                 model.put("viajesCreados", viajesCreados);
+                model.put("comentarios", comentarios);
                 model.put("gasto", new Gasto());
                 model.put("cantidadViajesCreados", cantidadViajesCreados);
                 model.put("cantidadViajesUnidos", cantidadViajesUnidos);
+                model.put("comentario", new Comentario());
                 return new ModelAndView("perfil", model);
             }else{
                 return new ModelAndView("redirect:/login");
             }
         }catch(Exception e){
             ModelMap model = new ModelMap();
-            model.put("mensaje", e.getMessage());
-            return new ModelAndView("error/error",model);
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
+            model.put("usuario", usuario);
+            model.put("viajes", viajes);
+            return new ModelAndView("perfil", model);
+        }
+    }
+
+    @RequestMapping(value="/comentario", method = RequestMethod.POST )
+    public ModelAndView nuevoComentario(@ModelAttribute("comentario") Comentario comentario, @RequestParam(required = false) Long idUsuario, HttpSession session){
+
+        ModelMap modelo = new ModelMap();
+
+        try {
+            if (session == null || session.getAttribute("isLogged") == null) {
+                return new ModelAndView("redirect:/home");
+            }
+
+            Usuario usuarioOrigen = (Usuario) session.getAttribute("usuario");
+            comentario.setUsuarioOrigen(usuarioOrigen);
+
+            if (idUsuario != null) {
+                Usuario usuarioDestino = servicioUsuario.obtenerUsuarioPorId(idUsuario);
+                comentario.setUsuarioDestino(usuarioDestino);
+            }
+            Usuario usuarioDestino = servicioUsuario.obtenerUsuarioPorId(idUsuario);
+            comentario.setUsuarioDestino(usuarioDestino);
+
+            servicioComentario.crearComentario(comentario);
+
+            return new ModelAndView("redirect:/usuario?idUsuario="+usuarioDestino.getId());
+        } catch (Exception e) {
+            modelo.put("mensaje", e.getMessage());
+            return new ModelAndView("error/error", modelo);
         }
     }
 
@@ -117,16 +158,5 @@ public class ControladorPerfil {
         }
         return new ModelAndView("redirect:mi-perfil");
     }
-
-
-/*  @RequestMapping(value="/usuario", method = RequestMethod.GET )
-    public ModelAndView encontrarUsuarioPorId(@RequestParam(required = false) Long id){
-
-        Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(id);
-        ModelMap model = new ModelMap();
-        model.put("usuario", usuarioBuscado);
-        return new ModelAndView("perfil", model);
-
-    }*/
 
 }

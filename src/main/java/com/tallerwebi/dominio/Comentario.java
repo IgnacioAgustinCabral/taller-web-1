@@ -1,7 +1,6 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Comentario {
@@ -9,18 +8,49 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double calificacion;
     private String descripcion;
 
-    @ManyToMany(mappedBy = "comentarios")
-    private Set<Usuario> usuarios;
+    private Double calificacion;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_origen_id")
+    private Usuario usuarioOrigen;
+
+    @Override
+    public String toString() {
+        return "Comentario{" +
+                "id=" + id +
+                ", descripcion='" + descripcion + '\'' +
+                ", usuarioOrigen=" + usuarioOrigen +
+                ", usuarioDestino=" + usuarioDestino +
+                '}';
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_destino_id")
+    private Usuario usuarioDestino;
+
+    public Usuario getUsuarioOrigen() {
+        return usuarioOrigen;
+    }
+
+    public void setUsuarioOrigen(Usuario usuarioOrigen) {
+        this.usuarioOrigen = usuarioOrigen;
+    }
+
+    public Usuario getUsuarioDestino() {
+        return usuarioDestino;
+    }
+
+    public void setUsuarioDestino(Usuario usuarioDestino) {
+        this.usuarioDestino = usuarioDestino;
+    }
 
     public Comentario () {
 
     }
 
-    public Comentario (Double calificacion, String descripcion) {
-        this.calificacion = calificacion;
+    public Comentario (String descripcion) {
         this.descripcion = descripcion;
     }
 
@@ -32,19 +62,19 @@ public class Comentario {
         this.id = id;
     }
 
-    public Double getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(Double calificacion) {
-        this.calificacion = calificacion;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Double getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(Double calificacion) {
+        this.calificacion = calificacion;
     }
 }

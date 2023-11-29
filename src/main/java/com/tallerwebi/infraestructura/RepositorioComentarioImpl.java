@@ -37,13 +37,16 @@ public class RepositorioComentarioImpl implements RepositorioComentario {
 
     @Override
     public List<Comentario> obtenerComentarios() {
-        return sessionFactory.getCurrentSession().createQuery("FROM comentario", Comentario.class).list();
+        return sessionFactory.getCurrentSession().createQuery("FROM Comentario", Comentario.class).list();
     }
 
     @Override
     public List<Comentario> buscarComentariosPorUsuario(Usuario usuario) {
-        return sessionFactory.getCurrentSession().createQuery("FROM usuario_comentario uc WHERE uc.id_usuario = :id_usuario", Comentario.class)
-                .setParameter("id_usuario",usuario)
+
+        List<Comentario> comentarios = sessionFactory.getCurrentSession()
+                .createQuery("FROM Comentario C WHERE C.usuarioDestino = :usuario_destino_id", Comentario.class)
+                .setParameter("usuario_destino_id",usuario)
                 .list();
+        return comentarios;
     }
 }
