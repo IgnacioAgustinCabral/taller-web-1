@@ -13,7 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Transactional
@@ -53,10 +56,21 @@ public class ControladorPerfil {
             if(session.getAttribute("usuario") != null){
                 ModelMap model = new ModelMap();
                 Usuario usuario = (Usuario) session.getAttribute("usuario");
-                List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
-                //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
+                //Obtener viajes a los que se unió el usuario
+                Set<Viaje> viajesUnidos = servicioViaje.obtenerViajesDePasajero(usuario);
+                if(viajesUnidos == null){
+                    viajesUnidos = new HashSet<>();
+                }
+
+                //Obtener viajes creados por el usuario
+                List<Viaje> viajesCreados = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
+                if(viajesCreados == null){
+                    viajesCreados = new ArrayList<>();
+                }
+
                 model.put("usuario", usuario);
-                model.put("viajes", viajes);
+                model.put("viajesUnidos", viajesUnidos);
+                model.put("viajesCreados", viajesCreados);
                 model.put("gasto", new Gasto());
                 return new ModelAndView("perfil", model);
             }else{

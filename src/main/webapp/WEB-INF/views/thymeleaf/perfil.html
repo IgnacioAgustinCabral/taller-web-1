@@ -63,21 +63,21 @@
                         <div class="d-flex justify-content-center align-items-center text-center">
                             <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" class="img-thumbnail" alt="profile-image" style="max-width: 25% !important;">
                             <div class="w-100 ms-3">
-                                <h3 th:text="${usuario.nombre + ' ' + usuario.apellido}" class="my-0"></h3>
-                                <h5 class="text-muted" th:text="${usuario.email}"></h5>
-                                <h6 class="text-muted mb-1 font-13"><strong>Ubicación:</strong> <span class="ms-2">Argentina</span></h6>
+                                <h3 th:text="${usuario.nombre + ' ' + usuario.apellido}" class="my-0 pb-2"></h3>
+                                <h5 class="text-muted pb-2" th:text="${usuario.email}"></h5>
+                                <h6 class="text-muted mb-1 font-12 pb-2"><strong>Ubicación:</strong> <span class="ms-2">Argentina</span></h6>
                                 <div class="row">
                                     <div class="col-4 border-end border-light">
                                         <h5 class="text-muted mt-1 mb-2 fw-normal">Viajes creados</h5>
-                                        <h2 class="mb-0 fw-bold">116</h2>
+                                        <h2 class="mb-0 fw-semibold" th:text="${viajesCreados.size()}"></h2>
                                     </div>
                                     <div class="col-4 border-end border-light">
                                         <h5 class="text-muted mt-1 mb-2 fw-normal">Viajes a los que se unió</h5>
-                                        <h2 class="mb-0 fw-bold">87</h2>
+                                        <h2 class="mb-0 fw-semibold" th:text="${viajesUnidos.size()}"></h2>
                                     </div>
                                     <div class="col-4 border-end border-light">
                                         <h5 class="text-muted mt-1 mb-2 fw-normal">Calificación</h5>
-                                        <h2 class="mb-0 fw-bold">87</h2>
+                                        <h2 class="mb-0 fw-semibold">87</h2>
                                     </div>
                                 </div>
 
@@ -95,8 +95,8 @@
                     <div class="card-header">
                         <h2 class="header-title mb-3 text-center" th:text="'Viajes creados por: ' + ${usuario.nombre}"></h2>
                     </div>
-                    <div class="border border-light p-2 mb-3" th:if="${viajes != null && viajes.size() > 0}">
-                        <div th:each="viaje : ${viajes}">
+                    <div class="border border-light p-2 mb-3" th:if="${viajesCreados != null && viajesCreados.size() > 0}">
+                        <div th:each="viaje : ${viajesCreados}">
                             <div class="card card-margin flex-row align-items-center">
                                 <div class="flex-row userInfo text-center" style="padding: 1rem !important">
                                     <div class="flex-row">
@@ -207,7 +207,6 @@
                                                             </form>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -216,7 +215,7 @@
                             </div>
                         </div>
                     </div>
-                    <div th:unless="${viajes != null && viajes.size() > 0}">
+                    <div th:unless="${viajesCreados != null && viajesCreados.size() > 0}">
                         <div style="display: flex; flex-direction: column;" class="text-center topSpace">
                             <i class="fa-solid fa-exclamation-triangle mt-3 topSpace" style="font-size: 1.5em;"></i>
                             <h4>¡No se encontraron viajes!</h4>
