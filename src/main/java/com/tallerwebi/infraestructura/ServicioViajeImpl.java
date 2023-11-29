@@ -56,13 +56,11 @@ public class ServicioViajeImpl implements ServicioViaje {
             viajesFiltrados.addAll(repositorioViaje.buscarPorOrigen(filtro.getOrigen()));
         if(filtro.getDestino().getId() != null)
             viajesFiltrados.addAll(repositorioViaje.buscarPorDestino(filtro.getDestino()));
-        if(filtro.getFecha() != null )
+        if(filtro.getFecha() != null)
             viajesFiltrados.addAll(repositorioViaje.buscarPorFecha(filtro.getFecha().toString()));
 
-        //TODO: faltan custom exceptions
-        /*if(filtro == null)
-            Throw FiltroNuloException("por alguna razon el filtro esta nulo");*/
-
+        if(filtro.getOrigen().getId() == null && filtro.getDestino().getId() == null && filtro.getFecha() == null)
+            viajesFiltrados.addAll(repositorioViaje.listarViajes());
 
         return viajesFiltrados;
     }
