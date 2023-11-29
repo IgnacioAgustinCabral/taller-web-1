@@ -4,8 +4,6 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Set;
 
 @Entity
@@ -28,12 +26,12 @@ public class Usuario {
     private String tokenValidacion;
     @Lob
     private byte[] imagenDePerfil;
+    private String tokenResetPassword;
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros", fetch = FetchType.EAGER)
-    private Set<Viaje> viajes = new HashSet<>();;
+    private Set<Viaje> viajes = new HashSet<>();
 
     @OneToMany(mappedBy = "usuarioDestino", cascade = CascadeType.ALL)
     private List<Comentario> comentariosRecibidos;
-
 
     //TODO: constructor de pruebas.
     public Usuario(){};
@@ -166,6 +164,14 @@ public class Usuario {
 
     public void setImagenDePerfil(byte[] imagenDePerfil) {
         this.imagenDePerfil = imagenDePerfil;
+    }
+
+    public String getTokenResetPassword() {
+        return tokenResetPassword;
+    }
+
+    public void setTokenResetPassword(String tokenResetPassword) {
+        this.tokenResetPassword = tokenResetPassword;
     }
 
     @Override

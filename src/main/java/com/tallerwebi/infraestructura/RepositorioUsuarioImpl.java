@@ -21,16 +21,6 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
-    public Usuario buscarUsuario(String email, String password) {
-
-        final Session session = sessionFactory.getCurrentSession();
-        return (Usuario) session.createCriteria(Usuario.class)
-                .add(Restrictions.eq("email", email))
-                .add(Restrictions.eq("password", password))
-                .uniqueResult();
-    }
-
-    @Override
     public Usuario buscarUsuario(String email) {
 
         final Session session = sessionFactory.getCurrentSession();
@@ -76,6 +66,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public void actualizar(Usuario usuario) {
         sessionFactory.getCurrentSession().update(usuario);
+    }
+
+    @Override
+    public Usuario buscarPorTokenPassword(String tokenPassword) {
+        return (Usuario) sessionFactory.getCurrentSession().createQuery("FROM Usuario WHERE tokenResetPassword = :tokenPassword")
+                .setParameter("tokenPassword",tokenPassword)
+                .uniqueResult();
     }
 
 }

@@ -11,7 +11,6 @@ import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -57,13 +56,11 @@ public class ServicioViajeImpl implements ServicioViaje {
             viajesFiltrados.addAll(repositorioViaje.buscarPorOrigen(filtro.getOrigen()));
         if(filtro.getDestino().getId() != null)
             viajesFiltrados.addAll(repositorioViaje.buscarPorDestino(filtro.getDestino()));
-        if(filtro.getFecha() != null )
+        if(filtro.getFecha() != null)
             viajesFiltrados.addAll(repositorioViaje.buscarPorFecha(filtro.getFecha().toString()));
 
-        //TODO: faltan custom exceptions
-        /*if(filtro == null)
-            Throw FiltroNuloException("por alguna razon el filtro esta nulo");*/
-
+        if(filtro.getOrigen().getId() == null && filtro.getDestino().getId() == null && filtro.getFecha() == null)
+            viajesFiltrados.addAll(repositorioViaje.listarViajes());
 
         return viajesFiltrados;
     }
@@ -115,6 +112,26 @@ public class ServicioViajeImpl implements ServicioViaje {
         Set<Usuario> pasajeros = viajeBuscado.getListaPasajeros();
         return pasajeros.contains(usuario);
     }
+
+    @Override
+    public Boolean eliminarViaje(Long viajeId, Usuario usuario) throws Exception {
+        Viaje viaje = repositorioViaje.buscarPorId(viajeId);
+
+        if (viaje == null) {
+            throw new Exception("El viaje a eliminar no existe.");
+        }
+
+        Usuario creador = viaje.getUsuario();
+
+        if (!creador.getId().equals(usuario.getId())) {
+            throw new Exception("Solo el usuario creador puede eliminar el viaje.");
+        }
+
+        repositorioViaje.eliminar(viaje);
+
+        return true;
+    }
+
 
     @Override
     public Boolean ModificarViaje(Usuario usuario,Viaje viaje, Long id) throws Exception {

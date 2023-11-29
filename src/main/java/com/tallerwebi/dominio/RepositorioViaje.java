@@ -24,5 +24,7 @@ public interface RepositorioViaje {
     List<Viaje> buscarPorOrigenDestinoYfecha(Ciudad origen, Ciudad destino, String fechaHora);
 
     List<Viaje> listarPorProvincia(String provincia);
+
+    void eliminarViaje(Long viajeId);
 }
 

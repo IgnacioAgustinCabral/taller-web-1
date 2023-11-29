@@ -106,7 +106,7 @@
         <p class="card-text text-center topSpace"><small class="text-muted">Última actualización: hace 2 días</small>
         </p>
         <div class="d-flex justify-content-center">
-            <a th:href="@{/perfil/usuario(idUsuario= ${viaje.usuario.id})}"
+            <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
                class="btn btn-primary bottomSpace rightSpace">Ver perfil</a>
             <a href="#" class="btn btn-secondary bottomSpace rightSpace">Conectar</a>
             <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" class="btn  bottomSpace rightSpace"
