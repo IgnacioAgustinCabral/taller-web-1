@@ -1,7 +1,6 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Comentario {
@@ -10,6 +9,8 @@ public class Comentario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descripcion;
+
+    private Double calificacion;
 
     @ManyToOne
     @JoinColumn(name = "usuario_origen_id")
@@ -67,5 +68,13 @@ public class Comentario {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Double getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(Double calificacion) {
+        this.calificacion = calificacion;
     }
 }

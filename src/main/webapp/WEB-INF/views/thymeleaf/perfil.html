@@ -36,6 +36,7 @@
     <link th:href="@{/css/perfil.css}" rel="stylesheet">
     <link th:href="@{/css/viaje.css}" rel="stylesheet">
     <link th:href="@{/css/modal.css}" rel="stylesheet">
+    <link th:href="@{/css/reseñas.css}" rel="stylesheet">
 
 
 </head>
@@ -60,9 +61,9 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" th:if="${usuario != null}">
                         <div class="d-flex justify-content-center align-items-center text-center">
-                            <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" class="img-thumbnail" alt="profile-image" style="max-width: 25% !important;">
+                            <img  th:src="@{'/usuario/imagen/' + ${usuario.id}}" class="img-thumbnail" alt="profile-image" style="max-width: 25% !important;">
                             <div class="w-100 ms-3">
                                 <h3 th:text="${usuario.nombre + ' ' + usuario.apellido}" class="my-0"></h3>
                                 <h5 class="text-muted" th:text="${usuario.email}"></h5>
@@ -91,9 +92,9 @@
 
     <div class="row">
         <div class="col-xl-12">
-            <div  class="card">
+            <div  class="card" >
                 <div class="card-body">
-                    <div class="card-header">
+                    <div class="card-header" th:if="${usuario != null}">
                         <h2 class="header-title mb-3 text-center" th:text="'Viajes creados por: ' + ${usuario.nombre}"></h2>
                     </div>
                     <div class="border border-light p-2 mb-3" th:if="${viajes != null && viajes.size() > 0}">
@@ -241,6 +242,7 @@
                                 <img class="me-2 avatar-sm rounded-circle" th:src="@{'/usuario/imagen/' + ${comentario.usuarioOrigen.id}}" alt="Generic placeholder image">
                                 <div class="w-100">
                                     <h5 class th:text="${comentario.usuarioOrigen.nombre}"><small class="text-muted"> 1 hour ago</small></h5>
+                                    <span th:text="${comentario.calificacion.intValue()}+'/5'"></span>
                                     <div class th:text="${comentario.descripcion}">
                                         <br>
                                         <a href="javascript: void(0);" class="text-muted font-13 d-inline-block mt-2"><i class="mdi mdi-reply"></i> Reply</a>
@@ -251,13 +253,26 @@
                                 <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> Load more </a>
                             </div>
                         </div>
-                        <div class="container mt-5 mx-auto">
+
+                        <div class="container mt-5 mx-auto"  th:if="${usuario != null}">
                             <form id="commentForm" th:action="@{/comentario}" th:object="${comentario}" method="POST">
                                 <div class="form-row">
                                     <div class="form-group col-md-6 mx-auto">
                                         <div>
+                                            <div class="rating-container">
+                                                <label for="numeric-rating">Calificación numérica:</label>
+                                                <select class="ignore" id="numeric-rating" name="numeric-rating" th:if="${comentario != null}" th:field="${comentario.calificacion}">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                            </div>
+                                            <input type="hidden" id="idUsuario" name="idUsuario" th:value="${usuario.id}">
+
                                             <textarea th:field="${comentario.descripcion}" class="form-control" id="comentario" rows="3" required placeholder="Realiza un comentario"></textarea>
-                                            <button type="submit" class="btn btn-primary mt-4" th:onclick="submitForm()">Enviar</button>
+                                            <button type="submit" class="btn btn-primary mt-4">Enviar</button>
                                         </div>
                                     </div>
                                 </div>

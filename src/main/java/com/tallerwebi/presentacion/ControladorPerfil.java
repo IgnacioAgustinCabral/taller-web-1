@@ -65,6 +65,7 @@ public class ControladorPerfil {
                 model.put("viajes", viajes);
                 model.put("comentarios", comentarios);
                 model.put("gasto", new Gasto());
+                model.put("comentario", new Comentario());
                 return new ModelAndView("perfil", model);
             }else{
                 return new ModelAndView("redirect:/login");
@@ -76,7 +77,7 @@ public class ControladorPerfil {
             //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
             model.put("usuario", usuario);
             model.put("viajes", viajes);
-            return new ModelAndView("perfil/perfil", model);
+            return new ModelAndView("perfil", model);
         }/*else{
             return new ModelAndView("redirect:/login");
             model.put("mensaje", e.getMessage());
@@ -101,10 +102,12 @@ public class ControladorPerfil {
                 Usuario usuarioDestino = servicioUsuario.obtenerUsuarioPorId(idUsuario);
                 comentario.setUsuarioDestino(usuarioDestino);
             }
+            Usuario usuarioDestino = servicioUsuario.obtenerUsuarioPorId(idUsuario);
+            comentario.setUsuarioDestino(usuarioDestino);
 
             servicioComentario.crearComentario(comentario);
 
-            return new ModelAndView("redirect:/usuario");
+            return new ModelAndView("redirect:/usuario?idUsuario="+usuarioDestino.getId());
         } catch (Exception e) {
             modelo.put("mensaje", e.getMessage());
             return new ModelAndView("error/error", modelo);
