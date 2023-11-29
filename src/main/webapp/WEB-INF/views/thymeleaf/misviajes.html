@@ -48,30 +48,46 @@
     </div>
 </header>
 
+<section class="hero-area bg-6 text-center overly">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content-block">
+                    <h1 class="header-title mb-3 text-center">Mis viajes</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="container" style="margin-top: 50px;">
+    <!-- VIAJES QUE TE UNISTE-->
     <div class="row">
         <div class="col-xl-12">
-            <div th:if="${viajes != null && viajes.size() > 0}" class="card">
+            <div class="card">
                 <div class="card-body">
-                    <div class="border border-light p-2 mb-3">
-                        <h3 class="header-title mb-3"
-                            th:text="${usuario.nombre} + ' Viajes a los que te uniste: '"></h3>
+                    <div class="card-header">
+                        <h2 class="header-title mb-3"
+                            th:text="${usuario.nombre} + ', estos son los viajes a los que te uniste: '"></h2>
+                    </div>
+                    <div class="border border-light p-2 mb-3" th:if="${viajes != null && viajes.size() > 0}">
                         <div th:each="viaje : ${viajes}">
-                            <div class="card card-margin flex-row">
-                                <div class="flex-row userInfo text-center">
+                            <div class="card card-margin flex-row align-items-center">
+                                <div class="flex-row userInfo text-center" style="padding: 1rem !important">
                                     <div class="flex-row">
                                         <img th:src="@{'/usuario/imagen/' + ${viaje.usuario.id}}" alt="avatar"
-                                             class="rounded-circle img-avatar-size topSpace"
-                                             style="max-width: 65% !important">
+                                             class="rounded-circle img-avatar-size topSpace">
                                         <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"
                                             class="card-title"></h4>
+                                        <a th:href="@{/ver-viaje(id=${viaje.id})}"
+                                           class="btn btn-secondary bottomSpace btn-block">Ver viaje</a>
                                         <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
-                                           class="btn btn-primary bottomSpace">Ver perfil</a>
+                                           class="btn btn-primary bottomSpace btn-block">Ver perfil</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-10 d-block">
                                     <div class="card-header no-border">
-                                        <div class="col-lg-5 card-body">
+                                        <div class="col-lg-5 card-body topSpace">
                                             <div class="widget-49-title-wrapper">
                                                 <div class="widget-49-meeting-time">
                                                     <div class="widget-49-date-warning">
@@ -93,27 +109,21 @@
                                                         <span class="widget-49-pro-title dateInfo">Condiciones:</span>
                                                         <li class="list-group-item" style="font-size: 1.5em !important;">
                                                         <span th:if="${viaje.noFumar}">
-                                                            <!-- Mostrar el icono de NO permitido fumar si noFumar es true -->
                                                             <i class="nf nf-md-smoking"></i>
                                                         </span>
-                                                        <span th:unless="${viaje.noFumar}">
-                                                            <!-- Mostrar el icono de permitido fumar si noFumar es false -->
+                                                            <span th:unless="${viaje.noFumar}">
                                                             <i class="nf nf-md-smoking_off"></i>
                                                         </span>
-                                                        <span th:if="${viaje.noNinios}">
-                                                            <!-- Mostrar el icono de NO permitido niños si noNinios es true -->
+                                                            <span th:if="${viaje.noNinios}">
                                                             <i class="nf nf-md-baby_carriage"></i>
                                                         </span>
-                                                        <span th:unless="${viaje.noNinios}">
-                                                            <!-- Mostrar el icono de permitido niños si noNinios es false -->
+                                                            <span th:unless="${viaje.noNinios}">
                                                             <i class="nf nf-md-baby_carriage_off"></i>
                                                         </span>
-                                                        <span th:unless="${viaje.noMascotas}">
-                                                            <!-- Mostrar el icono de permitido mascotas si noMascotas es false -->
+                                                            <span th:unless="${viaje.noMascotas}">
                                                             <i class="nf nf-md-paw_off"></i>
                                                         </span>
-                                                        <span th:if="${viaje.noMascotas}">
-                                                            <!-- Mostrar el icono de mascotas tachado si noMascotas es true -->
+                                                            <span th:if="${viaje.noMascotas}">
                                                             <i class="nf nf-md-paw"></i>
                                                         </span>
                                                         </li>
@@ -121,19 +131,19 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-5 card-body">
+                                        <div class="col-lg-5 card-body topSpace">
                                             <div class="widget-49-title-wrapper">
                                                 <div class="widget-49-meeting-time">
                                                     <div class="widget-49-date-warning">
-                                                        <span class="widget-49-pro-title dateInfo">Cupo del viaje </span>
-                                                        <span class="widget-49-meeting-time" th:number="${viaje.cantidad}"></span>
+                                                        <span class="widget-49-pro-title dateInfo">Cupo del viaje: </span>
+                                                        <span class="widget-49-pro-title"
+                                                              th:text="${viaje.cantidad}"></span>
                                                     </div>
                                                     <div class="widget-49-date-warning">
                                                         <span class="widget-49-pro-title dateInfo">Lugares disponibles: </span>
                                                         <span class="widget-49-pro-title"
-                                                              th:text="${viaje.cantidad - viaje.listaPasajeros.size()}"></span>
+                                                              th:text="${viaje.cantidad - viaje.getListaPasajeros().size()}"></span>
                                                     </div>
-
                                                     <div class="widget-49-date-warning">
                                                         <div class="flex-row">
                                                             <span class="widget-49-pro-title dateInfo">Descripción del viaje: </span>
@@ -149,17 +159,152 @@
                             </div>
                         </div>
                     </div>
+                    <div th:unless="${viajes != null && viajes.size() > 0}">
+                        <div style="display: flex; flex-direction: column;" class="text-center topSpace">
+                            <i class="fa-solid fa-exclamation-triangle mt-3 topSpace" style="font-size: 1.5em;"></i>
+                            <h4>¡No se encontraron viajes a los que te hayas unido!</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div th:unless="${viajes != null && viajes.size() > 0}">
-                <!-- Fragmento de barra de navegación para invitados -->
-                <div style="display: flex; justify-content: center">
-                    <h1>Todavia no te uniste a ningun viaje!</h1>
+            <!-- VIAJES QUE CREASTE-->
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-header">
+                                <h2 class="header-title mb-3"
+                                    th:text="${usuario.nombre} + ', estos son los viajes que creaste: '"></h2>
+                            </div>
+                            <div class="border border-light p-2 mb-3" th:if="${viajes != null && viajes.size() > 0}">
+                                <div th:each="viaje : ${viajes}">
+                                    <div class="card card-margin flex-row align-items-center">
+                                        <div class="flex-row userInfo text-center" style="padding: 1rem !important">
+                                            <div class="flex-row">
+                                                <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar"
+                                                     class="rounded-circle img-avatar-size topSpace">
+                                                <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"
+                                                    class="card-title"></h4>
+                                                <a th:href="@{/ver-viaje(id=${viaje.id})}"
+                                                   class="btn btn-secondary bottomSpace btn-block">Ver viaje</a>
+                                                <a th:href="@{/crear-viaje(viaje = ${viaje.id})}"
+                                                   th:if="${stalker == null}"
+                                                   class="btn btn-primary bottomSpace btn-block">Modificar viaje</a>
+                                                <button th:if="${session.usuario} eq ${viaje.usuario}"
+                                                        th:attr="onclick='openModal(\'' + ${viaje.id} + '\')'"
+                                                        class="btn btn-info bottomSpace btn-block">Registrar gasto
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10 d-block">
+                                            <div class="card-header no-border">
+                                                <div class="col-lg-5 card-body topSpace">
+                                                    <div class="widget-49-title-wrapper">
+                                                        <div class="widget-49-meeting-time">
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Origen: </span>
+                                                                <span class="widget-49-pro-title"
+                                                                      th:text="${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Destino: </span>
+                                                                <span class="widget-49-pro-title"
+                                                                      th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Fecha de salida: </span>
+                                                                <span class="widget-49-pro-title"
+                                                                      th:text="${viaje.fecha}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Condiciones:</span>
+                                                                <li class="list-group-item" style="font-size: 1.5em !important;">
+                                                                <span th:if="${viaje.noFumar}">
+                                                                    <i class="nf nf-md-smoking"></i>
+                                                                </span>
+                                                                <span th:unless="${viaje.noFumar}">
+                                                                    <i class="nf nf-md-smoking_off"></i>
+                                                                </span>
+                                                                <span th:if="${viaje.noNinios}">
+                                                                    <i class="nf nf-md-baby_carriage"></i>
+                                                                </span>
+                                                                <span th:unless="${viaje.noNinios}">
+                                                                    <i class="nf nf-md-baby_carriage_off"></i>
+                                                                </span>
+                                                                <span th:unless="${viaje.noMascotas}">
+                                                                    <i class="nf nf-md-paw_off"></i>
+                                                                </span>
+                                                                <span th:if="${viaje.noMascotas}">
+                                                                    <i class="nf nf-md-paw"></i>
+                                                                </span>
+                                                                </li>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-5 card-body topSpace">
+                                                    <div class="widget-49-title-wrapper">
+                                                        <div class="widget-49-meeting-time">
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Cupo del viaje: </span>
+                                                                <span class="widget-49-pro-title"
+                                                                      th:text="${viaje.cantidad}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <span class="widget-49-pro-title dateInfo">Lugares disponibles: </span>
+                                                                <span class="widget-49-pro-title"
+                                                                      th:text="${viaje.cantidad - viaje.getListaPasajeros().size()}"></span>
+                                                            </div>
+                                                            <div class="widget-49-date-warning">
+                                                                <div class="flex-row">
+                                                                    <span class="widget-49-pro-title dateInfo">Descripción del viaje: </span>
+                                                                    <span class="widget-49-pro-title"
+                                                                          th:text="${viaje.descripcion}"></span>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--<div th:attr="id='myModal-' + ${viaje.id}" class="modal" >
+                                                                <div class="modal-content">
+                                                                    <span class="close" onclick="closeModal()">&times;</span>
+                                                                    <p class="text-center mt-5 " style="font-size: 30px;margin-top: 2rem;text-align: center;font-weight: 900;">Nuevo Gasto</p>
+                                                                    <form class="p-3" action="#" th:action="@{/agregar-gasto}" th:object="${gasto}" method="POST">
+                                                                        <div class="form-group">
+                                                                            <input type="hidden" id="idViaje" name="idViaje" th:value="${viaje.id}">
+                                                                            <label for="descripcion" class="mb-3"><strong>Detalle del Gasto:</strong></label>
+                                                                            <input type="text" class="form-control bg-gray mb-3" id="descripcion" name="descripcion" th:field="*{descripcion}"></input>
+
+                                                                            <label for="monto" class="mb-3"><strong>Monto del Gasto:</strong></label>
+                                                                            <input type="number" class="form-control bg-gray mb-3" id="monto" name="monto" th:field="*{monto}"></input>
+
+                                                                            <div class="justify-content-center text-center">
+                                                                                <p th:if="${error != null}" class="alert alert-danger m-0" th:text="${error}"></p>
+                                                                                <p th:if="${exito!= null}" class="alert alert-danger m-0" th:text="${exito}">  </p>
+                                                                            </div>
+                                                                            <div class="justify-content-center text-center ">
+                                                                                <button class="p-3 btn btn-primary mt-2" type="submit">Agregar Gasto</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:unless="${viajes != null && viajes.size() > 0}">
+                                <div style="display: flex; flex-direction: column;" class="text-center topSpace">
+                                    <i class="fa-solid fa-exclamation-triangle mt-3 topSpace"
+                                       style="font-size: 1.5em;"></i>
+                                    <h4>¡No se encontraron viajes que hayas creado!</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>

@@ -660,6 +660,12 @@ ul.pagination .active a {
   background-repeat: no-repeat;
   background-size: cover;
 }
+.bg-6 {
+  background: url(../images/home/mis-viajes.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+}
 
 .navigation {
   padding: 20px 0;

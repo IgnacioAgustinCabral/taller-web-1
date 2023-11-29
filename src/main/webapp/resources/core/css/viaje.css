@@ -72,6 +72,13 @@ body{
     display: flex;
     align-items: center;
 }
+.bg-6 {
+    background: url(../images/home/mis-viajes.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
 
 .widget-49 .widget-49-title-wrapper .widget-49-date-primary {
     display: flex;
