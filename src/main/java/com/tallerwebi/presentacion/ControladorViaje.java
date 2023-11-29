@@ -329,6 +329,7 @@ public class ControladorViaje {
                 model.put("usuario", usuario);
                 model.put("viajesUnidos", viajesUnidos);
                 model.put("viajesCreados", viajesCreados);
+                model.put("gasto", new Gasto());
 
                 return new ModelAndView("misviajes", model);
             }else{
@@ -341,4 +342,20 @@ public class ControladorViaje {
         }
     }
 
+
+    @RequestMapping(path="/add-gasto", method = RequestMethod.POST)
+    public ModelAndView addGasto(@ModelAttribute Gasto gasto, @RequestParam Long idViaje){
+        ModelMap model = new ModelMap();
+        try {
+            Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
+            gasto.setViaje(viaje);
+            this.servicioGasto.guardarGasto(gasto);
+            model.put("exito", "Gasto Agregado exitosamente");
+        }
+        catch (Exception e){
+            model.put("error", "Error al registrar el gasto");
+            return new ModelAndView("mis-viajes", model);
+        }
+        return new ModelAndView("redirect:mis-viajes");
+    }
 }
