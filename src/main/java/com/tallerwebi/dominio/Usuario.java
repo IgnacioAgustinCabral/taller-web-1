@@ -1,6 +1,11 @@
 package com.tallerwebi.dominio;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -11,16 +16,30 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "El email es obligatorio")
+    @Email(message = "El email debe ser válido")
     private String email;
     private Boolean emailValidado = false;
+    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
+    @Pattern(regexp = ".*[A-Z].*", message = "La contraseña debe contener al menos una letra mayúscula")
     private String password;
     private String rol;
     private Boolean activo = false;
+    @NotBlank(message = "El campo Nombre es obligatorio")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Nombre debe contener solo letras")
     private String nombre;
+    @NotBlank(message = "El campo Apellido es obligatorio")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Apellido debe contener solo letras")
     private  String apellido;
-    private Long dni;
+    @NotBlank(message = "El DNI no puede estar vacío")
+    @Pattern(regexp = "^[0-9]{1,9}$", message = "El DNI debe contener solo números y como máximo 9 dígitos")
+    private String dni;
+    @NotBlank(message = "La fecha de nacimiento es obligatoria")
     private String fecha_nac;
+    @Digits(integer = 3, fraction = 0, message = "El código de área debe contener solo dígitos")
     private Integer cod_area;
+    @NotNull(message = "El teléfono no puede estar vacío")
+    @Digits(integer = 10, fraction = 0, message = "El teléfono debe contener solo 10 dígitos")
     private Long telefono;
     private String tokenValidacion;
     @Lob
@@ -42,7 +61,7 @@ public class Usuario {
     //TODO: constructor de pruebas.
     public Usuario(){};
 
-    public Usuario(String nombre, String apellido, Long dni, String fecha_nac, Integer cod_area, Long telefono, String email, String password, String rol, Boolean activo, byte[] imagenDePerfil){
+    public Usuario(String nombre, String apellido, String dni, String fecha_nac, Integer cod_area, Long telefono, String email, String password, String rol, Boolean activo, byte[] imagenDePerfil){
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -113,7 +132,7 @@ public class Usuario {
         return cod_area;
     }
 
-    public Long getDni() {
+    public String getDni() {
         return dni;
     }
 
@@ -129,7 +148,7 @@ public class Usuario {
         this.cod_area = cod_area;
     }
 
-    public void setDni(Long dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
