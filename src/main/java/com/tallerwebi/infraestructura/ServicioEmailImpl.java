@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 
 @Service("servicioEmail")
+@Transactional
 public class ServicioEmailImpl implements ServicioEmail {
 
     private String FROM_EMAIL_ADDRESS = "travelando.unlam@gmail.com";
     @Value("${SENDGRID_API_KEY}")
     private String API_KEY;
+    String imgUrl = "https://i.imgur.com/J7NByxf.png";
+
 
     public void enviarMailRegistro(String toMail, String token) throws IOException {
 
@@ -30,6 +33,7 @@ public class ServicioEmailImpl implements ServicioEmail {
 
         // Contenido del correo en formato HTML
         String cuerpoCorreo = "<html><body>" +
+                "<img width=\"93\" height=\"73\" src=\"" + imgUrl + "\" alt=\"Descripción de la imagen\">" +
                 "<p>Gracias por Registrarte en TravelAndo!</p>" +
                 "<p>Por favor, verifica tu dirección de email para poder comenzar a planificar tus próximos viajes por Argentina.</p>" +
                 "<p><strong>Buen Viaje!</strong></p>" +
@@ -70,6 +74,7 @@ public class ServicioEmailImpl implements ServicioEmail {
         Email to = new Email(email);
 
         String cuerpoCorreo = "<html><body>" +
+                "<img width=\"93\" height=\"73\" src=\"" + imgUrl + "\" alt=\"Descripción de la imagen\">" +
                 "<h1><strong>Restablecer Contraseña</strong></h1>" +
                 "<a href='http://localhost:8080/spring/verificar-token-password?token=" + token + "' style='background-color: #bb1524; color: #ffffff; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;'>Restablecer contraseña</a>" +
                 "<p>Se ha solicitado un cambio de contraseña para tu cuenta, si fuiste vos porfavor entrá al link para modificar tu contraseña sino ignora este e-mail</p>" +
@@ -100,6 +105,7 @@ public class ServicioEmailImpl implements ServicioEmail {
         Email to = new Email(toMail);
 
         String cuerpoCorreo = "<html><body>" +
+                "<img width=\"93\" height=\"73\" src=\"" + imgUrl + "\" alt=\"Descripción de la imagen\">" +
                 "<p>¡Hola!</p>" +
                 "<p>Tienes una solicitud para unirte al viaje.</p>" +
                 "<p>Nombre del usuario interesado: " + usuarioInteresado + "</p>" +
@@ -138,6 +144,7 @@ public class ServicioEmailImpl implements ServicioEmail {
         Email to = new Email(toMail);
 
         String cuerpoCorreo = "<html><body>" +
+                "<img width=\"93\" height=\"73\" src=\"" + imgUrl + "\" alt=\"Descripción de la imagen\">" +
                 "<p>Lamentamos informarte que tu solicitud para unirte al viaje ha sido rechazada.</p>" +
                 "<p>El creador del viaje, " + nombreCreador + ", ha proporcionado el siguiente motivo:</p>" +
                 "<p style='background-color: #ee1b2e; color: white; padding: 10px; border-radius: 5px;'>" + motivo + "</p>" +
@@ -174,6 +181,7 @@ public class ServicioEmailImpl implements ServicioEmail {
         String enlaceViaje = "http://localhost:8080/spring/ver-viaje?id=" + idViaje;
 
         String cuerpoCorreo = "<html><body>" +
+                "<img width=\"93\" height=\"73\" src=\"" + imgUrl + "\" alt=\"Descripción de la imagen\">" +
                 "<p>¡Hola!</p>" +
                 "<p>" + creadorViaje + " ha aceptado tu solicitud para unirte al viaje.</p>" +
                 "<p>Puedes ver los detalles del viaje haciendo clic en el siguiente enlace:</p>" +

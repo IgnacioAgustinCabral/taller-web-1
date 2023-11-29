@@ -109,7 +109,7 @@
             <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
                class="btn btn-primary bottomSpace rightSpace">Ver perfil</a>
             <a href="#" class="btn btn-secondary bottomSpace rightSpace">Conectar</a>
-            <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" class="btn  bottomSpace rightSpace"
+            <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" id="botonUnirme" class="btn  bottomSpace rightSpace"
                th:classappend="${unido ? 'btn-secondary' : 'btn-primary'}" th:text="${unido ? 'Unido' : 'Unirme'}"></a>
         </div>
 
@@ -215,6 +215,22 @@
 <script th:src="@{/js/maps.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Obtener el enlace por su ID
+        var enlaceUnirme = document.getElementById("botonUnirme");
+
+        // Verificar si el enlace está presente y su texto es 'Unido'
+        if (enlaceUnirme && enlaceUnirme.innerText.trim() === 'Unido') {
+            // Cambiar el comportamiento del enlace
+            enlaceUnirme.style.pointerEvents = "none"; // Deshabilitar el clic
+            enlaceUnirme.style.color = "gray"; // Cambiar el color a gris para mostrarlo deshabilitado
+            enlaceUnirme.removeAttribute("href"); // Eliminar el atributo 'href'
+            // Opcionalmente, puedes agregar un mensaje de título al pasar el mouse sobre el enlace para indicar que está deshabilitado
+            enlaceUnirme.setAttribute("title", "Este botón está deshabilitado");
+        }
+    });
 </script>
 </body>
 <!--
