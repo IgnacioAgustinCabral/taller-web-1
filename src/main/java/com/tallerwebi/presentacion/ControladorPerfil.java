@@ -61,9 +61,9 @@ public class ControladorPerfil {
         modelo.put("session", session);
         modelo.put("usuario",usuarioBuscado);
         modelo.put("stalker",stalker);
+        modelo.put("viajesCreados", viajesCreados);
         modelo.put("comentarios", comentarios);
         modelo.put("comentario", new Comentario());
-        modelo.put("viajesCreados", viajesCreados);
         modelo.put("gasto", new Gasto());
         modelo.put("cantidadViajesCreados", cantidadViajesCreados);
         modelo.put("cantidadViajesUnidos", cantidadViajesUnidos);
@@ -92,7 +92,6 @@ public class ControladorPerfil {
 
 
                 List<Comentario> comentarios =servicioComentario.obtenerComentariosPorUsuario(usuario);
-                //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
                 model.put("usuario", usuario);
                 model.put("viajesUnidos", viajesUnidos);
                 model.put("viajesCreados", viajesCreados);

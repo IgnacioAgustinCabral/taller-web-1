@@ -1,5 +1,7 @@
 package com.tallerwebi.dominio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -27,8 +29,11 @@ public class Usuario {
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros", fetch = FetchType.EAGER)
     private Set<Viaje> viajes = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioDestino", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comentario> comentariosRecibidos = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(mappedBy = "usuarioOrigen", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comentario> comentariosRealizados = new ArrayList<>();
 
