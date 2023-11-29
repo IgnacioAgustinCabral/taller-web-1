@@ -51,203 +51,116 @@
 </header>
 
 <body>
-<div class="container spaceToHeaderFixed">
+    <div class="container spaceToHeaderFixed">
+        <div class="card mb-3">
+            <img class="card-img-top bottomSpace" th:src="@{'/destino/imagen/' + ${viaje.destino.id}}" height="380px" alt="Imagen descriptiva del destino del viaje">
+            <h1 class="card-title text-center mt-3"
+                th:text="'Viaje creado por ' + ${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"></h1>
+            <!--<h5 class="card-text">Descripción</h5>-->
+            <p class="card-text text-center topSpace" th:text="${viaje.descripcion}"></p>
+            <div class="card-body row row-cols-2">
+                <div class="col text-center">
+                    <h5 class="card-text">Origen</h5>
+                    <p class="card-text" th:text="${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></p>
+                    <h5 class="card-text">Fecha de salida</h5>
+                    <p class="card-text" th:text="${viaje.fecha}"></p>
+                    <h5 class="card-text">Cupo del viaje</h5>
+                    <p class="card-text" th:text="${viaje.cantidad}"></p>
+                    <h5 class="card-text">Lugares disponibles</h5>
+                    <p class="card-text" th:text="${viaje.cantidad - viaje.getListaPasajeros().size()}"></p>
 
-    <div class="card mb-3">
-
-        <img class="card-img-top bottomSpace" th:src="@{'/destino/imagen/' + ${viaje.destino.id}}" height="380px" alt="Imagen descriptiva del destino del viaje">
-        <h1 class="card-title text-center mt-3"
-            th:text="'Viaje creado por ' + ${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"></h1>
-        <!--<h5 class="card-text">Descripción</h5>-->
-        <p class="card-text text-center topSpace" th:text="${viaje.descripcion}"></p>
-        <div class="card-body row row-cols-2">
-            <div class="col text-center">
-                <h5 class="card-text">Origen</h5>
-                <p class="card-text" th:text="${viaje.origen.provincia.nombre} + ', ' + ${viaje.origen.nombre}"></p>
-                <h5 class="card-text">Fecha de salida</h5>
-                <p class="card-text" th:text="${viaje.fecha}"></p>
-                <h5 class="card-text">Cupo del viaje: </h5>
-                <p class="card-text" th:text="${viaje.cantidad}"></p>
-                <h5 class="card-text">Lugares disponibles</h5>
-                <p class="card-text" th:text="${viaje.cantidad - viaje.getListaPasajeros().size()}"></p>
-
+                </div>
+                <div class="col text-center">
+                    <h5 class="card-text">Destino</h5>
+                    <p class="card-text" th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></p>
+                    <h5 class="card-text">Tiempo de viaje</h5>
+                    <p class="card-text" id="duracion"></p>
+                    <h5 class="card-text">Distancia a Recorrer</h5>
+                    <p class="card-text" id="distancia"></p>
+                    <h5 class="card-text">Condiciones</h5>
+                    <li class="list-group-item" style="font-size: 2em !important;">
+                        <span th:if="${viaje.noFumar}">
+                            <!-- Mostrar el icono de NO permitido fumar si noFumar es true -->
+                            <i class="nf nf-md-smoking"></i>
+                        </span>
+                        <span th:unless="${viaje.noFumar}">
+                            <!-- Mostrar el icono de permitido fumar si noFumar es false -->
+                            <i class="nf nf-md-smoking_off"></i>
+                        </span>
+                        <span th:if="${viaje.noNinios}">
+                            <!-- Mostrar el icono de NO permitido niños si noNinios es true -->
+                            <i class="nf nf-md-baby_carriage"></i>
+                        </span>
+                        <span th:unless="${viaje.noNinios}">
+                            <!-- Mostrar el icono de permitido niños si noNinios es false -->
+                            <i class="nf nf-md-baby_carriage_off"></i>
+                        </span>
+                        <span th:unless="${viaje.noMascotas}">
+                            <!-- Mostrar el icono de permitido mascotas si noMascotas es false -->
+                            <i class="nf nf-md-paw_off"></i>
+                        </span>
+                        <span th:if="${viaje.noMascotas}">
+                            <!-- Mostrar el icono de mascotas tachado si noMascotas es true -->
+                            <i class="nf nf-md-paw"></i>
+                        </span>
+                    </li>
+                </div>
             </div>
-            <div class="col text-center">
-                <h5 class="card-text">Destino</h5>
-                <p class="card-text" th:text="${viaje.destino.provincia.nombre} + ', ' + ${viaje.destino.nombre}"></p>
-                <h5 class="card-text">Tiempo de viaje</h5>
-                <p class="card-text" id="duracion"></p>
-                <h5 class="card-text">Distancia a Recorrer:</h5>
-                <p class="card-text" id="distancia"></p>
-                <h5 class="card-text">Condiciones</h5>
-                <li class="list-group-item" style="font-size: 2em !important;">
-                    <span th:if="${viaje.noFumar}">
-                        <!-- Mostrar el icono de NO permitido fumar si noFumar es true -->
-                        <i class="nf nf-md-smoking"></i>
-                    </span>
-                    <span th:unless="${viaje.noFumar}">
-                        <!-- Mostrar el icono de permitido fumar si noFumar es false -->
-                        <i class="nf nf-md-smoking_off"></i>
-                    </span>
-                    <span th:if="${viaje.noNinios}">
-                        <!-- Mostrar el icono de NO permitido niños si noNinios es true -->
-                        <i class="nf nf-md-baby_carriage"></i>
-                    </span>
-                    <span th:unless="${viaje.noNinios}">
-                        <!-- Mostrar el icono de permitido niños si noNinios es false -->
-                        <i class="nf nf-md-baby_carriage_off"></i>
-                    </span>
-                    <span th:unless="${viaje.noMascotas}">
-                        <!-- Mostrar el icono de permitido mascotas si noMascotas es false -->
-                        <i class="nf nf-md-paw_off"></i>
-                    </span>
-                    <span th:if="${viaje.noMascotas}">
-                        <!-- Mostrar el icono de mascotas tachado si noMascotas es true -->
-                        <i class="nf nf-md-paw"></i>
-                    </span>
-                </li>
-            </div>
-        </div>
-        <p class="card-text text-center topSpace"><small class="text-muted">Última actualización: hace 2 días</small>
-        </p>
-        <div class="d-flex justify-content-center">
-            <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
-               class="btn btn-primary bottomSpace rightSpace">Ver perfil</a>
-
-            <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" class="btn btn-active  bottomSpace rightSpace"
-               th:classappend="${unido ? 'btn-secondary' : 'btn-primary'}" th:text="${unido ? 'Unido' : 'Unirme'}">Unirme</a>
-
-            <button type="button" class="btn btn-calcular-gasto bottomSpace rightSpace" th:onclick="'mostrarGastos(\'' + ${viaje.id} + '\')'">
-                Ver Gastos
-            </button>
-        </div>
-
-        <!-- Modal -->
-        <div class="gastos-section container p-5 mt-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);" >
-
-            <div class="card mt-0" style="padding: 2rem!important; box-shadow: 2px 4px 10px rgba(0, 0, 0, 1);">
-                <h2 class="card-title text-center mb-5" style="text-decoration: underline;">Sección de Gastos</h2>
-                <table class="table listaGastos " >
-                    <thead>
-                    <tr class="text-center">
-                        <th>Detalle</th>
-                        <th>Monto</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tablaGastos" class="text-center">
-
-                    </tbody>
-                </table>
-                <h5 class="card-text" style="margin-top: 15px;text-align: center;font-style: italic; margin-bottom: 20px;">Gasto total: <span id="montoTotal"></span></h5>
-                <p class="card-footer card-text" style="background-color: rgba(0,0,0,0.1)!important;margin-top: 1rem!important;border: 1px solid rgba(0,0,0,.125)!important;">*Recuerde que el TOTAL puede variar segun los gastos que agregue el conductor ya que este puede seguir agregando gastos hasta el final del viaje.</p>
-                <p class="card-footer card-text" style="background-color: rgba(0,0,0,0.1)!important;margin-top: 0!important;border: 1px solid rgba(0,0,0,.125)!important;">*El cálculo por persona es variable segun la cantidad de personas en el viaje.</p>
-                <div class=" mt-3 row">
-                    <button type="btn-calcular-gasto" class="btn btn-success col-3 ms-2" onclick="calcularMontoPorPersona()">Calcular Monto por Persona</button>
-
-                    <!-- Mostrar el resultado del cálculo del monto por persona -->
-                    <h6 class="card-text  ms-5 col-6 " id="calcular-gasto"  style="display: none; font-size: 20px; ">Monto por Persona: <span id="montoPorPersona"></span></h6>
+            <!--<p class="card-text text-center topSpace"><small class="text-muted">Última actualización: hace 2 días</small></p>-->
+            <div class="d-flex justify-content-center">
+                <div class="d-flex col-lg-4">
+                    <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
+                       class="btn btn-primary btn-block m-2">Ver perfil</a>
+                    <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" class="btn btn-active btn-block m-2"
+                       th:classappend="${unido ? 'btn-secondary' : 'btn-primary'}" th:text="${unido ? 'Unido' : 'Unirme'}">Unirme</a>
+                    <button type="button" class="btn btn-success btn-block m-2" th:onclick="'mostrarGastos(\'' + ${viaje.id} + '\')'">
+                        Ver Gastos
+                    </button>
                 </div>
             </div>
 
-        </div>
+            <!-- Modal -->
+            <div class="gastos-section container p-5 mt-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);" >
+                <div class="card mt-0" style="padding: 2rem!important; box-shadow: 2px 4px 10px rgba(0, 0, 0, 1);">
+                    <h2 class="card-title text-center mb-5" style="text-decoration: underline;">Sección de Gastos</h2>
+                    <table class="table listaGastos " >
+                        <thead>
+                        <tr class="text-center">
+                            <th>Detalle</th>
+                            <th>Monto</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablaGastos" class="text-center">
+                        </tbody>
+                    </table>
+                    <h5 class="card-text" style="margin-top: 15px;text-align: center;font-style: italic; margin-bottom: 20px;">Gasto total: <span id="montoTotal"></span></h5>
+                    <p class="card-footer card-text" style="background-color: rgba(0,0,0,0.1)!important;margin-top: 1rem!important;border: 1px solid rgba(0,0,0,.125)!important;">*Recuerde que el TOTAL puede variar segun los gastos que agregue el conductor ya que este puede seguir agregando gastos hasta el final del viaje.</p>
+                    <p class="card-footer card-text" style="background-color: rgba(0,0,0,0.1)!important;margin-top: 0!important;border: 1px solid rgba(0,0,0,.125)!important;">*El cálculo por persona es variable segun la cantidad de personas en el viaje.</p>
+                    <div class=" mt-3 row">
+                        <button type="btn-calcular-gasto" class="btn btn-success col-3 ms-2" onclick="calcularMontoPorPersona()">Calcular Monto por Persona</button>
 
+                        <!-- Mostrar el resultado del cálculo del monto por persona -->
+                        <h6 class="card-text  ms-5 col-6 " id="calcular-gasto"  style="display: none; font-size: 20px; ">Monto por persona: <span id="montoPorPersona"></span></h6>
+                    </div>
+                </div>
+            </div>
+            </div>
 
-        </div>
-        <div id="mapa" style="height:400px;"
-        th:data-origen="${coordenadaOrigen}"
-        th:data-destino="${coordenadaDestino}"></div>
-  </div>
+            <div class="card border-light">
+                <div class="card-header justify-content-center">
+                    <h2>Recorrido del viaje</h2>
+                </div>
+                <div id="mapa" class="card border-light mb-0" style="height:400px;"
+                     th:data-origen="${coordenadaOrigen}"
+                     th:data-destino="${coordenadaDestino}">
+                </div>
+            </div>
+
+    </div>
 </div>
 
-<!--
-<span th:text="${'Viaje: ' + viaje.destino.nombre+', '+viaje.destino.provincia.nombre + ' - '
-                              + viaje.origen.nombre + ', '+viaje.origen.provincia.nombre}"></span>
-<div class="container">
-  <div class="row text-center">
-    <div class="col-lg-10 mx-auto">
-      <div class="card card-margin flex-row">
-        <div class="col-lg-3 userInfo">
-          <div>
-            <img th:src="${viaje.usuario.avatar}" alt="avatar" width="5px" height="50px" class="rounded-circle">
-            <h5 th:text="${viaje.destino.nombre}" class="card-title"></h5>
-          </div>
-          <div>
-            <a th:href="@{/perfil/usuario(idUsuario=${viaje.usuario.id})}" class="card-link">Ver Perfil</a>
-          </div>
-        </div>
-        <div class=" col-lg-9 d-block paddingNone">
-          <div class="card-header no-border">
-            <div class="col-lg-6 card-body">
-              <div class="widget-49">
-                <div class="widget-49-title-wrapper">
-                  <div class="widget-49-date-warning">
-                    <span class="widget-49-date-day">13</span>
-                    <span class="widget-49-date-month">abril</span>
-                  </div>
-                  <div class="widget-49-meeting-info">
-                    <span class="widget-49-pro-title" th:text="${viaje.destino.nombre}"></span>
-                    <span class="widget-49-meeting-time" th:text="${viaje.destino.provincia.nombre}"></span>
-                  </div>
-                </div>
-                <div class="widget-49-title-wrapper">
-                  <div class="widget-49-date-warning">
-                    <span class="widget-49-date-day">15</span>
-                    <span class="widget-49-date-month">mayo</span>
-                  </div>
-                  <div class="widget-49-meeting-info">
-                    <span class="widget-49-pro-title" th:text="${viaje.origen.nombre}"></span>
-                    <span class="widget-49-meeting-time" th:text="${viaje.origen.provincia.nombre}"></span>
-                  </div>
-                </div>
-                <div class="widget-49-title-wrapper">
-                  <div class="widget-49-date-warning">
-                    <span class="widget-49-date-day">2</span>
-                  </div>
-                  <div class="widget-49-meeting-info">
-                    <span class="widget-49-pro-title">Lugares disponibles</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 card-body">
-              <div class="widget-49">
-                <div class="widget-49-title-wrapper">
-                  <div class="widget-49-meeting-info ">
-                    <div class="flex-row">
-                      <span class="widget-49-meeting-time">Viaje Publico</span>
-                      <span class="widget-49-meeting-time">No Fumar</span>
-                    </div>
-                    <div class="flex-row">
-                      <span class="widget-49-meeting-time">No niños</span>
-                      <span class="widget-49-meeting-time">No Mascotas</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="widget-49-title-wrapper">
-                  <div class="widget-49-meeting-info flex-row">
-                    <span class="widget-49-pro-title">Distancia a recorrer</span>
-                    <span class="widget-49-meeting-time">291km</span>
-                  </div>
-                </div>
-                <div class="widget-49-title-wrapper">
-                  <div class="widget-49-meeting-info flex-row">
-                    <span class="widget-49-pro-title">Tiempo estimado de viaje</span>
-                    <span class="widget-49-meeting-time">30 minutos</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="widget-49-meeting-action d-flex" style="padding: 10px 10px;background-color: grey;">
-              <a href="#" style="padding: 5px;background-color: red;color:white;font-size: medium;border-radius:3px;">ENVIAR MENSAJE</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>-->
+
+
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeHh7_S2wkpYRu1DNMwzAZr5bcSd-cpY0&callback=initMap" async
