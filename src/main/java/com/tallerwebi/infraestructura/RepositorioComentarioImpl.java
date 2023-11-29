@@ -42,9 +42,11 @@ public class RepositorioComentarioImpl implements RepositorioComentario {
 
     @Override
     public List<Comentario> buscarComentariosPorUsuario(Usuario usuario) {
-        return sessionFactory.getCurrentSession()
-                .createQuery("FROM Comentario C JOIN Usuario U ON C.usuarioOrigen = U.id WHERE C.usuarioDestino = :usuario_destino_id", Comentario.class)
+
+        List<Comentario> comentarios = sessionFactory.getCurrentSession()
+                .createQuery("FROM Comentario C WHERE C.usuarioDestino = :usuario_destino_id", Comentario.class)
                 .setParameter("usuario_destino_id",usuario)
-                .getResultList();
+                .list();
+        return comentarios;
     }
 }

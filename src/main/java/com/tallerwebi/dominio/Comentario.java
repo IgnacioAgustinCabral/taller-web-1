@@ -15,9 +15,35 @@ public class Comentario {
     @JoinColumn(name = "usuario_origen_id")
     private Usuario usuarioOrigen;
 
+    @Override
+    public String toString() {
+        return "Comentario{" +
+                "id=" + id +
+                ", descripcion='" + descripcion + '\'' +
+                ", usuarioOrigen=" + usuarioOrigen +
+                ", usuarioDestino=" + usuarioDestino +
+                '}';
+    }
+
     @ManyToOne
     @JoinColumn(name = "usuario_destino_id")
     private Usuario usuarioDestino;
+
+    public Usuario getUsuarioOrigen() {
+        return usuarioOrigen;
+    }
+
+    public void setUsuarioOrigen(Usuario usuarioOrigen) {
+        this.usuarioOrigen = usuarioOrigen;
+    }
+
+    public Usuario getUsuarioDestino() {
+        return usuarioDestino;
+    }
+
+    public void setUsuarioDestino(Usuario usuarioDestino) {
+        this.usuarioDestino = usuarioDestino;
+    }
 
     public Comentario () {
 
