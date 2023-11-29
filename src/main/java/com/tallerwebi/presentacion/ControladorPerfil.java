@@ -1,13 +1,11 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioUsuario;
-import com.tallerwebi.dominio.ServicioViaje;
-import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.dominio.Viaje;
+import com.tallerwebi.dominio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,12 +21,15 @@ public class ControladorPerfil {
 
     private ServicioUsuario servicioUsuario;
     private ServicioViaje servicioViaje;
+    private ServicioGasto servicioGasto;
 
 
     @Autowired
-    public ControladorPerfil(ServicioViaje servicioViaje,ServicioUsuario servicioUsuario){
+    public ControladorPerfil(ServicioViaje servicioViaje,ServicioUsuario servicioUsuario, ServicioGasto servicioGasto){
         this.servicioViaje = servicioViaje;
-        this.servicioUsuario = servicioUsuario;}
+        this.servicioUsuario = servicioUsuario;
+        this.servicioGasto = servicioGasto;
+    }
 
     @RequestMapping(value="/usuario", method = RequestMethod.GET )
     public ModelAndView irAPerfil(@RequestParam(required = false) Long idUsuario, HttpServletRequest request){
@@ -42,6 +43,7 @@ public class ControladorPerfil {
         modelo.put("usuario",usuarioBuscado);
         modelo.put("stalker",stalker);
         modelo.put("viajes",viajes);
+        modelo.put("gasto", new Gasto());
         return new ModelAndView("perfil",modelo);
     }
 
@@ -55,6 +57,7 @@ public class ControladorPerfil {
                 //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
                 model.put("usuario", usuario);
                 model.put("viajes", viajes);
+                model.put("gasto", new Gasto());
                 return new ModelAndView("perfil", model);
             }else{
                 return new ModelAndView("redirect:/login");
@@ -65,6 +68,23 @@ public class ControladorPerfil {
             return new ModelAndView("error/error",model);
         }
     }
+
+    @RequestMapping(path="/agregar-gasto", method = RequestMethod.POST)
+    public ModelAndView agregarGasto(@ModelAttribute Gasto gasto, @RequestParam Long idViaje){
+        ModelMap model = new ModelMap();
+        try {
+            Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
+            gasto.setViaje(viaje);
+            this.servicioGasto.guardarGasto(gasto);
+            model.put("exito", "Gasto Agregado exitosamente");
+        }
+        catch (Exception e){
+            model.put("error", "Error al registrar el gasto");
+            return new ModelAndView("perfil", model);
+        }
+        return new ModelAndView("redirect:mi-perfil");
+    }
+
 
 /*  @RequestMapping(value="/usuario", method = RequestMethod.GET )
     public ModelAndView encontrarUsuarioPorId(@RequestParam(required = false) Long id){
