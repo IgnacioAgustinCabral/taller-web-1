@@ -1,9 +1,9 @@
 package com.tallerwebi.dominio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Usuario {
@@ -29,15 +29,13 @@ public class Usuario {
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros", fetch = FetchType.EAGER)
     private Set<Viaje> viajes = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuarioDestino", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comentario> comentariosRecibidos = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "usuario_comentario",
-            joinColumns = @JoinColumn(name = "id_usuario"),
-            inverseJoinColumns = @JoinColumn(name = "id_comentario")
-    )
-    private Set<Comentario> comentarios;
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuarioOrigen", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comentario> comentariosRealizados = new ArrayList<>();
 
     //TODO: constructor de pruebas.
     public Usuario(){};
@@ -160,6 +158,23 @@ public class Usuario {
     public Set<Viaje> getListaViajes() {
         return viajes;
     }
+
+    public List<Comentario> getComentariosRecibidos() {
+        return comentariosRecibidos;
+    }
+
+    public void setComentariosRecibidos(List<Comentario> comentariosRecibidos) {
+        this.comentariosRecibidos = comentariosRecibidos;
+    }
+
+    public List<Comentario> getComentariosRealizados() {
+        return comentariosRealizados;
+    }
+
+    public void setComentariosRealizados(List<Comentario> comentariosRealizados) {
+        this.comentariosRealizados = comentariosRealizados;
+    }
+
     public void setListaViajes(Set<Viaje> listaViajes) {
         this.viajes = listaViajes;
     }
