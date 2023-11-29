@@ -33,8 +33,8 @@ public class ControladorViajeTest {
     private Viaje viajeMock;
     private ServicioCiudad servicioCiudadMock;
     private ServicioUsuario servicioUsuarioMock;
-    private HttpSession sessionMockUsuario;
     private ServicioEmail servicioEmailMock;
+    private HttpSession sessionMockUsuario;
 
     @BeforeEach
     public void init(){
@@ -48,6 +48,8 @@ public class ControladorViajeTest {
         servicioCiudadMock = mock(ServicioCiudad.class);
         servicioEmailMock = mock(ServicioEmail.class);
         controladorViaje = new ControladorViaje(servicioUsuarioMock,servicioViajeMock,servicioCiudadMock,servicioEmailMock);
+        servicioEmailMock = mock(ServicioEmail.class);
+        controladorViaje = new ControladorViaje(servicioUsuarioMock,servicioViajeMock,servicioCiudadMock, servicioEmailMock);
         sessionMockUsuario = mock(HttpSession.class);
     }
 

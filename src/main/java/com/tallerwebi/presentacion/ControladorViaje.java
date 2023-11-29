@@ -263,7 +263,9 @@ public class ControladorViaje {
             // Enviar solicitud al creador del viaje
             String linkAceptar = "http://localhost:8080/spring/aceptar-solicitud?viaje=" + viajeId +
                     "&emailUsuario=" + usuario.getEmail() +
-                    "&creadorViaje=" + creadorViaje.getNombre();
+                    "&creadorViaje=" + creadorViaje.getNombre() +
+                    "&telefono=" + creadorViaje.getCod_area() + "-" + creadorViaje.getTelefono() +
+                    "&emailCreador=" + creadorViaje.getEmail();
             ;
             String linkRechazar = "http://localhost:8080/spring/formulario-rechazo?nombreCreador=" + creadorViaje.getNombre() +
                     "&emailUsuario=" + usuario.getEmail();
@@ -271,9 +273,9 @@ public class ControladorViaje {
             String emailCreadorViaje = creadorViaje.getEmail();
 
             String usuarioInteresado = usuario.getNombre();
+                Long idUsuarioInteresado = usuario.getId();
 
-            servicioEmail.enviarSolicitudUnirseViaje(emailCreadorViaje, usuarioInteresado, linkAceptar, linkRechazar);
-
+            servicioEmail.enviarSolicitudUnirseViaje(emailCreadorViaje, usuarioInteresado,idUsuarioInteresado, linkAceptar, linkRechazar);
 
             // Redirigir al usuario de vuelta a la página principal
             return new ModelAndView("redirect:/home");
@@ -327,11 +329,13 @@ public class ControladorViaje {
     @RequestMapping(value = "/aceptar-solicitud", method = RequestMethod.GET)
     public ModelAndView aceptarSolicitud(@RequestParam("viaje") Long viajeId,
                                          @RequestParam("emailUsuario") String emailUsuario,
-                                         @RequestParam("creadorViaje") String creadorViaje) {
+                                         @RequestParam("creadorViaje") String creadorViaje,
+                                         @RequestParam("telefono") String telefono,
+                                         @RequestParam("emailCreador") String emailCreador) {
         try {
             Usuario usuarioSolicitante = servicioUsuario.obtenerUsuarioPorEmail(emailUsuario);
             servicioViaje.UnirAViaje(usuarioSolicitante, viajeId);
-            servicioEmail.enviarRespuestaAceptada(emailUsuario, creadorViaje);
+            servicioEmail.enviarRespuestaAceptada(emailUsuario, creadorViaje, viajeId, telefono, emailCreador);
 
             return new ModelAndView("redirect:/home");
         } catch (Exception e) {
