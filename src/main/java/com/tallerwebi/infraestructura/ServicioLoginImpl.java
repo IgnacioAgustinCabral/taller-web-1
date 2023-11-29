@@ -7,6 +7,7 @@ import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.TokenInvalidoException;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,23 +23,31 @@ public class ServicioLoginImpl implements ServicioLogin {
     private RepositorioUsuario servicioLoginDao;
     private ServicioEmail servicioEmail;
     private RepositorioUsuario repositorioUsuario;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public ServicioLoginImpl(RepositorioUsuario servicioLoginDao, ServicioEmail servicioEmail, RepositorioUsuario repositorioUsuario) {
         this.servicioLoginDao = servicioLoginDao;
         this.servicioEmail = servicioEmail;
         this.repositorioUsuario = repositorioUsuario;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
-    public Usuario consultarUsuario (String email, String password) {
-        return servicioLoginDao.buscarUsuario(email, password);
+    public Usuario consultarUsuario(String email, String passwordIngresada) {
+        Usuario usuarioBuscado = servicioLoginDao.buscarUsuario(email);
+
+        if (usuarioBuscado != null && passwordEncoder.matches(passwordIngresada, usuarioBuscado.getPassword())) {
+            return usuarioBuscado;
+        }
+
+        return null;
     }
 
     @Override
     public void registrar(Usuario usuario, MultipartFile imagenDePerfil) throws UsuarioExistente, IOException {
-        Usuario usuarioEncontrado = servicioLoginDao.buscarUsuario(usuario.getEmail(), usuario.getPassword());
-        if(usuarioEncontrado != null){
+        Usuario usuarioEncontrado = servicioLoginDao.buscarUsuario(usuario.getEmail());
+        if (usuarioEncontrado != null) {
             throw new UsuarioExistente();
         }
 
@@ -47,6 +56,8 @@ public class ServicioLoginImpl implements ServicioLogin {
         usuario.setTokenValidacion(token);
 
         usuario.setImagenDePerfil(Base64.getEncoder().encode(imagenDePerfil.getBytes()));
+
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
         servicioLoginDao.guardar(usuario);
 
@@ -72,6 +83,37 @@ public class ServicioLoginImpl implements ServicioLogin {
         usuario.setTokenValidacion(nuevoToken);
         servicioLoginDao.actualizar(usuario);
         enviarCorreoValidacion(usuario.getEmail(), nuevoToken);
+    }
+
+    @Override
+    public void enviarMailConInstruccion(String email) throws IOException {
+        String token = generarToken();
+        Usuario usuario = repositorioUsuario.buscarUsuario(email);
+
+        if (usuario != null) {
+            usuario.setTokenResetPassword(token);
+        }
+
+        servicioEmail.enviarMailInstruccion(email, token);
+    }
+
+    @Override
+    public Boolean verificarTokenPassword(String tokenPassword) {
+        Usuario usuario = repositorioUsuario.buscarPorTokenPassword(tokenPassword);
+
+        if (usuario != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void modificarPassword(String password, String token) {
+        Usuario usuario = repositorioUsuario.buscarPorTokenPassword(token);
+        usuario.setPassword(passwordEncoder.encode(password));
+        usuario.setTokenResetPassword(null);
+        repositorioUsuario.guardar(usuario);
     }
 
 
@@ -100,8 +142,6 @@ public class ServicioLoginImpl implements ServicioLogin {
             throw new TokenInvalidoException("Token de validación no válido");
         }
     }
-
-
 
 
 }

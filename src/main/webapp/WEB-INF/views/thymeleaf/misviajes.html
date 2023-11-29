@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Mi Perfil</title>
+    <title>Proximos Viajes</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Use Thymeleaf expressions for CSS URLs -->
@@ -25,21 +25,19 @@
     <script th:src="@{/plugins/google-map/map.js}" defer></script>
     <script src="https://kit.fontawesome.com/90ab493dae.js" crossorigin="anonymous"></script>
     <link href="https://www.nerdfonts.com/assets/css/webfont.css" rel="stylesheet">
-
     <!-- Use Thymeleaf expressions for your custom CSS and JavaScript -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <script th:src="@{/js/script.js}"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
+          integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/css/perfil.css}" rel="stylesheet">
     <link th:href="@{/css/viaje.css}" rel="stylesheet">
 </head>
-
 <body class="body-wrapper">
-
 <header>
-
     <div th:if="${session != null ? session.isLogged : false}">
         <!-- Fragmento de barra de navegación para usuarios autenticados -->
         <div th:replace="navbar-user"></div>
@@ -48,112 +46,27 @@
         <!-- Fragmento de barra de navegación para invitados -->
         <div th:replace="navbar-guest"></div>
     </div>
-
-
 </header>
 
-<div class="container">
+<div class="container" style="margin-top: 50px;">
     <div class="row">
         <div class="col-xl-12">
-            <div class="card">
+            <div th:if="${viajes != null && viajes.size() > 0}" class="card">
                 <div class="card-body">
-                    <div class="dropdown float-end">
-                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-dots-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-
-                            <a href="javascript:void(0);" class="dropdown-item">Edit</a>
-
-                            <a href="javascript:void(0);" class="dropdown-item">Delete</a>
-
-                            <a href="javascript:void(0);" class="dropdown-item">Block</a>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start">
-                        <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
-                        <div class="w-100 ms-3">
-                            <h4 th:text="${usuario.nombre + ' ' + usuario.apellido}" class="my-0"></h4>
-                            <p class="text-muted" th:text="${usuario.email}"></p>
-                            <div class="profile-cover__action bg--img" data-overlay="0.3">
-                                <button class="btn btn-rounded btn-info">
-                                    <i class="fa fa-plus"></i>
-                                    <span>Follow</span>
-                                </button>
-                                <button class="btn btn-rounded btn-info">
-                                    <i class="fa fa-comment"></i>
-                                    <span>Message</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="mt-3">
-                                <h4 class="font-13 text-uppercase">About Me :</h4>
-                                <p class="text-muted font-13 mb-3">
-                                    Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
-                                </p>
-                                <p class="text-muted mb-2 font-13"><strong>Full Name :</strong> <span class="ms-2">Geneva D. McKnight</span></p>
-                                <p class="text-muted mb-1 font-13"><strong>Location :</strong> <span class="ms-2">USA</span></p>
-                            </div>
-                            <ul class="social-list list-inline mt-3 mb-0">
-                                <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="social-list-item text-center border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="social-list-item text-center border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="social-list-item text-center border-info text-info"><i class="mdi mdi-twitter"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="social-list-item text-center border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="card-body text-center">
-                                <div class="row">
-                                    <div class="col-4 border-end border-light">
-                                        <h5 class="text-muted mt-1 mb-2 fw-normal">Applied</h5>
-                                        <h2 class="mb-0 fw-bold">116</h2>
-                                    </div>
-                                    <div class="col-4 border-end border-light">
-                                        <h5 class="text-muted mt-1 mb-2 fw-normal">Reviewed</h5>
-                                        <h2 class="mb-0 fw-bold">87</h2>
-                                    </div>
-                                    <div class="col-4">
-                                        <h5 class="text-muted mt-1 mb-2 fw-normal">Contacted</h5>
-                                        <h2 class="mb-0 fw-bold">98</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xl-12">
-            <div  class="card">
-                <div class="card-body">
-                    <div class="card-header">
-                        <h2 class="header-title mb-3 text-center" th:text="${usuario.nombre} + ' estos son tus proximos viajes:'"></h2>
-                    </div>
-                    <div class="border border-light p-2 mb-3" th:if="${viajes != null && viajes.size() > 0}">
+                    <div class="border border-light p-2 mb-3">
+                        <h3 class="header-title mb-3"
+                            th:text="${usuario.nombre} + ' estos son tus proximos viajes:'"></h3>
                         <div th:each="viaje : ${viajes}">
                             <div class="card card-margin flex-row">
                                 <div class="flex-row userInfo text-center">
                                     <div class="flex-row">
-                                        <img th:src="@{'/usuario/imagen/' + ${usuario.getId()}}" alt="avatar"
+                                        <img th:src="@{'/usuario/imagen/' + ${viaje.usuario.id}}" alt="avatar"
                                              class="rounded-circle img-avatar-size topSpace"
                                              style="max-width: 65% !important">
                                         <h4 th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"
                                             class="card-title"></h4>
-                                        <a th:href="@{/crear-viaje(viaje = ${viaje.id})}"  th:if="${stalker == null}" class="btn btn-primary bottomSpace">Modificar</a>
+                                        <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
+                                           class="btn btn-primary bottomSpace">Ver perfil</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-10 d-block">
@@ -183,23 +96,23 @@
                                                             <!-- Mostrar el icono de NO permitido fumar si noFumar es true -->
                                                             <i class="nf nf-md-smoking"></i>
                                                         </span>
-                                                            <span th:unless="${viaje.noFumar}">
+                                                        <span th:unless="${viaje.noFumar}">
                                                             <!-- Mostrar el icono de permitido fumar si noFumar es false -->
                                                             <i class="nf nf-md-smoking_off"></i>
                                                         </span>
-                                                            <span th:if="${viaje.noNinios}">
+                                                        <span th:if="${viaje.noNinios}">
                                                             <!-- Mostrar el icono de NO permitido niños si noNinios es true -->
                                                             <i class="nf nf-md-baby_carriage"></i>
                                                         </span>
-                                                            <span th:unless="${viaje.noNinios}">
+                                                        <span th:unless="${viaje.noNinios}">
                                                             <!-- Mostrar el icono de permitido niños si noNinios es false -->
                                                             <i class="nf nf-md-baby_carriage_off"></i>
                                                         </span>
-                                                            <span th:unless="${viaje.noMascotas}">
+                                                        <span th:unless="${viaje.noMascotas}">
                                                             <!-- Mostrar el icono de permitido mascotas si noMascotas es false -->
                                                             <i class="nf nf-md-paw_off"></i>
                                                         </span>
-                                                            <span th:if="${viaje.noMascotas}">
+                                                        <span th:if="${viaje.noMascotas}">
                                                             <!-- Mostrar el icono de mascotas tachado si noMascotas es true -->
                                                             <i class="nf nf-md-paw"></i>
                                                         </span>
@@ -213,7 +126,12 @@
                                                 <div class="widget-49-meeting-time">
                                                     <div class="widget-49-date-warning">
                                                         <span class="widget-49-pro-title dateInfo">Lugares disponibles: </span>
-                                                        <span class="widget-49-pro-title" th:text="${viaje.cantidad - viaje.getListaPasajeros().size()}"></span>
+                                                        <span class="widget-49-pro-title"
+                                                              th:text="${viaje.cantidad - viaje.listaPasajeros.size()}"></span>
+                                                    </div>
+                                                    <div class="widget-49-date-warning">
+                                                        <span class="widget-49-pro-title dateInfo">Tiempo de viaje: </span>
+                                                        <span class="widget-49-meeting-time">6 horas</span>
                                                     </div>
                                                     <div class="widget-49-date-warning">
                                                         <div class="flex-row">
@@ -230,44 +148,21 @@
                             </div>
                         </div>
                     </div>
-                    <div th:unless="${viajes != null && viajes.size() > 0}">
-                        <div style="display: flex; flex-direction: column;" class="text-center topSpace">
-                            <i class="fa-solid fa-exclamation-triangle mt-3 topSpace" style="font-size: 1.5em;"></i>
-                            <h4>¡No se encontraron viajes!</h4>
-                        </div>
-                    </div>
                 </div>
             </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <div class="border border-light p-2 mb-3">
-                        <h4 class="header-title mb-3">Reseñas</h4>
-                        <div class="d-flex align-items-start post-user-comment-box">
-                            <img class="me-2 avatar-sm rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Generic placeholder image">
-                            <div class="w-100">
-                                <h5 class>Thelma Fridley <small class="text-muted"> 1 hour ago</small></h5>
-                                <div class>
-                                    Cras sit amet nibh libero, in
-                                    gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                                    purus odio, vestibulum in vulputate at, tempus viverra turpis. Duis
-                                    sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper
-                                    porta. Mauris massa.
-                                    <br>
-                                    <a href="javascript: void(0);" class="text-muted font-13 d-inline-block mt-2"><i class="mdi mdi-reply"></i> Reply</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> Load more </a>
-                    </div>
+            <div th:unless="${viajes != null && viajes.size() > 0}">
+                <!-- Fragmento de barra de navegación para invitados -->
+                <div style="display: flex; justify-content: center">
+                    <h1>Todavia no te uniste a ningun viaje!</h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+</body>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript"></script>
 <script src="plugins/jquery/jquery.min.js"></script>
@@ -280,7 +175,5 @@
 <script src="plugins/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
 <script src="plugins/google-map/map.js" defer></script>
-
 <script th:src="@{js/script.js}"></script>
-</body>
 </html>

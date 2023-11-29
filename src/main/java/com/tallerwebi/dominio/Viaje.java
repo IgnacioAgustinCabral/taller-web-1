@@ -2,6 +2,7 @@ package com.tallerwebi.dominio;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -36,7 +37,8 @@ public class Viaje {
 
 
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "Viaje_Pasajero",
             joinColumns = @JoinColumn(name="viaje_id"),
@@ -182,5 +184,16 @@ public class Viaje {
         return this.destino != null && this.destino.getNombre() != null && !this.destino.getNombre().equals("-- Selecciona una ciudad de Origen --");
     }*/
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Viaje)) return false;
+        Viaje viaje = (Viaje) o;
+        return Objects.equals(id, viaje.id) && Objects.equals(cantidad, viaje.cantidad) && Objects.equals(fecha, viaje.fecha) && Objects.equals(destino, viaje.destino) && Objects.equals(origen, viaje.origen) && Objects.equals(usuario, viaje.usuario);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, cantidad, fecha, destino, origen, usuario);
+    }
 }

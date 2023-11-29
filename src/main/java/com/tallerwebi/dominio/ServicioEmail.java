@@ -11,4 +11,6 @@ public interface ServicioEmail {
     void enviarSolicitudUnirseViaje(String emailCreadorViaje, String usuarioInteresado, Long idUsuarioInteresado, String linkAceptar, String linkRechazar) throws IOException;
 
     public void enviarRespuestaAceptada(String toMail, String creadorViaje, Long idViaje, String telefono, String emailCreador) throws IOException;
+
+    void enviarMailInstruccion(String email, String token) throws IOException;
 }

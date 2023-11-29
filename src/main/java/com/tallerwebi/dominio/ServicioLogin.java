@@ -15,4 +15,10 @@ public interface ServicioLogin {
     String generarToken();
 
     void actualizarToken(Usuario usuario) throws IOException;
+
+    void enviarMailConInstruccion(String email) throws IOException;
+
+    Boolean verificarTokenPassword(String tokenPassword);
+
+    void modificarPassword(String password, String token);
 }

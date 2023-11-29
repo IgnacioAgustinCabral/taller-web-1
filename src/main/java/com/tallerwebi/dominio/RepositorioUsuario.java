@@ -4,7 +4,6 @@ import java.util.List;
 
 public interface RepositorioUsuario {
 
-    Usuario buscarUsuario(String email, String password);
     Usuario buscarUsuario(String email);
     void guardar(Usuario usuario);
     Usuario buscar(String email);
@@ -16,5 +15,7 @@ public interface RepositorioUsuario {
     Usuario buscarPorTokenValidacion(String token);
 
     void actualizar(Usuario usuario);
+
+    Usuario buscarPorTokenPassword(String tokenPassword);
 }
 

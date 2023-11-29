@@ -10,6 +10,7 @@ import com.sendgrid.helpers.mail.objects.Email;
 import com.tallerwebi.dominio.ServicioEmail;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -60,6 +61,37 @@ public class ServicioEmailImpl implements ServicioEmail {
             System.out.println(ex.getMessage());
         }
     }
+
+    @Override
+    public void enviarMailInstruccion(String email, String token) throws IOException {
+        SendGrid sendGrid = new SendGrid(API_KEY);
+        Email from = new Email(FROM_EMAIL_ADDRESS);
+        String subject = "TravelAndo - Restablecer Contraseña";
+        Email to = new Email(email);
+
+        String cuerpoCorreo = "<html><body>" +
+                "<h1><strong>Restablecer Contraseña</strong></h1>" +
+                "<a href='http://localhost:8080/spring/verificar-token-password?token=" + token + "' style='background-color: #bb1524; color: #ffffff; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;'>Restablecer contraseña</a>" +
+                "<p>Se ha solicitado un cambio de contraseña para tu cuenta, si fuiste vos porfavor entrá al link para modificar tu contraseña sino ignora este e-mail</p>" +
+                "<p>Necesitas Ayuda? Nuestro Equipo de Asesores siempre está dispuesto a darte una mano!</p>" +
+                "<a href='mailto:travelando.unlam@gmail.com' style='background-color: #004376; color: #ffffff; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;'>Contactar Soporte</a>" +
+                "</body></html>";
+
+        Content content = new Content("text/html", cuerpoCorreo);
+        Mail mail = new Mail(from, subject, to, content);
+
+        Request request = new Request();
+
+        try{
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sendGrid.api(request);
+        } catch (IOException ex){
+            throw new IOException();
+        }
+
+    }
     @Override
     public void enviarSolicitudUnirseViaje(String toMail, String usuarioInteresado, Long idUsuarioInteresado, String linkAceptar, String linkRechazar) throws IOException {
         SendGrid sendGrid = new SendGrid(API_KEY);
@@ -68,10 +100,10 @@ public class ServicioEmailImpl implements ServicioEmail {
         Email to = new Email(toMail);
 
         String cuerpoCorreo = "<html><body>" +
-                "<p>¡Hola " + usuarioInteresado + "!</p>" +
+                "<p>¡Hola!</p>" +
                 "<p>Tienes una solicitud para unirte al viaje.</p>" +
                 "<p>Nombre del usuario interesado: " + usuarioInteresado + "</p>" +
-                "<p><a href=\"http://localhost:8080/spring/perfil/usuario?idUsuario=" + idUsuarioInteresado
+                "<p><a href=\"http://localhost:8080/spring/usuario?idUsuario=" + idUsuarioInteresado
                 + "\" style='background-color: green; color: white; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;'>Ver Perfil</a></p>"
                 + "<p><a href=\"" + linkAceptar + "\" style='background-color: #0060aa; color: white; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px;'>Aceptar</a>"
                 + "<a href=\"" + linkRechazar + "\" style='background-color: #ee1b2e; color: white; padding: 10px 20px; text-decoration: none; display: inline-block; border-radius: 5px; margin-left: 5px;'>Rechazar</a></p>"
@@ -99,28 +131,38 @@ public class ServicioEmailImpl implements ServicioEmail {
 
 
     @Override
-    public void enviarRespuestaRechazada(String toMail,String motivo, String nombreCreador) throws IOException {
+    public void enviarRespuestaRechazada(String toMail, String motivo, String nombreCreador) throws IOException {
         SendGrid sendGrid = new SendGrid(API_KEY);
         Email from = new Email(FROM_EMAIL_ADDRESS);
-        String subject = "Respuesta a tu solicitud";
+        String subject = "Respuesta a tu solicitud para unirse al Viaje";
         Email to = new Email(toMail);
 
-        // Construye el contenido del correo en función de la respuesta
-        String cuerpoCorreo = "<p>Tu solicitud ha sido rechazada por: </p>"+"<p>"+ nombreCreador + "</p>";
-
-        if (motivo != null && !motivo.isEmpty()) {
-                cuerpoCorreo += "<p>Motivo: " + motivo + "</p>";
-            }
-
-        cuerpoCorreo = "<html><body>" + cuerpoCorreo + "</body></html>";
+        String cuerpoCorreo = "<html><body>" +
+                "<p>Lamentamos informarte que tu solicitud para unirte al viaje ha sido rechazada.</p>" +
+                "<p>El creador del viaje, " + nombreCreador + ", ha proporcionado el siguiente motivo:</p>" +
+                "<p style='background-color: #ee1b2e; color: white; padding: 10px; border-radius: 5px;'>" + motivo + "</p>" +
+                "<p>Gracias por tu interés.</p>" +
+                "<p>TravelAndo Team</p>" +
+                "</body></html>";
 
         Content content = new Content("text/html", cuerpoCorreo);
         Mail mail = new Mail(from, subject, to, content);
 
-
-
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sendGrid.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
-@Override
+
+    @Override
     public void enviarRespuestaAceptada(String toMail, String creadorViaje, Long idViaje, String telefono, String emailCreador)
             throws IOException {
 
@@ -129,26 +171,26 @@ public class ServicioEmailImpl implements ServicioEmail {
         String subject = "Solicitud Aceptada para Unirse al Viaje";
         Email to = new Email(toMail);
 
-        // Obtener el enlace del viaje
         String enlaceViaje = "http://localhost:8080/spring/ver-viaje?id=" + idViaje;
 
-        // Contenido del correo en formato HTML
         String cuerpoCorreo = "<html><body>" +
-                "<p>¡Hola " + creadorViaje + "!</p>" +
+                "<p>¡Hola!</p>" +
                 "<p>" + creadorViaje + " ha aceptado tu solicitud para unirte al viaje.</p>" +
                 "<p>Puedes ver los detalles del viaje haciendo clic en el siguiente enlace:</p>" +
                 "<a href='" + enlaceViaje + "' style='background-color: #0060aa; color: #ffffff; padding: 10px 20px; " +
                 "text-decoration: none; display: inline-block; border-radius: 5px;'>Ver Viaje</a>" +
+                "<br>" +
+                "<h3>Datos de Contacto:</h3>" +
                 "<table style='border-collapse: collapse; width: 100%;'>" +
-                "<tr><td style='border: 1px solid #dddddd; text-align: left; padding: 8px;'>Creador del Viaje</td>" +
+                "<tr><td style='border: 1px solid #dddddd; text-align: left; padding: 8px;'><b>Nombre Completo</b></td>" +
                 "<td style='border: 1px solid #dddddd; text-align: left; padding: 8px;'>" + creadorViaje + "</td></tr>" +
-                "<tr><td style='border: 1px solid #dddddd; text-align: left; padding: 8px;'>Email del Creador</td>" +
+                "<tr><td style='border: 1px solid #dddddd; text-align: left; padding: 8px;'><b>Email</b></td>" +
                 "<td style='border: 1px solid #dddddd; text-align: left; padding: 8px;'>" + emailCreador + "</td></tr>" +
-                "<tr><td style='border: 1px solid #dddddd; text-align: left; padding: 8px;'>Teléfono del Creador</td>" +
+                "<tr><td style='border: 1px solid #dddddd; text-align: left; padding: 8px;'><b>Teléfono</b></td>" +
                 "<td style='border: 1px solid #dddddd; text-align: left; padding: 8px;'>" + telefono + "</td></tr>" +
                 "</table>" +
                 "<p>¡Esperamos que disfrutes del viaje!</p>" +
-                "<p>Tu Equipo de Viaje</p>" +
+                "<p>TravelAndo Team</p>" +
                 "</body></html>";
 
         Content content = new Content("text/html", cuerpoCorreo);

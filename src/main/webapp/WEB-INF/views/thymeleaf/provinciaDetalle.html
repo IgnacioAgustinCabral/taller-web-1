@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Mi Perfil</title>
+    <title>TravelAndo</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Use Thymeleaf expressions for CSS URLs -->
@@ -50,20 +50,18 @@
 
 </header>
 
-<section class="hero-area bg-5 text-center overly">
+<section class="hero-area text-center overly" th:style="'background: url(/spring/destino/imagen/' + ${viajes[0].destino.id} + '); background-repeat: no-repeat; background-size: cover;'">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="content-block">
                     <div th:once>
-                        <h1  th:if="${viajes != null and not #lists.isEmpty(viajes)}">
+                        <h1 th:if="${viajes != null and not #lists.isEmpty(viajes)}">
                             Viajes con destino a <span th:text="${viajes[0].destino.provincia.nombre}"></span>
                         </h1>
                         <h1 th:unless="${viajes != null and not #lists.isEmpty(viajes)}">
                             Sin Resultados
                         </h1>
-
-                        <!--<h1>Viajes con destino a <span th:text="${viajes[0].destino.provincia.nombre}"></span></h1>-->
                     </div>
                 </div>
             </div>

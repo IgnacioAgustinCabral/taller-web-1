@@ -1,10 +1,8 @@
 package com.tallerwebi.dominio;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Set;
 
 @Entity
@@ -27,10 +25,12 @@ public class Usuario {
     private String tokenValidacion;
     @Lob
     private byte[] imagenDePerfil;
-    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros")
-    private List<Viaje> viajes;
+    private String tokenResetPassword;
+    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "listaPasajeros", fetch = FetchType.EAGER)
+    private Set<Viaje> viajes = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_comentario",
             joinColumns = @JoinColumn(name = "id_usuario"),
@@ -157,14 +157,12 @@ public class Usuario {
         this.emailValidado = emailValidado;
     }
 
-
-  /*  public List<Viaje> getViajes() {
+    public Set<Viaje> getListaViajes() {
         return viajes;
     }
-
-    public void setViajes(List<Viaje> viajes) {
-        this.viajes = viajes;
-    }*/
+    public void setListaViajes(Set<Viaje> listaViajes) {
+        this.viajes = listaViajes;
+    }
 
     public byte[] getImagenDePerfil() {
         return imagenDePerfil;
@@ -172,6 +170,14 @@ public class Usuario {
 
     public void setImagenDePerfil(byte[] imagenDePerfil) {
         this.imagenDePerfil = imagenDePerfil;
+    }
+
+    public String getTokenResetPassword() {
+        return tokenResetPassword;
+    }
+
+    public void setTokenResetPassword(String tokenResetPassword) {
+        this.tokenResetPassword = tokenResetPassword;
     }
 
     @Override

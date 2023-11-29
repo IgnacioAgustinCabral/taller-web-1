@@ -12,7 +12,6 @@ import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,6 +24,7 @@ public class ServicioViajeImpl implements ServicioViaje {
     @Autowired
     public ServicioViajeImpl(RepositorioViaje repositorioViaje, RepositorioUsuario repositorioUsuario) {
         this.repositorioViaje = repositorioViaje;
+        this.repositorioUsuario = repositorioUsuario;
     }
 
     @Override
@@ -127,6 +127,26 @@ public class ServicioViajeImpl implements ServicioViaje {
     }
 
     @Override
+    public Boolean eliminarViaje(Long viajeId, Usuario usuario) throws Exception {
+        Viaje viaje = repositorioViaje.buscarPorId(viajeId);
+
+        if (viaje == null) {
+            throw new Exception("El viaje a eliminar no existe.");
+        }
+
+        Usuario creador = viaje.getUsuario();
+
+        if (!creador.getId().equals(usuario.getId())) {
+            throw new Exception("Solo el usuario creador puede eliminar el viaje.");
+        }
+
+        repositorioViaje.eliminar(viaje);
+
+        return true;
+    }
+
+
+    @Override
     public Boolean ModificarViaje(Usuario usuario,Viaje viaje, Long id) throws Exception {
 
         Viaje viajeBuscado = repositorioViaje.buscarPorId(id);
@@ -187,6 +207,14 @@ public class ServicioViajeImpl implements ServicioViaje {
         this.repositorioViaje.guardar(viajeAModificar);
 
         return true;
+    }
+
+    @Override
+    public Set<Viaje> obtenerViajesDePasajero(Usuario usuario) {
+
+        Usuario buscado  = repositorioUsuario.buscarUsuarioPorId(usuario.getId());
+
+        return buscado.getListaViajes();
     }
 
     @Override

@@ -5,16 +5,15 @@ import com.tallerwebi.dominio.excepcion.NullEmailValidoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -162,6 +161,22 @@ public class ControladorViaje {
         }
         return new ModelAndView("redirect:/home");
     }
+    @RequestMapping(path = "/eliminar/{viajeId}", method = RequestMethod.GET)
+    public ModelAndView eliminarViaje(@PathVariable Long viajeId, HttpSession session) {
+        ModelMap model = new ModelMap();
+
+        try {
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            this.servicioViaje.eliminarViaje(viajeId, usuario);
+        } catch (Exception e) {
+            model.put("mensaje", "Error al eliminar el viaje: " + e.getMessage());
+            return new ModelAndView("error/error", model);
+        }
+
+
+        return new ModelAndView("redirect:/mi-perfil");
+    }
+
 
     @RequestMapping(path = "/creacion", method = RequestMethod.POST)
     public ModelAndView crearViaje(@ModelAttribute("viaje") Viaje viaje, HttpSession session) {
@@ -263,12 +278,13 @@ public class ControladorViaje {
             // Enviar solicitud al creador del viaje
             String linkAceptar = "http://localhost:8080/spring/aceptar-solicitud?viaje=" + viajeId +
                     "&emailUsuario=" + usuario.getEmail() +
-                    "&creadorViaje=" + creadorViaje.getNombre() +
+                    "&creadorViaje=" + creadorViaje.getNombre() + " " + creadorViaje.getApellido() +
                     "&telefono=" + creadorViaje.getCod_area() + "-" + creadorViaje.getTelefono() +
                     "&emailCreador=" + creadorViaje.getEmail();
             ;
-            String linkRechazar = "http://localhost:8080/spring/formulario-rechazo?nombreCreador=" + creadorViaje.getNombre() +
-                    "&emailUsuario=" + usuario.getEmail();
+            String linkRechazar = "http://localhost:8080/spring/formulario-rechazo?nombreCreador=" +
+                    creadorViaje.getNombre() + " " + creadorViaje.getApellido() +
+                    "&destinatario=" + usuario.getEmail();
 
             String emailCreadorViaje = creadorViaje.getEmail();
 
@@ -316,12 +332,11 @@ public class ControladorViaje {
     }
 
     @RequestMapping(path = "/rechazado", method = RequestMethod.POST)
-    private ModelAndView rechazarSolicitud(@RequestParam String motivo, @RequestParam String nombreCreador, @RequestParam String destinatario) throws IOException {
+    private ModelAndView rechazarSolicitud(@RequestParam("motivo") String motivo, @RequestParam String nombreCreador, @RequestParam String destinatario) throws IOException {
 
         servicioEmail.enviarRespuestaRechazada(destinatario, motivo, nombreCreador);
 
-        return new ModelAndView("/home");
-
+        return new ModelAndView("redirect:/home");
 
     }
 
@@ -344,4 +359,28 @@ public class ControladorViaje {
             return new ModelAndView("redirect:/home");
         }
     }
+    @RequestMapping(path = "/mis-viajes", method = RequestMethod.GET )
+    public ModelAndView verMisViajes(HttpSession session) {
+        try{
+            if(session.getAttribute("usuario") != null){
+                ModelMap model = new ModelMap();
+                Usuario usuario = (Usuario) session.getAttribute("usuario");
+                Set<Viaje> viajes = servicioViaje.obtenerViajesDePasajero(usuario);
+
+                if(viajes == null)
+                    viajes = new HashSet<>();
+                //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
+                model.put("usuario", usuario);
+                model.put("viajes", viajes);
+                return new ModelAndView("misviajes", model);
+            }else{
+                return new ModelAndView("redirect:/login");
+            }
+        }catch(Exception e){
+            ModelMap model = new ModelMap();
+            model.put("mensaje", e.getMessage());
+            return new ModelAndView("error/error",model);
+        }
+    }
+
 }

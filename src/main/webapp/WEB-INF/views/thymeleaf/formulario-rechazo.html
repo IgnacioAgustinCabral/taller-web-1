@@ -7,13 +7,13 @@
 <body>
 
 <div class="container">
-    <form class="form-group" th:action="@{/rechazado}">
+    <form class="form-group" th:action="@{/rechazado}" method="post">
 
         <input type="hidden" id="destinatario" name="destinatario" th:value="${session.destinatario}">
         <input type="hidden" id="nombreCreador" name="nombreCreador" th:value="${session.nombreCreador}">
 
         <label for="motivo" class="mb-3"><strong>Motivo del rechazo</strong></label>
-        <textarea class="form-control bg-gray mb-3" id="motivo" name="motivo" th:field="${motivo}"></textarea>
+        <textarea class="form-control bg-gray mb-3" id="motivo" name="motivo" th:value="${motivo}"></textarea>
 
         <button type="submit" class="btn btn-info">Enviar</button>
 
