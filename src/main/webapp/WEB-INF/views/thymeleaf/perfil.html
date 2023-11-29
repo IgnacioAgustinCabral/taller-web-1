@@ -36,7 +36,7 @@
     <link th:href="@{/css/perfil.css}" rel="stylesheet">
     <link th:href="@{/css/viaje.css}" rel="stylesheet">
     <link th:href="@{/css/modal.css}" rel="stylesheet">
-    <link th:href="@{/css/reseñas.css}" rel="stylesheet">
+    <link th:href="@{/css/comentarios.css}" rel="stylesheet">
 
 
 </head>
@@ -228,40 +228,39 @@
             </div>
 
             <div class="card">
+                <div class="card-header">
+                    <h2 class="header-title pt-2">Comentarios de los usuarios</h2>
+                </div>
                 <div class="card-body">
                     <div class="border border-light p-2 mb-3">
-                        <h4 class="header-title mb-3">Reseñas</h4>
+                        <div th:each="comentario : ${comentarios}">
+                            <div class="d-flex flex-row card post-user-comment-box">
+                                <img class="me-2 avatar-lg rounded-circle" th:src="@{'/usuario/imagen/' + ${comentario.usuarioOrigen.id}}" alt="Generic placeholder image">
+                                <div class="w-100">
+                                    <h5 class th:text="'Usuario que dejó el comentario: ' + ${comentario.usuarioOrigen.nombre}"></h5>
+                                    <h6 th:text="'Puntaje: ' + ${comentario.calificacion.intValue()}+'/5'"></h6>
+                                    <h6 class th:text="'Comentario: ' + ${comentario.descripcion}"></h6>
+                                </div>
+                            </div>
+                        </div>
                         <div th:unless="${comentarios != null && comentarios.size() > 0}">
                             <div style="display: flex; flex-direction: column;" class="text-center topSpace">
                                 <i class="fa-solid fa-exclamation-triangle mt-3 topSpace" style="font-size: 1.5em;"></i>
-                                <h4>¡Aún no hay reseñas para éste usuario!</h4>
-                            </div>
-                        </div>
-                        <div th:each="comentario : ${comentarios}">
-                            <div class="d-flex align-items-start post-user-comment-box">
-                                <img class="me-2 avatar-sm rounded-circle" th:src="@{'/usuario/imagen/' + ${comentario.usuarioOrigen.id}}" alt="Generic placeholder image">
-                                <div class="w-100">
-                                    <h5 class th:text="${comentario.usuarioOrigen.nombre}"><small class="text-muted"> 1 hour ago</small></h5>
-                                    <span th:text="${comentario.calificacion.intValue()}+'/5'"></span>
-                                    <div class th:text="${comentario.descripcion}">
-                                        <br>
-                                        <a href="javascript: void(0);" class="text-muted font-13 d-inline-block mt-2"><i class="mdi mdi-reply"></i> Reply</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> Load more </a>
+                                <h4>¡Aún no hay comentarios para éste usuario!</h4>
                             </div>
                         </div>
 
-                        <div class="container mt-5 mx-auto"  th:if="${usuario != null}">
+
+                        <div class="container col-md-6 card" th:if="${session.isLogged == true and usuario.id != session.usuario.id}" >
                             <form id="commentForm" th:action="@{/comentario}" th:object="${comentario}" method="POST">
-                                <div class="form-row">
-                                    <div class="form-group col-md-6 mx-auto">
-                                        <div>
-                                            <div class="rating-container">
-                                                <label for="numeric-rating">Calificación numérica:</label>
-                                                <select class="ignore" id="numeric-rating" name="numeric-rating" th:if="${comentario != null}" th:field="${comentario.calificacion}">
+                                <div class="card-header">
+                                    <h5 class="header-title pt-2">Dejar un comentario</h5>
+                                </div>
+                                    <div class="form-group col-md-12 mx-auto">
+                                        <div class="column">
+                                            <div class="rating-container pt-2">
+                                                <label class="" for="numeric-rating">Puntaje: </label>
+                                                <select class="ignore form-control mb-1" id="numeric-rating" name="numeric-rating" th:if="${comentario != null}" th:field="${comentario.calificacion}">
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -271,46 +270,15 @@
                                             </div>
                                             <input type="hidden" id="idUsuario" name="idUsuario" th:value="${usuario.id}">
 
+                                            <label class="" for="comentario">Comentario: </label>
                                             <textarea th:field="${comentario.descripcion}" class="form-control" id="comentario" rows="3" required placeholder="Realiza un comentario"></textarea>
-                                            <button type="submit" class="btn btn-primary mt-4">Enviar</button>
+                                            <button type="submit" class="btn btn-primary mt-4">Enviar comentario</button>
                                         </div>
                                     </div>
-                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="successModalLabel">Comentario Agregado con Éxito</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ¡Tu comentario ha sido agregado con éxito!
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="errorModalLabel">Error al Realizar el Comentario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Por favor, completa todos los campos antes de enviar el formulario.
             </div>
         </div>
     </div>
