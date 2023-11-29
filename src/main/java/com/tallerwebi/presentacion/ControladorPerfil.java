@@ -58,6 +58,16 @@ public class ControladorPerfil {
         int cantidadViajesCreados = viajesCreados.size();
         int cantidadViajesUnidos = viajesUnidos.size();
 
+        Double sum =0.0;
+        Double calificacionPromedio = 0.0;
+
+        if(comentarios.size() > 0){
+            for (Comentario com : comentarios){
+                sum+= com.getCalificacion();
+            }
+            calificacionPromedio =  sum/comentarios.size();
+        }
+
         modelo.put("session", session);
         modelo.put("usuario",usuarioBuscado);
         modelo.put("stalker",stalker);
@@ -67,6 +77,7 @@ public class ControladorPerfil {
         modelo.put("gasto", new Gasto());
         modelo.put("cantidadViajesCreados", cantidadViajesCreados);
         modelo.put("cantidadViajesUnidos", cantidadViajesUnidos);
+        modelo.put("calificacionPromedio", calificacionPromedio);
         return new ModelAndView("perfil",modelo);
     }
 
@@ -90,8 +101,18 @@ public class ControladorPerfil {
                 int cantidadViajesCreados = viajesCreados.size();
                 int cantidadViajesUnidos = viajesUnidos.size();
 
-
                 List<Comentario> comentarios =servicioComentario.obtenerComentariosPorUsuario(usuario);
+
+                Double sum =0.0;
+                Double calificacionPromedio = 0.0;
+
+                if(comentarios.size() > 0){
+                    for (Comentario com : comentarios){
+                        sum+= com.getCalificacion();
+                    }
+                    calificacionPromedio =  sum/comentarios.size();
+                }
+
                 model.put("usuario", usuario);
                 model.put("viajesUnidos", viajesUnidos);
                 model.put("viajesCreados", viajesCreados);
@@ -99,6 +120,7 @@ public class ControladorPerfil {
                 model.put("gasto", new Gasto());
                 model.put("cantidadViajesCreados", cantidadViajesCreados);
                 model.put("cantidadViajesUnidos", cantidadViajesUnidos);
+                model.put("calificacionPromedio", calificacionPromedio);
                 model.put("comentario", new Comentario());
                 return new ModelAndView("perfil", model);
             }else{
