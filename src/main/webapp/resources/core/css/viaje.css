@@ -47,7 +47,7 @@ body{
 .userInfo{
     background-color: #a5b1b5 !important;
     border-radius: 8px 0px 0px 8px;
-    padding: 0 0.9375rem;
+    padding: 1rem !important;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -72,6 +72,13 @@ body{
     display: flex;
     align-items: center;
 }
+.bg-6 {
+    background: url(../images/home/mis-viajes.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
 
 .widget-49 .widget-49-title-wrapper .widget-49-date-primary {
     display: flex;

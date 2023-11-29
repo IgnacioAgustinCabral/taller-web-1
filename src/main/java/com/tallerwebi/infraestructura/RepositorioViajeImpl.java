@@ -31,7 +31,8 @@ public class RepositorioViajeImpl implements RepositorioViaje {
 
     @Override
     public Viaje buscarPorId(Long id) {
-        return sessionFactory.getCurrentSession().get(Viaje.class,id);
+       Viaje viaje = sessionFactory.getCurrentSession().get(Viaje.class,id);
+       return viaje;
     }
 
 

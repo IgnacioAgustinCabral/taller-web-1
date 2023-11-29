@@ -3,18 +3,16 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.NullEmailValidoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.transaction.SystemException;
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -25,13 +23,15 @@ public class ControladorViaje {
     private ServicioViaje servicioViaje;
     private ServicioUsuario servicioUsuario;
     private ServicioCiudad servicioCiudad;
+    private ServicioGasto servicioGasto;
 
     @Autowired
-    public ControladorViaje(ServicioUsuario servicioUsuario, ServicioViaje servicioViaje, ServicioCiudad servicioCiudad) {
+    public ControladorViaje(ServicioGasto servicioGasto, ServicioUsuario servicioUsuario, ServicioViaje servicioViaje, ServicioCiudad servicioCiudad) {
 
         this.servicioUsuario = servicioUsuario;
         this.servicioViaje = servicioViaje;
         this.servicioCiudad = servicioCiudad;
+        this.servicioGasto = servicioGasto;
     }
 
     @RequestMapping(value = "/crear-viaje", method = RequestMethod.GET)
@@ -257,10 +257,35 @@ public class ControladorViaje {
         try {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             Boolean unido = servicioViaje.UnirAViaje(usuario, viaje);
+
+
         } catch (Exception e) {
             return new ModelAndView("redirect:/home");
         }
         return new ModelAndView("redirect:/home");
+    }
+
+    @RequestMapping(value = "/mostrar-gastos", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> mostrarGastos(@RequestParam("idViaje") Long idViaje) {
+        try {
+            Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
+            List<Gasto> gastos = servicioGasto.obtenerGastosPorViaje(viaje);
+            Integer usuariosUnidos = viaje.getListaPasajeros().size() + 1;
+
+            // Calcular la suma total de los montos de los gastos
+            double montoTotal = gastos.stream().mapToDouble(Gasto::getMonto).sum();
+
+            // Crear un mapa con la estructura deseada
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("gastos", gastos);
+            respuesta.put("montoTotal", montoTotal);
+            respuesta.put("cantidadUnidos", usuariosUnidos);
+
+            return ResponseEntity.ok().body(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error al obtener los gastos del viaje"));
+        }
     }
 
     @RequestMapping(value = "/modificar-viaje", method = RequestMethod.GET)
@@ -288,13 +313,24 @@ public class ControladorViaje {
             if(session.getAttribute("usuario") != null){
                 ModelMap model = new ModelMap();
                 Usuario usuario = (Usuario) session.getAttribute("usuario");
-                Set<Viaje> viajes = servicioViaje.obtenerViajesDePasajero(usuario);
 
-                if(viajes == null)
-                    viajes = new HashSet<>();
-                //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
+                //Obtener viajes a los que se unió el usuario
+                Set<Viaje> viajesUnidos = servicioViaje.obtenerViajesDePasajero(usuario);
+                if(viajesUnidos == null){
+                    viajesUnidos = new HashSet<>();
+                }
+
+                //Obtener viajes creados por el usuario
+                List<Viaje> viajesCreados = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
+                if(viajesCreados == null){
+                    viajesCreados = new ArrayList<>();
+                }
+
                 model.put("usuario", usuario);
-                model.put("viajes", viajes);
+                model.put("viajesUnidos", viajesUnidos);
+                model.put("viajesCreados", viajesCreados);
+                model.put("gasto", new Gasto());
+
                 return new ModelAndView("misviajes", model);
             }else{
                 return new ModelAndView("redirect:/login");
@@ -306,4 +342,20 @@ public class ControladorViaje {
         }
     }
 
+
+    @RequestMapping(path="/add-gasto", method = RequestMethod.POST)
+    public ModelAndView addGasto(@ModelAttribute Gasto gasto, @RequestParam Long idViaje){
+        ModelMap model = new ModelMap();
+        try {
+            Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
+            gasto.setViaje(viaje);
+            this.servicioGasto.guardarGasto(gasto);
+            model.put("exito", "Gasto Agregado exitosamente");
+        }
+        catch (Exception e){
+            model.put("error", "Error al registrar el gasto");
+            return new ModelAndView("mis-viajes", model);
+        }
+        return new ModelAndView("redirect:mis-viajes");
+    }
 }

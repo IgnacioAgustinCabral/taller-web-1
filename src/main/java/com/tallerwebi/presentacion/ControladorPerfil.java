@@ -19,15 +19,17 @@ import java.util.List;
 @Transactional
 public class ControladorPerfil {
 
+    private ServicioGasto servicioGasto;
     private ServicioUsuario servicioUsuario;
     private ServicioViaje servicioViaje;
     private ServicioComentario servicioComentario;
 
 
     @Autowired
-    public ControladorPerfil(ServicioViaje servicioViaje,ServicioUsuario servicioUsuario, ServicioComentario servicioComentario){
+    public ControladorPerfil(ServicioViaje servicioViaje,ServicioUsuario servicioUsuario, ServicioGasto servicioGasto, ServicioComentario servicioComentario){
         this.servicioViaje = servicioViaje;
         this.servicioUsuario = servicioUsuario;
+        this.servicioGasto = servicioGasto;
         this.servicioComentario = servicioComentario;
     }
 
@@ -46,6 +48,7 @@ public class ControladorPerfil {
         modelo.put("viajes",viajes);
         modelo.put("comentarios", comentarios);
         modelo.put("comentario", new Comentario());
+        modelo.put("gasto", new Gasto());
         return new ModelAndView("perfil",modelo);
     }
 
@@ -61,6 +64,7 @@ public class ControladorPerfil {
                 model.put("usuario", usuario);
                 model.put("viajes", viajes);
                 model.put("comentarios", comentarios);
+                model.put("gasto", new Gasto());
                 return new ModelAndView("perfil", model);
             }else{
                 return new ModelAndView("redirect:/login");
@@ -107,4 +111,30 @@ public class ControladorPerfil {
         }
     }
 
+    @RequestMapping(path="/agregar-gasto", method = RequestMethod.POST)
+    public ModelAndView agregarGasto(@ModelAttribute Gasto gasto, @RequestParam Long idViaje){
+        ModelMap model = new ModelMap();
+        try {
+            Viaje viaje = servicioViaje.obtenerViajePorId(idViaje);
+            gasto.setViaje(viaje);
+            this.servicioGasto.guardarGasto(gasto);
+            model.put("exito", "Gasto Agregado exitosamente");
+        }
+        catch (Exception e){
+            model.put("error", "Error al registrar el gasto");
+            return new ModelAndView("perfil", model);
+        }
+        return new ModelAndView("redirect:mi-perfil");
+    }
+
+
+/*  @RequestMapping(value="/usuario", method = RequestMethod.GET )
+    public ModelAndView encontrarUsuarioPorId(@RequestParam(required = false) Long id){
+
+        Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(id);
+        ModelMap model = new ModelMap();
+        model.put("usuario", usuarioBuscado);
+        return new ModelAndView("perfil", model);
+
+    }*/
 }
