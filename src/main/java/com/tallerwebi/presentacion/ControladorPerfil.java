@@ -41,12 +41,27 @@ public class ControladorPerfil {
         Usuario stalker = (Usuario) session.getAttribute("usuario");
         Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(idUsuario);
 
-        List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuarioBuscado);
+        //Obtener viajes a los que se unió el usuario
+        Set<Viaje> viajesUnidos = servicioViaje.obtenerViajesDePasajero(usuarioBuscado);
+        if(viajesUnidos == null){
+            viajesUnidos = new HashSet<>();
+        }
+
+        //Obtener viajes creados por el usuario
+        Set<Viaje> viajesCreados = new HashSet<>(servicioViaje.obtenerViajesCreadosPorUnUsuario(usuarioBuscado));
+        if (viajesCreados == null) {
+            viajesCreados = new HashSet<>();
+        }
+        int cantidadViajesCreados = viajesCreados.size();
+        int cantidadViajesUnidos = viajesUnidos.size();
+
         modelo.put("session", session);
         modelo.put("usuario",usuarioBuscado);
         modelo.put("stalker",stalker);
-        modelo.put("viajes",viajes);
+        modelo.put("viajesCreados", viajesCreados);
         modelo.put("gasto", new Gasto());
+        modelo.put("cantidadViajesCreados", cantidadViajesCreados);
+        modelo.put("cantidadViajesUnidos", cantidadViajesUnidos);
         return new ModelAndView("perfil",modelo);
     }
 

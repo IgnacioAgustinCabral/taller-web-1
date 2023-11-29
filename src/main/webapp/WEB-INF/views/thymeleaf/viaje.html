@@ -111,15 +111,15 @@
         <p class="card-text text-center topSpace"><small class="text-muted">Última actualización: hace 2 días</small>
         </p>
         <div class="d-flex justify-content-center">
-            <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
-               class="btn btn-primary bottomSpace rightSpace">Ver perfil</a>
-
-            <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" class="btn btn-active  bottomSpace rightSpace"
-               th:classappend="${unido ? 'btn-secondary' : 'btn-primary'}" th:text="${unido ? 'Unido' : 'Unirme'}">Unirme</a>
-
-            <button type="button" class="btn btn-calcular-gasto bottomSpace rightSpace" th:onclick="'mostrarGastos(\'' + ${viaje.id} + '\')'">
-                Ver Gastos
-            </button>
+            <div class="d-flex col-lg-4">
+                <a th:href="@{/usuario(idUsuario= ${viaje.usuario.id})}"
+                   class="btn btn-primary btn-block m-2">Ver perfil</a>
+                <a th:href="@{/unir-a-viaje(viaje = ${viaje.id})}" class="btn btn-active btn-block m-2"
+                   th:classappend="${unido ? 'btn-secondary' : 'btn-primary'}" th:text="${unido ? 'Unido' : 'Unirme'}">Unirme</a>
+                <button type="button" class="btn btn-calcular-gasto btn-block m-2" th:onclick="'mostrarGastos(\'' + ${viaje.id} + '\')'">
+                    Ver Gastos
+                </button>
+            </div>
         </div>
 
         <!-- Modal -->
