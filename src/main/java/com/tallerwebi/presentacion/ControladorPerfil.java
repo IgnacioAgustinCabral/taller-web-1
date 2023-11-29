@@ -13,7 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Transactional
@@ -41,14 +44,29 @@ public class ControladorPerfil {
         Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(idUsuario);
         List<Comentario> comentarios = servicioComentario.obtenerComentariosPorUsuario(usuarioBuscado);
 
-        List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuarioBuscado);
+        //Obtener viajes a los que se unió el usuario
+        Set<Viaje> viajesUnidos = servicioViaje.obtenerViajesDePasajero(usuarioBuscado);
+        if(viajesUnidos == null){
+            viajesUnidos = new HashSet<>();
+        }
+
+        //Obtener viajes creados por el usuario
+        Set<Viaje> viajesCreados = new HashSet<>(servicioViaje.obtenerViajesCreadosPorUnUsuario(usuarioBuscado));
+        if (viajesCreados == null) {
+            viajesCreados = new HashSet<>();
+        }
+        int cantidadViajesCreados = viajesCreados.size();
+        int cantidadViajesUnidos = viajesUnidos.size();
+
         modelo.put("session", session);
         modelo.put("usuario",usuarioBuscado);
         modelo.put("stalker",stalker);
-        modelo.put("viajes",viajes);
         modelo.put("comentarios", comentarios);
         modelo.put("comentario", new Comentario());
+        modelo.put("viajesCreados", viajesCreados);
         modelo.put("gasto", new Gasto());
+        modelo.put("cantidadViajesCreados", cantidadViajesCreados);
+        modelo.put("cantidadViajesUnidos", cantidadViajesUnidos);
         return new ModelAndView("perfil",modelo);
     }
 
@@ -58,13 +76,30 @@ public class ControladorPerfil {
             if(session.getAttribute("usuario") != null){
                 ModelMap model = new ModelMap();
                 Usuario usuario = (Usuario) session.getAttribute("usuario");
-                List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
+                //Obtener viajes a los que se unió el usuario
+                Set<Viaje> viajesUnidos = servicioViaje.obtenerViajesDePasajero(usuario);
+                if(viajesUnidos == null){
+                    viajesUnidos = new HashSet<>();
+                }
+
+                //Obtener viajes creados por el usuario
+                Set<Viaje> viajesCreados = new HashSet<>(servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario));
+                if (viajesCreados == null) {
+                    viajesCreados = new HashSet<>();
+                }
+                int cantidadViajesCreados = viajesCreados.size();
+                int cantidadViajesUnidos = viajesUnidos.size();
+
+
                 List<Comentario> comentarios =servicioComentario.obtenerComentariosPorUsuario(usuario);
                 //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
                 model.put("usuario", usuario);
-                model.put("viajes", viajes);
+                model.put("viajesUnidos", viajesUnidos);
+                model.put("viajesCreados", viajesCreados);
                 model.put("comentarios", comentarios);
                 model.put("gasto", new Gasto());
+                model.put("cantidadViajesCreados", cantidadViajesCreados);
+                model.put("cantidadViajesUnidos", cantidadViajesUnidos);
                 model.put("comentario", new Comentario());
                 return new ModelAndView("perfil", model);
             }else{
@@ -74,15 +109,10 @@ public class ControladorPerfil {
             ModelMap model = new ModelMap();
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             List<Viaje> viajes = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
-            //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
             model.put("usuario", usuario);
             model.put("viajes", viajes);
             return new ModelAndView("perfil", model);
-        }/*else{
-            return new ModelAndView("redirect:/login");
-            model.put("mensaje", e.getMessage());
-            return new ModelAndView("error/error",model);
-        }*/
+        }
     }
 
     @RequestMapping(value="/comentario", method = RequestMethod.POST )
@@ -130,14 +160,4 @@ public class ControladorPerfil {
         return new ModelAndView("redirect:mi-perfil");
     }
 
-
-/*  @RequestMapping(value="/usuario", method = RequestMethod.GET )
-    public ModelAndView encontrarUsuarioPorId(@RequestParam(required = false) Long id){
-
-        Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId(id);
-        ModelMap model = new ModelMap();
-        model.put("usuario", usuarioBuscado);
-        return new ModelAndView("perfil", model);
-
-    }*/
 }
