@@ -7,12 +7,14 @@ import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
@@ -52,8 +54,15 @@ public class ControladorLogin {
     }
 
     @RequestMapping(path = "/registrarme", method = RequestMethod.POST, consumes = {"multipart/form-data"})
-    public ModelAndView registrarme(@ModelAttribute("usuario") Usuario usuario, @RequestPart("imagenDePerfil") MultipartFile imagenDePerfil) {
+    public ModelAndView registrarme(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult result, @RequestPart("imagenDePerfil") MultipartFile imagenDePerfil) {
         ModelMap model = new ModelMap();
+
+        if (result.hasErrors()) {
+            // Hay errores de validación, maneja según tu lógica
+            model.addAttribute("error", "Error en el formulario");
+            return new ModelAndView("nuevo-usuario", model);
+        }
+
         try {
             servicioLogin.registrar(usuario, imagenDePerfil);
         } catch (UsuarioExistente e) {

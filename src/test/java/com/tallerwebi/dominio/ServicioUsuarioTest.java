@@ -42,7 +42,7 @@ public class ServicioUsuarioTest {
     public void queSePuedaBuscarUsuarioPorEmail(){
         byte[] imagen = new byte[]{0x12, 0x34, 0x56, 0x78}; // imagen falsa
 
-        Usuario usuarioEsperado = new Usuario("Nombre", "Apellido",12345678L,"2000/01/01", 011,12345678L,"nombreapellido@unlam.edu.ar", "contraseña", "admin", true,imagen);
+        Usuario usuarioEsperado = new Usuario("Nombre", "Apellido","12345678","2000/01/01", 011,12345678L,"nombreapellido@unlam.edu.ar", "contraseña", "admin", true,imagen);
 
         when(this.repositorioUsuario.buscarUsuario(anyString())).thenReturn(usuarioEsperado);
 
@@ -62,6 +62,6 @@ public class ServicioUsuarioTest {
 
     private Usuario crearUsuario(Integer id) {
         byte[] imagen = new byte[]{0x12, 0x34, 0x56, 0x78}; // imagen falsa
-        return new Usuario("Nombre" + id, "Apellido" + id ,12345678L,"2000/01/01", 011,12345678L,"nombreapellido"+ id +"@unlam.edu.ar", "contraseña" + id, "admin", true,imagen);
+        return new Usuario("Nombre" + id, "Apellido" + id ,"12345678","2000/01/01", 011,12345678L,"nombreapellido"+ id +"@unlam.edu.ar", "contraseña" + id, "admin", true,imagen);
     }
 }

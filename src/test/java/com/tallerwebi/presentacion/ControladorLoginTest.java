@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,12 +28,14 @@ public class ControladorLoginTest {
 	private ServicioLogin servicioLoginMock;
 
 	private MultipartFile mockFile;
+	private BindingResult bindingResultMock;
 
 
 	@BeforeEach
 	public void init(){
 		datosLoginMock = new DatosLogin("dami@unlam.com", "123");
 		usuarioMock = mock(Usuario.class);
+		bindingResultMock = mock(BindingResult.class);
 		when(usuarioMock.getEmail()).thenReturn("dami@unlam.com");
 		requestMock = mock(HttpServletRequest.class);
 		sessionMock = mock(HttpSession.class);
@@ -76,7 +79,7 @@ public class ControladorLoginTest {
 	public void registrameSiUsuarioNoExisteDeberiaCrearUsuarioYVolverAlLogin() throws UsuarioExistente, IOException {
 
 		// ejecucion
-		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock,mockFile);
+		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock,bindingResultMock, mockFile);
 
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
@@ -89,7 +92,7 @@ public class ControladorLoginTest {
 		doThrow(UsuarioExistente.class).when(servicioLoginMock).registrar(eq(usuarioMock), any(MultipartFile.class));
 
 		// ejecucion
-		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock,mockFile);
+		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock,bindingResultMock,mockFile);
 
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("nuevo-usuario"));
@@ -102,7 +105,7 @@ public class ControladorLoginTest {
 		doThrow(RuntimeException.class).when(servicioLoginMock).registrar(eq(usuarioMock), any(MultipartFile.class));
 
 		// ejecucion
-		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock,mockFile);
+		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock,bindingResultMock, mockFile);
 
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("nuevo-usuario"));
