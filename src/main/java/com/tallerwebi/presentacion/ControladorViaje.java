@@ -313,13 +313,23 @@ public class ControladorViaje {
             if(session.getAttribute("usuario") != null){
                 ModelMap model = new ModelMap();
                 Usuario usuario = (Usuario) session.getAttribute("usuario");
-                Set<Viaje> viajes = servicioViaje.obtenerViajesDePasajero(usuario);
 
-                if(viajes == null)
-                    viajes = new HashSet<>();
-                //Usuario usuarioBuscado = servicioUsuario.obtenerUsuarioPorId((Long) session.getAttribute("id"));
+                //Obtener viajes a los que se unió el usuario
+                Set<Viaje> viajesUnidos = servicioViaje.obtenerViajesDePasajero(usuario);
+                if(viajesUnidos == null){
+                    viajesUnidos = new HashSet<>();
+                }
+
+                //Obtener viajes creados por el usuario
+                List<Viaje> viajesCreados = servicioViaje.obtenerViajesCreadosPorUnUsuario(usuario);
+                if(viajesCreados == null){
+                    viajesCreados = new ArrayList<>();
+                }
+
                 model.put("usuario", usuario);
-                model.put("viajes", viajes);
+                model.put("viajesUnidos", viajesUnidos);
+                model.put("viajesCreados", viajesCreados);
+
                 return new ModelAndView("misviajes", model);
             }else{
                 return new ModelAndView("redirect:/login");

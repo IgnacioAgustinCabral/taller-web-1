@@ -70,8 +70,8 @@
                         <h2 class="header-title mb-3"
                             th:text="${usuario.nombre} + ', estos son los viajes a los que te uniste: '"></h2>
                     </div>
-                    <div class="border border-light p-2 mb-3" th:if="${viajes != null && viajes.size() > 0}">
-                        <div th:each="viaje : ${viajes}">
+                    <div class="border border-light p-2 mb-3" th:if="${viajesUnidos != null && viajesUnidos.size() > 0}">
+                        <div th:each="viaje : ${viajesUnidos}">
                             <div class="card card-margin flex-row align-items-center">
                                 <div class="flex-row userInfo text-center" style="padding: 1rem !important">
                                     <div class="flex-row">
@@ -159,7 +159,7 @@
                             </div>
                         </div>
                     </div>
-                    <div th:unless="${viajes != null && viajes.size() > 0}">
+                    <div th:unless="${viajesUnidos != null && viajesUnidos.size() > 0}">
                         <div style="display: flex; flex-direction: column;" class="text-center topSpace">
                             <i class="fa-solid fa-exclamation-triangle mt-3 topSpace" style="font-size: 1.5em;"></i>
                             <h4>¡No se encontraron viajes a los que te hayas unido!</h4>
@@ -176,8 +176,8 @@
                                 <h2 class="header-title mb-3"
                                     th:text="${usuario.nombre} + ', estos son los viajes que creaste: '"></h2>
                             </div>
-                            <div class="border border-light p-2 mb-3" th:if="${viajes != null && viajes.size() > 0}">
-                                <div th:each="viaje : ${viajes}">
+                            <div class="border border-light p-2 mb-3" th:if="${viajesCreados != null && viajesCreados.size() > 0}">
+                                <div th:each="viaje : ${viajesCreados}">
                                     <div class="card card-margin flex-row align-items-center">
                                         <div class="flex-row userInfo text-center" style="padding: 1rem !important">
                                             <div class="flex-row">
@@ -295,7 +295,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div th:unless="${viajes != null && viajes.size() > 0}">
+                            <div th:unless="${viajesCreados != null && viajesCreados.size() > 0}">
                                 <div style="display: flex; flex-direction: column;" class="text-center topSpace">
                                     <i class="fa-solid fa-exclamation-triangle mt-3 topSpace"
                                        style="font-size: 1.5em;"></i>
