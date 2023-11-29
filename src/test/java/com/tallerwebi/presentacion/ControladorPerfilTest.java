@@ -34,6 +34,7 @@ public class ControladorPerfilTest {
     private ServicioCiudad servicioCiudadMock;
     private HttpSession sessionMockUsuario;
     private ServicioUsuario servicioUsuarioMock;
+    private ServicioComentario servicioComentarioMock;
     private ServicioGasto servicioGastoMock;
 
     @BeforeEach
@@ -47,7 +48,7 @@ public class ControladorPerfilTest {
         servicioCiudadMock = mock(ServicioCiudad.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
         servicioGastoMock = mock(ServicioGasto.class);
-        controladorPerfil = new ControladorPerfil(servicioViajeMock, servicioUsuarioMock,servicioGastoMock);
+        controladorPerfil = new ControladorPerfil(servicioViajeMock, servicioUsuarioMock,servicioGastoMock, servicioComentarioMock);
         sessionMockUsuario = mock(HttpSession.class);
     }
 

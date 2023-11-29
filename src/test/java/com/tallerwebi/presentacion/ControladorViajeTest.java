@@ -33,6 +33,7 @@ public class ControladorViajeTest {
     private Viaje viajeMock;
     private ServicioCiudad servicioCiudadMock;
     private ServicioUsuario servicioUsuarioMock;
+    private ServicioEmail servicioEmailMock;
     private HttpSession sessionMockUsuario;
     private ServicioGasto servicioGastoMock;
 
@@ -47,8 +48,9 @@ public class ControladorViajeTest {
         servicioUsuarioMock = mock(ServicioUsuario.class);
         servicioCiudadMock = mock(ServicioCiudad.class);
         servicioGastoMock = mock(ServicioGasto.class);
-        controladorViaje = new ControladorViaje(servicioGastoMock,servicioUsuarioMock,servicioViajeMock,servicioCiudadMock);
+        servicioEmailMock = mock(ServicioEmail.class);
         sessionMockUsuario = mock(HttpSession.class);
+        controladorViaje = new ControladorViaje(servicioGastoMock,servicioUsuarioMock,servicioViajeMock,servicioCiudadMock,servicioEmailMock);
     }
 
 
